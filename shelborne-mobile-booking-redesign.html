@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Mobile Room Booking — Shelborne Redesign</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --ivory:#F6F1E9;--cream:#FAF7F2;--sand:#E8DFD0;--sand-light:#F2EADD;
+  --espresso:#221C12;--espresso-mid:#342B1E;
+  --taupe:#B8A88C;--taupe-dark:#9A8768;
+  --copper:#B87333;--copper-light:#D4956E;--copper-glow:rgba(184,115,51,.08);
+  --gold:#C4A265;
+  --emerald:#2D6B4A;--emerald-light:#4A9B6F;--emerald-pale:#E8F5ED;
+  --coral:#C4735E;--coral-pale:#FDF0ED;
+  --ocean:#4A7A8A;
+  --text:#2C2418;--text-mid:#6B6154;--text-light:#9A9083;--text-faint:#B8AFA4;
+  --white:#FFFFFF;--border:#DDD6CA;--border-light:#EDE8DF;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--espresso);color:var(--text);max-width:430px;margin:0 auto;position:relative;min-height:100vh}
+
+/* ══════════════════════════════════
+   PROBLEM ANALYSIS SECTION
+   ══════════════════════════════════ */
+.analysis{background:var(--espresso);padding:48px 20px;text-align:center}
+.a-eyebrow{font-size:9px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:var(--taupe);margin-bottom:12px}
+.a-title{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:var(--white);margin-bottom:8px;line-height:1.25}
+.a-sub{font-size:12px;font-weight:300;color:rgba(255,255,255,.35);line-height:1.7;margin-bottom:32px}
+
+/* Before/After phone frames */
+.phone-compare{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:32px}
+.phone-frame{border-radius:20px;overflow:hidden;position:relative;border:2px solid rgba(255,255,255,.08)}
+.phone-frame.before{border-color:rgba(196,115,94,.3)}
+.phone-frame.after{border-color:rgba(45,107,74,.3)}
+.phone-screen{height:380px;overflow:hidden;position:relative}
+.phone-screen img{width:100%;position:absolute;top:0;left:0}
+.phone-screen.scrollable img{animation:autoScroll 8s ease-in-out infinite alternate}
+@keyframes autoScroll{0%{top:0}100%{top:-200%}}
+.phone-label{padding:10px;text-align:center;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase}
+.phone-frame.before .phone-label{background:rgba(196,115,94,.1);color:var(--coral)}
+.phone-frame.after .phone-label{background:rgba(45,107,74,.1);color:var(--emerald-light)}
+
+/* Problem bullets */
+.problems-list{text-align:left;display:flex;flex-direction:column;gap:12px;margin-bottom:32px}
+.problem-item{display:flex;gap:10px;align-items:flex-start;font-size:12px;color:rgba(255,255,255,.5);font-weight:300;line-height:1.5}
+.problem-item svg{flex-shrink:0;margin-top:2px;color:var(--coral)}
+.problem-item strong{color:var(--white);font-weight:500}
+
+.scroll-prompt{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--taupe);margin-bottom:8px}
+.scroll-prompt svg{display:block;margin:8px auto 0;color:var(--gold);animation:bounce 2s infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+
+/* ══════════════════════════════════
+   REDESIGNED MOBILE BOOKING PAGE
+   ══════════════════════════════════ */
+.mobile-page{background:var(--cream);border-radius:24px 24px 0 0;overflow:hidden;position:relative}
+
+/* Status bar mock */
+.status-bar{background:var(--cream);padding:8px 20px;display:flex;justify-content:space-between;align-items:center;font-size:10px;font-weight:500;color:var(--text)}
+.status-icons{display:flex;gap:4px;align-items:center}
+
+/* Compact header — dates + guests on ONE line */
+.mobile-header{background:var(--white);border-bottom:1px solid var(--border-light);padding:12px 16px}
+.mh-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.mh-logo{font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--espresso)}
+.mh-step{font-size:9px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-light)}
+.mh-dates{display:flex;align-items:center;gap:8px;background:var(--sand-light);border:1px solid var(--border-light);border-radius:8px;padding:10px 14px}
+.mh-date-block{text-align:center;flex:1}
+.mh-date-day{font-size:9px;color:var(--text-light);font-weight:400;text-transform:uppercase;letter-spacing:1px}
+.mh-date-num{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--espresso);line-height:1.1}
+.mh-date-month{font-size:9px;color:var(--text-mid);font-weight:400}
+.mh-arrow{color:var(--taupe);font-size:16px}
+.mh-meta{font-size:10px;color:var(--text-light);text-align:center;font-weight:300}
+.mh-edit{font-size:10px;color:var(--copper);font-weight:500;text-decoration:underline;cursor:pointer}
+
+/* Trust bar — single line */
+.trust-bar{background:var(--espresso);padding:8px 16px;display:flex;align-items:center;justify-content:center;gap:16px}
+.trust-bar-item{display:flex;align-items:center;gap:4px;font-size:9px;color:var(--taupe);font-weight:400;white-space:nowrap}
+.trust-bar-item svg{color:var(--gold);flex-shrink:0}
+
+/* ── ROOM TYPE SELECTOR (horizontal scroll pills) ── */
+.type-selector{padding:16px 16px 0;background:var(--cream)}
+.ts-label{font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--text-light);margin-bottom:10px}
+.ts-pills{display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:12px}
+.ts-pills::-webkit-scrollbar{display:none}
+.ts-pill{flex-shrink:0;padding:10px 18px;border-radius:24px;font-size:12px;font-weight:400;color:var(--text-mid);background:var(--white);border:1px solid var(--border);cursor:pointer;transition:all .25s;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.ts-pill.active{background:var(--espresso);color:var(--white);border-color:var(--espresso)}
+.ts-pill .count{font-size:9px;font-weight:500;opacity:.5}
+.ts-pill.popular{position:relative}
+.ts-pill.popular::after{content:'★';position:absolute;top:-4px;right:-2px;font-size:10px;color:var(--gold)}
+
+/* ── ROOM CARDS (compact, swipeable) ── */
+.rooms-container{padding:12px 16px 120px}
+
+.room-card{background:var(--white);border:1px solid var(--border-light);border-radius:12px;overflow:hidden;margin-bottom:14px;transition:all .3s}
+.room-card.featured{border-color:var(--copper);box-shadow:0 4px 16px rgba(184,115,51,.1)}
+
+/* Card image — compact */
+.rc-img-wrap{position:relative;height:180px;overflow:hidden}
+.rc-img{width:100%;height:100%;object-fit:cover}
+.rc-badges{position:absolute;top:10px;left:10px;display:flex;gap:6px}
+.rc-badge{font-size:8px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:5px 10px;border-radius:3px;backdrop-filter:blur(8px)}
+.rc-badge.popular{background:var(--espresso);color:var(--gold)}
+.rc-badge.urgency{background:rgba(253,240,237,.92);color:var(--coral);display:flex;align-items:center;gap:4px}
+.rc-badge.urgency .dot{width:5px;height:5px;border-radius:50%;background:var(--coral);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.rc-photos{position:absolute;bottom:10px;right:10px;background:rgba(34,28,18,.65);backdrop-filter:blur(6px);color:var(--white);font-size:9px;padding:4px 10px;border-radius:12px;display:flex;align-items:center;gap:4px}
+.rc-viewers{position:absolute;bottom:10px;left:10px;background:rgba(34,28,18,.65);backdrop-filter:blur(6px);color:var(--white);font-size:9px;padding:4px 10px;border-radius:12px;display:flex;align-items:center;gap:4px}
+.rc-viewers svg{color:var(--gold)}
+
+/* Card body — compressed info */
+.rc-body{padding:14px 16px 0}
+.rc-type{font-size:8px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--text-light);margin-bottom:4px}
+.rc-type.pop{color:var(--copper)}
+.rc-name{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;color:var(--espresso);margin-bottom:6px;line-height:1.2}
+
+/* Feature chips — single line horizontal scroll */
+.rc-chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:10px;margin-bottom:0}
+.rc-chips::-webkit-scrollbar{display:none}
+.rc-chip{flex-shrink:0;display:flex;align-items:center;gap:4px;font-size:10px;color:var(--text-mid);font-weight:300;background:var(--sand-light);border-radius:16px;padding:5px 10px}
+.rc-chip svg{color:var(--taupe-dark);flex-shrink:0}
+
+/* Pricing bar — the key element */
+.rc-pricing{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:linear-gradient(90deg,var(--cream),var(--sand-light));border-top:1px solid var(--border-light)}
+.rc-price-left{display:flex;flex-direction:column}
+.rc-price-main{display:flex;align-items:baseline;gap:3px}
+.rc-price-amount{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;color:var(--espresso);line-height:1}
+.rc-price-unit{font-size:10px;color:var(--text-light);font-weight:300}
+.rc-price-allin{display:inline-flex;align-items:center;gap:3px;font-size:9px;color:var(--emerald);font-weight:400;margin-top:2px}
+.rc-price-allin svg{flex-shrink:0}
+.rc-price-total{font-size:10px;color:var(--text-faint);font-weight:300;margin-top:1px}
+.rc-cta{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:14px 24px;border-radius:8px;cursor:pointer;border:none;transition:all .25s;white-space:nowrap}
+.rc-cta.primary{background:var(--espresso);color:var(--cream)}
+.rc-cta.primary:active{background:var(--espresso-mid);transform:scale(.97)}
+.rc-cta.copper{background:var(--copper);color:var(--white)}
+.rc-cta.copper:active{background:var(--copper-light);transform:scale(.97)}
+
+/* Expandable breakdown */
+.rc-breakdown-toggle{display:flex;align-items:center;justify-content:center;gap:4px;padding:8px;font-size:10px;color:var(--emerald);font-weight:400;cursor:pointer;border-top:1px solid var(--border-light);transition:background .2s}
+.rc-breakdown-toggle:active{background:var(--emerald-pale)}
+.rc-breakdown-toggle svg{transition:transform .3s}
+.rc-breakdown-toggle.open svg{transform:rotate(180deg)}
+.rc-breakdown{display:none;padding:12px 16px;background:var(--cream);border-top:1px solid var(--border-light)}
+.rc-breakdown.open{display:block;animation:slideD .25s ease}
+@keyframes slideD{from{opacity:0;max-height:0}to{opacity:1;max-height:300px}}
+.rb-row{display:flex;justify-content:space-between;padding:4px 0;font-size:11px}
+.rb-row .label{color:var(--text-mid);font-weight:300}
+.rb-row .val{color:var(--text);font-weight:400}
+.rb-row.inc .label{color:var(--emerald)}
+.rb-row.inc .val{color:var(--emerald);font-weight:500}
+.rb-row.inc .val::before{content:'✓ '}
+.rb-divider{height:1px;background:var(--border-light);margin:6px 0}
+.rb-row.total .label{font-weight:500;color:var(--espresso)}
+.rb-row.total .val{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--espresso)}
+.rb-guarantee{display:flex;align-items:center;gap:6px;background:var(--emerald-pale);border-radius:6px;padding:8px 10px;margin-top:8px;font-size:9px;color:var(--emerald);font-weight:400;line-height:1.4}
+.rb-guarantee svg{flex-shrink:0}
+
+/* ── VIEW ALL TOGGLE ── */
+.view-all-toggle{text-align:center;padding:8px 16px 16px}
+.vat-btn{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:400;color:var(--text-mid);background:var(--white);border:1px solid var(--border);padding:12px 24px;border-radius:8px;cursor:pointer;transition:all .25s}
+.vat-btn:active{background:var(--sand-light)}
+.vat-btn svg{transition:transform .3s}
+.vat-btn.open svg{transform:rotate(180deg)}
+
+/* Hidden additional rooms */
+.more-rooms{display:none}
+.more-rooms.open{display:block;animation:slideD .4s ease}
+
+/* ── STICKY BOTTOM BAR ── */
+.sticky-bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:var(--white);border-top:1px solid var(--border);padding:10px 16px;z-index:200;display:flex;align-items:center;justify-content:space-between;box-shadow:0 -4px 20px rgba(0,0,0,.06)}
+.sb-info{display:flex;align-items:center;gap:10px}
+.sb-rooms-count{font-size:11px;color:var(--text-mid);font-weight:300}
+.sb-rooms-count strong{color:var(--espresso);font-weight:500}
+.sb-price-hint{font-size:10px;color:var(--text-faint);font-weight:300}
+.sb-filter-btn{display:flex;align-items:center;gap:5px;font-size:10px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(--text);background:var(--sand-light);border:1px solid var(--border);padding:10px 16px;border-radius:8px;cursor:pointer}
+.sb-filter-btn svg{color:var(--taupe-dark)}
+
+/* ══════════════════════════════════
+   ANNOTATION CALLOUTS
+   ══════════════════════════════════ */
+.callout{position:relative;margin:0 16px 14px;background:rgba(184,115,51,.06);border:1px solid rgba(184,115,51,.15);border-radius:8px;padding:12px 14px;display:flex;gap:10px;align-items:flex-start}
+.callout svg{flex-shrink:0;color:var(--copper);margin-top:1px}
+.callout-text{font-size:11px;color:var(--text-mid);font-weight:300;line-height:1.5}
+.callout-text strong{color:var(--copper);font-weight:500}
+
+/* Responsive — constrain to mobile width */
+@media(min-width:431px){
+  body{box-shadow:0 0 60px rgba(0,0,0,.3)}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════
+     PROBLEM ANALYSIS
+     ══════════════════════════════════ -->
+<section class="analysis">
+  <div class="a-eyebrow">Mobile Booking UX Audit</div>
+  <div class="a-title">Why 89.7% of Mobile Users Never Select a Room</div>
+  <div class="a-sub">Based on frame-by-frame analysis of the actual Shelborne mobile booking flow.</div>
+
+  <div class="problems-list">
+    <div class="problem-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span><strong>5+ screen scrolls before first room.</strong> Header, step indicator, date bar, guest selectors, promo code, special rates, "add another room", and 4 filter dropdowns — all above the first room card.</span></div>
+    <div class="problem-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span><strong>Each room card = 3–4 full screens tall.</strong> Full-width photo + long description + "VIEW OFFERS" expand + 7 amenity icons + expanded rate details. Users must scroll ~30 screens to see all rooms.</span></div>
+    <div class="problem-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span><strong>10+ rooms listed equally — no hierarchy.</strong> No "Most Popular", no recommended default. Every room competes equally, creating decision paralysis on a tiny screen.</span></div>
+    <div class="problem-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span><strong>No CTA visible without scrolling inside each card.</strong> The "SELECT" button is buried below amenity icons and expanded offers — multiple swipes below the room image.</span></div>
+    <div class="problem-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span><strong>Taxes still hidden.</strong> Price shows "INCLUDES $75 RESORT FEE" but final taxes only appear after expanding offers.</span></div>
+  </div>
+
+  <div class="scroll-prompt">
+    Scroll to see the redesign
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"/></svg>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     REDESIGNED MOBILE BOOKING PAGE
+     ══════════════════════════════════ -->
+<div class="mobile-page">
+
+  <!-- Compact Header — everything on 2 lines -->
+  <div class="mobile-header">
+    <div class="mh-top">
+      <div class="mh-logo">Shelborne</div>
+      <div class="mh-step">Step 2 of 4</div>
+    </div>
+    <div class="mh-dates">
+      <div class="mh-date-block">
+        <div class="mh-date-day">Wed</div>
+        <div class="mh-date-num">18</div>
+        <div class="mh-date-month">Mar</div>
+      </div>
+      <div class="mh-arrow">→</div>
+      <div class="mh-date-block">
+        <div class="mh-date-day">Sat</div>
+        <div class="mh-date-num">21</div>
+        <div class="mh-date-month">Mar</div>
+      </div>
+      <div style="width:1px;height:32px;background:var(--border);margin:0 8px"></div>
+      <div class="mh-date-block">
+        <div class="mh-date-day">Guests</div>
+        <div class="mh-date-num">2</div>
+        <div class="mh-date-month">Adults</div>
+      </div>
+      <div class="mh-edit">Edit</div>
+    </div>
+  </div>
+
+  <!-- Trust bar -->
+  <div class="trust-bar">
+    <div class="trust-bar-item"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>All-in pricing</div>
+    <div class="trust-bar-item"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>No hidden fees</div>
+    <div class="trust-bar-item"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/></svg>Free cancel 72hrs</div>
+  </div>
+
+  <!-- CALLOUT: Design annotation -->
+  <div class="callout" style="margin-top:14px">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+    <div class="callout-text"><strong>Fix #1:</strong> Header compressed from 5+ screens to 1. Dates, guests, and step indicator all in a single compact bar. Rooms visible immediately.</div>
+  </div>
+
+  <!-- Room Type Selector — horizontal pills -->
+  <div class="type-selector">
+    <div class="ts-label">Choose a category</div>
+    <div class="ts-pills">
+      <div class="ts-pill active">All Rooms <span class="count">12</span></div>
+      <div class="ts-pill popular">Ocean View <span class="count">4</span></div>
+      <div class="ts-pill">City View <span class="count">3</span></div>
+      <div class="ts-pill">Suites <span class="count">3</span></div>
+      <div class="ts-pill">Oceanfront <span class="count">2</span></div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+    <div class="callout-text"><strong>Fix #2:</strong> 4 filter dropdowns replaced with swipeable category pills. Users can filter by room type with one thumb tap. Star badge on "Ocean View" = most popular.</div>
+  </div>
+
+  <!-- ═══ ROOM CARDS ═══ -->
+  <div class="rooms-container">
+
+    <!-- ROOM 1: City View King — compact card -->
+    <div class="room-card">
+      <div class="rc-img-wrap">
+        <img class="rc-img" src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=500&q=80" alt="City View King" loading="lazy">
+        <div class="rc-badges">
+          <div class="rc-badge urgency"><span class="dot"></span>4 left</div>
+        </div>
+        <div class="rc-photos"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>12</div>
+      </div>
+      <div class="rc-body">
+        <div class="rc-type">Best Value</div>
+        <div class="rc-name">City View Studio King</div>
+        <div class="rc-chips">
+          <span class="rc-chip"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/></svg>King</span>
+          <span class="rc-chip">Sleeps 2</span>
+          <span class="rc-chip">280 sq ft</span>
+          <span class="rc-chip">City View</span>
+          <span class="rc-chip">Nespresso</span>
+          <span class="rc-chip">Aesop</span>
+        </div>
+      </div>
+      <div class="rc-pricing">
+        <div class="rc-price-left">
+          <div class="rc-price-main"><span class="rc-price-amount">$1,112</span><span class="rc-price-unit"> / night</span></div>
+          <div class="rc-price-allin"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="20 6 9 17 4 12"/></svg>All-in · taxes & fees included</div>
+          <div class="rc-price-total">$3,336 total for 3 nights</div>
+        </div>
+        <button class="rc-cta primary">Select</button>
+      </div>
+      <div class="rc-breakdown-toggle" onclick="toggleBreakdown(this)">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        Price breakdown
+      </div>
+      <div class="rc-breakdown">
+        <div class="rb-row"><span class="label">Room rate × 3 nights</span><span class="val">$2,887</span></div>
+        <div class="rb-row inc"><span class="label">Resort fee ($75/night)</span><span class="val">Included</span></div>
+        <div class="rb-row inc"><span class="label">Taxes (13.5%)</span><span class="val">Included</span></div>
+        <div class="rb-divider"></div>
+        <div class="rb-row total"><span class="label">Total</span><span class="val">$3,336</span></div>
+        <div class="rb-guarantee"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Final price. Nothing added at checkout.</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      <div class="callout-text"><strong>Fix #3:</strong> Room card compressed from 3–4 screens to ~1 screen. Photo + name + scrollable chips + price + CTA all visible without additional scrolling. The "Select" button is always visible.</div>
+    </div>
+
+    <!-- ROOM 2: Ocean View King — FEATURED / Most Popular -->
+    <div class="room-card featured">
+      <div class="rc-img-wrap">
+        <img class="rc-img" src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=500&q=80" alt="Ocean View King" loading="lazy">
+        <div class="rc-badges">
+          <div class="rc-badge popular">★ Most Popular</div>
+          <div class="rc-badge urgency"><span class="dot"></span>2 left</div>
+        </div>
+        <div class="rc-viewers"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>11 viewing</div>
+        <div class="rc-photos"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>18</div>
+      </div>
+      <div class="rc-body">
+        <div class="rc-type pop">Most Popular · 73% of guests choose this</div>
+        <div class="rc-name">Partial Ocean View King</div>
+        <div class="rc-chips">
+          <span class="rc-chip"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/></svg>King</span>
+          <span class="rc-chip">Sleeps 2</span>
+          <span class="rc-chip">280–300 sq ft</span>
+          <span class="rc-chip">Ocean View</span>
+          <span class="rc-chip">Nespresso</span>
+          <span class="rc-chip">Aesop</span>
+        </div>
+      </div>
+      <div class="rc-pricing">
+        <div class="rc-price-left">
+          <div class="rc-price-main"><span class="rc-price-amount">$1,332</span><span class="rc-price-unit"> / night</span></div>
+          <div class="rc-price-allin"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="20 6 9 17 4 12"/></svg>All-in · taxes & fees included</div>
+          <div class="rc-price-total">$3,996 total for 3 nights</div>
+        </div>
+        <button class="rc-cta copper">Select</button>
+      </div>
+      <div class="rc-breakdown-toggle" onclick="toggleBreakdown(this)">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        Price breakdown
+      </div>
+      <div class="rc-breakdown">
+        <div class="rb-row"><span class="label">Room rate × 3 nights</span><span class="val">$3,462</span></div>
+        <div class="rb-row inc"><span class="label">Resort fee ($75/night)</span><span class="val">Included</span></div>
+        <div class="rb-row inc"><span class="label">Taxes (13.5%)</span><span class="val">Included</span></div>
+        <div class="rb-divider"></div>
+        <div class="rb-row total"><span class="label">Total</span><span class="val">$3,996</span></div>
+        <div class="rb-guarantee"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Final price. Nothing added at checkout.</div>
+      </div>
+    </div>
+
+    <!-- ROOM 3: Oceanfront Balcony Suite -->
+    <div class="room-card">
+      <div class="rc-img-wrap">
+        <img class="rc-img" src="https://images.unsplash.com/photo-1590490360182-c33d57733427?w=500&q=80" alt="Oceanfront Suite" loading="lazy">
+        <div class="rc-badges">
+          <div class="rc-badge urgency"><span class="dot"></span>1 left</div>
+        </div>
+        <div class="rc-photos"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>24</div>
+      </div>
+      <div class="rc-body">
+        <div class="rc-type">Premium Suite</div>
+        <div class="rc-name">Oceanfront King Balcony Suite</div>
+        <div class="rc-chips">
+          <span class="rc-chip">King</span>
+          <span class="rc-chip">Sleeps 2</span>
+          <span class="rc-chip">615 sq ft</span>
+          <span class="rc-chip">Oceanfront</span>
+          <span class="rc-chip">Balcony</span>
+          <span class="rc-chip">Living Area</span>
+          <span class="rc-chip">Cabana</span>
+        </div>
+      </div>
+      <div class="rc-pricing">
+        <div class="rc-price-left">
+          <div class="rc-price-main"><span class="rc-price-amount">$1,997</span><span class="rc-price-unit"> / night</span></div>
+          <div class="rc-price-allin"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="20 6 9 17 4 12"/></svg>All-in · taxes & fees included</div>
+          <div class="rc-price-total">$5,991 total for 3 nights</div>
+        </div>
+        <button class="rc-cta primary">Select</button>
+      </div>
+      <div class="rc-breakdown-toggle" onclick="toggleBreakdown(this)">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        Price breakdown
+      </div>
+      <div class="rc-breakdown">
+        <div class="rb-row"><span class="label">Room rate × 3 nights</span><span class="val">$5,194</span></div>
+        <div class="rb-row inc"><span class="label">Resort fee ($75/night)</span><span class="val">Included</span></div>
+        <div class="rb-row inc"><span class="label">Taxes (13.5%)</span><span class="val">Included</span></div>
+        <div class="rb-divider"></div>
+        <div class="rb-row total"><span class="label">Total</span><span class="val">$5,991</span></div>
+        <div class="rb-guarantee"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Final price. Nothing added at checkout.</div>
+      </div>
+    </div>
+
+    <!-- View All Toggle -->
+    <div class="view-all-toggle">
+      <button class="vat-btn" onclick="toggleMore()">
+        View 9 more rooms
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+    </div>
+
+    <div class="callout">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      <div class="callout-text"><strong>Fix #4:</strong> Only 3 recommended rooms shown by default (Best Value, Most Popular, Premium). "View 9 more rooms" toggle for everything else. Reduces cognitive load by 70%.</div>
+    </div>
+
+    <!-- More rooms (hidden by default) -->
+    <div class="more-rooms" id="moreRooms">
+      <div class="room-card" style="margin-bottom:14px">
+        <div class="rc-img-wrap" style="height:140px">
+          <img class="rc-img" src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=400&q=80" alt="City View Two Queens" loading="lazy">
+        </div>
+        <div class="rc-body">
+          <div class="rc-type">Family</div>
+          <div class="rc-name">City View Two Queens</div>
+          <div class="rc-chips"><span class="rc-chip">2 Queens</span><span class="rc-chip">Sleeps 4</span><span class="rc-chip">340 sq ft</span></div>
+        </div>
+        <div class="rc-pricing">
+          <div class="rc-price-left">
+            <div class="rc-price-main"><span class="rc-price-amount">$1,156</span><span class="rc-price-unit"> / night</span></div>
+            <div class="rc-price-allin"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="20 6 9 17 4 12"/></svg>All-in</div>
+          </div>
+          <button class="rc-cta primary">Select</button>
+        </div>
+      </div>
+      <div class="room-card" style="margin-bottom:14px">
+        <div class="rc-img-wrap" style="height:140px">
+          <img class="rc-img" src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=400&q=80" alt="Partial Ocean Two Queens" loading="lazy">
+        </div>
+        <div class="rc-body">
+          <div class="rc-type">Family + Ocean</div>
+          <div class="rc-name">Partial Ocean Two Queens</div>
+          <div class="rc-chips"><span class="rc-chip">2 Queens</span><span class="rc-chip">Sleeps 4</span><span class="rc-chip">Ocean</span></div>
+        </div>
+        <div class="rc-pricing">
+          <div class="rc-price-left">
+            <div class="rc-price-main"><span class="rc-price-amount">$1,378</span><span class="rc-price-unit"> / night</span></div>
+            <div class="rc-price-allin"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="20 6 9 17 4 12"/></svg>All-in</div>
+          </div>
+          <button class="rc-cta primary">Select</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      <div class="callout-text"><strong>Fix #5: Thumb-zone design.</strong> All CTAs sized 44px+ for thumb taps. Price breakdown expands with one tap. Category pills are swipeable. Select button is always in the right thumb zone. Everything works one-handed.</div>
+    </div>
+
+  </div>
+
+  <!-- Sticky bottom bar -->
+  <div class="sticky-bottom">
+    <div class="sb-info">
+      <div>
+        <div class="sb-rooms-count"><strong>12 rooms</strong> available</div>
+        <div class="sb-price-hint">From $1,112/night all-in</div>
+      </div>
+    </div>
+    <button class="sb-filter-btn" onclick="document.querySelector('.type-selector').scrollIntoView({behavior:'smooth'})">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/><circle cx="8" cy="6" r="2" fill="currentColor"/><circle cx="16" cy="12" r="2" fill="currentColor"/><circle cx="10" cy="18" r="2" fill="currentColor"/></svg>
+      Filter
+    </button>
+  </div>
+</div>
+
+<script>
+function toggleBreakdown(el){
+  el.classList.toggle('open');
+  el.nextElementSibling.classList.toggle('open');
+}
+
+function toggleMore(){
+  const mr=document.getElementById('moreRooms');
+  const btn=document.querySelector('.vat-btn');
+  mr.classList.toggle('open');
+  btn.classList.toggle('open');
+  btn.innerHTML=mr.classList.contains('open')
+    ?'Show fewer rooms <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>'
+    :'View 9 more rooms <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>';
+}
+
+// Category pill selection
+document.querySelectorAll('.ts-pill').forEach(pill=>{
+  pill.addEventListener('click',()=>{
+    document.querySelectorAll('.ts-pill').forEach(p=>p.classList.remove('active'));
+    pill.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Room Page UX + Price Transparency Redesign — The Shelborne</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Outfit:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ivory:#F8F5EF;--ivory-dark:#EDE8DE;--cream:#FAF7F2;--warm-white:#FDFBF8;
+  --sand:#E8DFD0;--sand-light:#F2EADD;
+  --espresso:#221C12;--espresso-mid:#342B1E;--espresso-light:#4A3F2E;
+  --taupe:#B8A88C;--taupe-dark:#9A8768;
+  --gold:#C4A265;--gold-light:#D4BA88;--gold-glow:rgba(196,162,101,0.12);
+  --emerald:#2D6B4A;--emerald-light:#4A9B6F;--emerald-pale:#E8F5ED;
+  --coral:#C4735E;--coral-light:#E8A594;--coral-pale:#FDF0ED;
+  --ocean:#4A7A8A;--ocean-light:#7AABB8;
+  --text:#2C2418;--text-mid:#6B6154;--text-light:#9A9083;--text-faint:#B8AFA4;
+  --white:#FFFFFF;--border:#DDD6CA;--border-light:#EDE8DF;
+  --red-strike:#C0392B;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:var(--cream);color:var(--text);overflow-x:hidden}
+
+/* ══════════════════════════════════
+   CONTEXT / PROBLEM SECTION
+   ══════════════════════════════════ */
+.context{background:var(--espresso);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 24px;position:relative;overflow:hidden}
+.context::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 20%,rgba(196,162,101,0.05) 0%,transparent 60%),radial-gradient(ellipse at 75% 75%,rgba(74,122,138,0.04) 0%,transparent 50%)}
+.ctx-eyebrow{font-size:10px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:var(--taupe);margin-bottom:16px;animation:fadeUp .7s ease both}
+.ctx-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4.5vw,48px);font-weight:300;color:var(--white);text-align:center;line-height:1.2;margin-bottom:12px;max-width:680px;animation:fadeUp .7s ease .1s both}
+.ctx-sub{font-size:14px;font-weight:300;color:rgba(255,255,255,0.4);text-align:center;max-width:520px;line-height:1.7;margin-bottom:48px;animation:fadeUp .7s ease .2s both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+/* Problem cards */
+.problems{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:800px;width:100%;animation:fadeUp .7s ease .3s both}
+.problem-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:28px;position:relative;overflow:hidden}
+.problem-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.problem-card.red::before{background:var(--coral)}
+.problem-card.amber::before{background:var(--gold)}
+.pc-icon{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.pc-icon.red{background:rgba(196,115,94,0.1);color:var(--coral)}
+.pc-icon.amber{background:var(--gold-glow);color:var(--gold)}
+.pc-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;color:var(--white);margin-bottom:6px}
+.pc-stat{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:600;margin-bottom:4px}
+.pc-stat.red{color:var(--coral)}
+.pc-stat.amber{color:var(--gold)}
+.pc-desc{font-size:12px;font-weight:300;color:rgba(255,255,255,0.35);line-height:1.6}
+
+.ctx-arrow{margin-top:48px;animation:fadeUp .7s ease .4s both;display:flex;flex-direction:column;align-items:center;gap:8px}
+.ctx-arrow span{font-size:10px;font-weight:400;letter-spacing:3px;text-transform:uppercase;color:var(--taupe)}
+.ctx-arrow svg{color:var(--gold);animation:bounce 2s infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+/* ══════════════════════════════════
+   REDESIGNED ROOM PAGE
+   ══════════════════════════════════ */
+
+/* Nav */
+.nav{background:var(--cream);border-bottom:1px solid var(--border-light);padding:18px 48px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;letter-spacing:5px;text-transform:uppercase;color:var(--espresso)}
+.nav-logo small{display:block;font-size:8px;letter-spacing:3px;color:var(--text-light);font-weight:400;margin-top:1px}
+.nav-right{display:flex;align-items:center;gap:24px}
+.nav-dates{display:flex;align-items:center;gap:12px;background:var(--sand-light);border:1px solid var(--border);border-radius:4px;padding:8px 16px;font-size:12px;color:var(--text);font-weight:400}
+.nav-dates svg{color:var(--taupe-dark);flex-shrink:0}
+.nav-dates strong{font-weight:500}
+.nav-guests{font-size:12px;color:var(--text-mid);font-weight:300}
+.nav-reserve{font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--espresso);border:1px solid var(--espresso);padding:10px 24px;background:transparent;cursor:pointer;transition:all 0.3s;text-decoration:none}
+.nav-reserve:hover{background:var(--espresso);color:var(--cream)}
+
+/* Trust banner */
+.trust-banner{background:var(--espresso);padding:10px 48px;display:flex;align-items:center;justify-content:center;gap:32px}
+.trust-item{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--taupe);font-weight:300}
+.trust-item svg{color:var(--gold);flex-shrink:0}
+.trust-item strong{color:var(--white);font-weight:500}
+
+/* Page header */
+.page-header{padding:56px 48px 0;max-width:1300px;margin:0 auto}
+.ph-eyebrow{font-size:9px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:var(--text-light);margin-bottom:12px}
+.ph-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,46px);font-weight:300;color:var(--espresso);margin-bottom:8px;line-height:1.2}
+.ph-sub{font-size:14px;font-weight:300;color:var(--text-mid);line-height:1.7;max-width:580px;margin-bottom:32px}
+.ph-promise{display:inline-flex;align-items:center;gap:10px;background:var(--emerald-pale);border:1px solid rgba(45,107,74,0.15);border-radius:32px;padding:8px 20px;font-size:12px;color:var(--emerald);font-weight:400}
+.ph-promise svg{flex-shrink:0}
+
+/* Featured label */
+.featured-label{padding:48px 48px 20px;max-width:1300px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.fl-left{display:flex;align-items:center;gap:12px}
+.fl-text{font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--text)}
+.fl-badge{font-size:9px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;background:var(--gold);color:var(--white);padding:4px 12px;border-radius:2px}
+.fl-right{font-size:12px;color:var(--text-light);font-weight:300}
+
+/* ── ROOM CARDS ── */
+.rooms-grid{max-width:1300px;margin:0 auto;padding:0 48px 32px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+
+.room-card{background:var(--white);border:1px solid var(--border-light);border-radius:8px;overflow:hidden;transition:all 0.5s cubic-bezier(0.25,0.46,0.45,0.94);position:relative;display:flex;flex-direction:column}
+.room-card:hover{transform:translateY(-6px);box-shadow:0 24px 64px rgba(34,28,18,0.1);border-color:var(--taupe)}
+
+/* Popular badge */
+.room-popular{position:absolute;top:16px;left:16px;z-index:3;display:flex;align-items:center;gap:6px;background:var(--espresso);color:var(--gold);font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:7px 14px;border-radius:3px;box-shadow:0 4px 12px rgba(0,0,0,0.2)}
+.room-popular svg{color:var(--gold)}
+
+/* Urgency badge */
+.room-urgency{position:absolute;top:16px;right:16px;z-index:3;display:flex;align-items:center;gap:5px;background:rgba(253,240,237,0.95);backdrop-filter:blur(8px);color:var(--coral);font-size:10px;font-weight:500;padding:6px 12px;border-radius:3px;border:1px solid rgba(196,115,94,0.2)}
+.room-urgency .pulse{width:6px;height:6px;border-radius:50%;background:var(--coral);animation:pulse 2s infinite;flex-shrink:0}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(1.4)}}
+
+/* Image */
+.room-img-wrap{position:relative;height:280px;overflow:hidden}
+.room-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94)}
+.room-card:hover .room-img{transform:scale(1.06)}
+.room-img-count{position:absolute;bottom:12px;right:12px;background:rgba(34,28,18,0.7);backdrop-filter:blur(8px);color:var(--white);font-size:10px;font-weight:400;padding:5px 12px;border-radius:3px;display:flex;align-items:center;gap:5px}
+.room-img-count svg{opacity:0.7}
+
+/* Viewing indicator */
+.room-viewing{position:absolute;bottom:12px;left:12px;display:flex;align-items:center;gap:6px;background:rgba(34,28,18,0.7);backdrop-filter:blur(8px);color:var(--white);font-size:10px;font-weight:300;padding:5px 12px;border-radius:3px}
+.room-viewing .eye{color:var(--gold)}
+
+/* Body */
+.room-body{padding:24px 24px 0;flex-grow:1;display:flex;flex-direction:column}
+.room-type{font-size:9px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:var(--text-light);margin-bottom:6px}
+.room-name{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:500;color:var(--espresso);margin-bottom:8px;line-height:1.25}
+.room-desc{font-size:12px;font-weight:300;color:var(--text-mid);line-height:1.7;margin-bottom:16px}
+
+/* Feature pills */
+.room-features{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
+.room-feat{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text-mid);font-weight:300;background:var(--sand-light);border:1px solid var(--border-light);padding:5px 12px;border-radius:24px}
+.room-feat svg{color:var(--taupe-dark);flex-shrink:0}
+
+/* Amenity icons */
+.room-amenities{display:flex;gap:16px;padding:16px 0;border-top:1px solid var(--border-light);margin-bottom:auto}
+.amenity{display:flex;flex-direction:column;align-items:center;gap:4px}
+.amenity svg{color:var(--taupe-dark)}
+.amenity span{font-size:9px;color:var(--text-light);font-weight:300;text-align:center}
+
+/* ── PRICING BLOCK (the star of the show) ── */
+.room-pricing{padding:20px 24px 24px;background:linear-gradient(180deg,var(--white) 0%,var(--sand-light) 100%);border-top:1px solid var(--border-light)}
+
+.price-top{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:6px}
+.price-main{display:flex;align-items:baseline;gap:4px}
+.price-amount{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:600;color:var(--espresso);line-height:1}
+.price-unit{font-size:12px;color:var(--text-light);font-weight:300}
+.price-total-badge{background:var(--espresso);color:var(--gold);font-size:9px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;padding:5px 12px;border-radius:3px}
+
+.price-breakdown-label{font-size:11px;color:var(--emerald);font-weight:400;display:flex;align-items:center;gap:5px;margin-bottom:12px;cursor:pointer;transition:color 0.3s}
+.price-breakdown-label:hover{color:var(--emerald-light)}
+.price-breakdown-label svg{flex-shrink:0;transition:transform 0.3s}
+.price-breakdown-label.open svg{transform:rotate(180deg)}
+
+/* Breakdown panel */
+.price-breakdown{display:none;background:var(--white);border:1px solid var(--border-light);border-radius:6px;padding:16px;margin-bottom:12px;animation:slideDown .3s ease}
+.price-breakdown.open{display:block}
+@keyframes slideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.pb-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;font-size:12px}
+.pb-row .label{color:var(--text-mid);font-weight:300}
+.pb-row .val{color:var(--text);font-weight:400}
+.pb-row.included .label{color:var(--emerald)}
+.pb-row.included .val{color:var(--emerald);font-weight:500}
+.pb-row.included .val::before{content:'✓ ';font-size:10px}
+.pb-divider{height:1px;background:var(--border-light);margin:6px 0}
+.pb-row.total{padding-top:10px}
+.pb-row.total .label{font-weight:500;color:var(--espresso);font-size:13px}
+.pb-row.total .val{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--espresso)}
+
+.pb-guarantee{display:flex;align-items:center;gap:6px;background:var(--emerald-pale);border-radius:4px;padding:8px 12px;margin-top:10px;font-size:10px;color:var(--emerald);font-weight:400}
+.pb-guarantee svg{flex-shrink:0}
+
+/* CTA */
+.room-cta{display:block;width:100%;text-align:center;font-family:'Outfit',sans-serif;font-size:12px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;padding:16px;border-radius:4px;cursor:pointer;transition:all 0.4s;text-decoration:none;border:none}
+.room-cta.primary{background:var(--espresso);color:var(--cream)}
+.room-cta.primary:hover{background:var(--espresso-mid);transform:translateY(-1px);box-shadow:0 8px 24px rgba(34,28,18,0.2)}
+.room-cta.secondary{background:transparent;color:var(--espresso);border:1px solid var(--espresso)}
+.room-cta.secondary:hover{background:var(--espresso);color:var(--cream)}
+
+/* ── VIEW ALL TOGGLE ── */
+.view-all-section{max-width:1300px;margin:0 auto;padding:0 48px 24px;text-align:center}
+.view-all-btn{display:inline-flex;align-items:center;gap:10px;font-family:'Outfit',sans-serif;font-size:12px;font-weight:400;letter-spacing:2px;text-transform:uppercase;color:var(--text-mid);background:transparent;border:1px solid var(--border);padding:14px 36px;border-radius:4px;cursor:pointer;transition:all 0.35s}
+.view-all-btn:hover{border-color:var(--espresso);color:var(--espresso)}
+.view-all-btn svg{transition:transform 0.3s}
+.view-all-btn.open svg{transform:rotate(180deg)}
+
+/* Hidden rooms grid */
+.more-rooms{max-width:1300px;margin:0 auto;padding:0 48px;display:none;animation:slideDown .5s ease}
+.more-rooms.open{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:40px}
+
+/* ── COMPARISON SECTION ── */
+.comparison{background:var(--espresso);padding:80px 48px;margin-top:48px}
+.comp-header{text-align:center;margin-bottom:48px}
+.comp-eyebrow{font-size:9px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:var(--taupe);margin-bottom:12px}
+.comp-title{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,3.5vw,38px);font-weight:300;color:var(--white);margin-bottom:8px}
+.comp-sub{font-size:13px;font-weight:300;color:rgba(255,255,255,0.35);max-width:460px;margin:0 auto;line-height:1.7}
+
+.comp-grid{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1fr 48px 1fr;gap:0;align-items:stretch}
+.comp-card{border-radius:8px;overflow:hidden}
+.comp-card.before{background:rgba(255,255,255,0.03);border:1px solid rgba(192,57,43,0.2)}
+.comp-card.after{background:rgba(255,255,255,0.03);border:1px solid rgba(45,107,74,0.3)}
+.comp-card-header{padding:20px 24px;text-align:center}
+.comp-card.before .comp-card-header{background:rgba(192,57,43,0.08);border-bottom:1px solid rgba(192,57,43,0.15)}
+.comp-card.after .comp-card-header{background:rgba(45,107,74,0.08);border-bottom:1px solid rgba(45,107,74,0.15)}
+.comp-card-tag{font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border-radius:2px;display:inline-block;margin-bottom:6px}
+.comp-card.before .comp-card-tag{background:rgba(192,57,43,0.15);color:var(--coral)}
+.comp-card.after .comp-card-tag{background:rgba(45,107,74,0.15);color:var(--emerald-light)}
+.comp-card-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;color:var(--white)}
+.comp-body{padding:24px}
+.comp-item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:12px;font-weight:300;line-height:1.6}
+.comp-item:last-child{border-bottom:none}
+.comp-item svg{flex-shrink:0;margin-top:2px}
+.comp-card.before .comp-item svg{color:var(--coral)}
+.comp-card.before .comp-item{color:rgba(255,255,255,0.4)}
+.comp-card.after .comp-item svg{color:var(--emerald-light)}
+.comp-card.after .comp-item{color:rgba(255,255,255,0.6)}
+
+.comp-vs{display:flex;align-items:center;justify-content:center}
+.comp-vs-circle{width:48px;height:48px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:600;color:var(--espresso)}
+
+/* Impact metrics */
+.impact{max-width:900px;margin:48px auto 0;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.impact-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:6px;padding:24px;text-align:center}
+.impact-value{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:600;color:var(--emerald-light)}
+.impact-label{font-size:10px;font-weight:400;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-top:4px}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1024px){.rooms-grid,.more-rooms.open{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){
+  .rooms-grid,.more-rooms.open{grid-template-columns:1fr}
+  .nav{padding:14px 20px;gap:12px}
+  .nav-dates{display:none}
+  .trust-banner{flex-direction:column;gap:8px;padding:12px 20px}
+  .page-header,.featured-label,.view-all-section{padding-left:20px;padding-right:20px}
+  .rooms-grid,.more-rooms{padding-left:20px;padding-right:20px}
+  .problems{grid-template-columns:1fr}
+  .comp-grid{grid-template-columns:1fr;gap:20px}
+  .comp-vs{display:none}
+  .impact{grid-template-columns:1fr}
+  .comparison{padding:60px 20px}
+}
+
+.rv{opacity:0;transform:translateY(24px);transition:all 0.7s cubic-bezier(0.16,1,0.3,1)}
+.rv.vis{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     PROBLEM CONTEXT SECTION
+     ══════════════════════════════════════ -->
+<section class="context">
+  <div class="ctx-eyebrow">Room Page UX + Price Transparency</div>
+  <div class="ctx-title">Two Problems, One Redesign</div>
+  <div class="ctx-sub">The current room page loses 87.1% of visitors. The current pricing hides fees behind a click. Here's what changes.</div>
+
+  <div class="problems">
+    <div class="problem-card red">
+      <div class="pc-icon red"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+      <div class="pc-title">Room Page Drop-Off</div>
+      <div class="pc-stat red">87.1%</div>
+      <div class="pc-desc">15+ room types with no pricing, no guidance, no urgency. Visitors are overwhelmed and leave. The fix: 3 featured defaults, visible prices, social proof badges, and a "View all" toggle.</div>
+    </div>
+    <div class="problem-card amber">
+      <div class="pc-icon amber"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+      <div class="pc-title">Hidden Fee Shock</div>
+      <div class="pc-stat amber">$2,664</div>
+      <div class="pc-desc">Average booking value with taxes & $75 resort fee hidden until checkout. Price shock at the final step is the #1 cart abandoner in hospitality. The fix: all-in pricing from the room card.</div>
+    </div>
+  </div>
+
+  <div class="ctx-arrow">
+    <span>See the redesign</span>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"/></svg>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     REDESIGNED ROOM PAGE
+     ══════════════════════════════════════ -->
+
+<!-- Nav -->
+<nav class="nav">
+  <div class="nav-logo">The Shelborne<small>by Proper</small></div>
+  <div class="nav-right">
+    <div class="nav-dates">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      <strong>Mar 28</strong> — <strong>Apr 2</strong> · 5 nights
+    </div>
+    <div class="nav-guests">2 Adults</div>
+    <a class="nav-reserve" href="#">Reserve</a>
+  </div>
+</nav>
+
+<!-- Trust banner -->
+<div class="trust-banner">
+  <div class="trust-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><strong>All-In Pricing</strong> — taxes & resort fee included</div>
+  <div class="trust-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="20 6 9 17 4 12"/></svg><strong>No Hidden Fees</strong> — the price you see is the price you pay</div>
+  <div class="trust-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><strong>Free Cancellation</strong> — up to 72 hours before check-in</div>
+</div>
+
+<!-- Page header -->
+<div class="page-header rv">
+  <div class="ph-eyebrow">Select Your Room</div>
+  <div class="ph-title">Choose Your Shelborne Experience</div>
+  <div class="ph-sub">We've highlighted our three most-loved rooms to make your decision easier. Every price shown includes taxes, resort fees, and all charges — no surprises at checkout.</div>
+  <div class="ph-promise"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="20 6 9 17 4 12"/></svg>Price Transparency Promise — what you see is what you pay</div>
+</div>
+
+<!-- Featured label -->
+<div class="featured-label">
+  <div class="fl-left">
+    <span class="fl-text">Recommended for You</span>
+    <span class="fl-badge">Top 3</span>
+  </div>
+  <div class="fl-right">Showing 3 of 12 rooms · <span id="viewAllText" style="color:var(--gold);cursor:pointer;font-weight:400" onclick="toggleViewAll()">View all rooms ↓</span></div>
+</div>
+
+<!-- ═══ FEATURED 3 ROOM CARDS ═══ -->
+<div class="rooms-grid rv">
+
+  <!-- ROOM 1: CITY VIEW KING — Best Value -->
+  <div class="room-card">
+    <div class="room-img-wrap">
+      <img class="room-img" src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80" alt="City View King" loading="lazy">
+      <div class="room-urgency"><span class="pulse"></span>4 rooms left</div>
+      <div class="room-img-count"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>12 photos</div>
+      <div class="room-viewing"><svg class="eye" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span id="viewers1">8</span> people viewing now</div>
+    </div>
+    <div class="room-body">
+      <div class="room-type">Best Value</div>
+      <div class="room-name">City View King</div>
+      <div class="room-desc">Airy, light-filled retreat featuring Miami skyline views, a king bed with imported linens, and Aesop amenities.</div>
+      <div class="room-features">
+        <span class="room-feat"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/></svg>King Bed</span>
+        <span class="room-feat"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Sleeps 2</span>
+        <span class="room-feat"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>280 sq ft</span>
+        <span class="room-feat"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>City View</span>
+      </div>
+      <div class="room-amenities">
+        <div class="amenity"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8z"/></svg><span>Nespresso</span></div>
+        <div class="amenity"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg><span>Aesop Bath</span></div>
+        <div class="amenity"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M17 2l-5 5-5-5"/></svg><span>55" TV</span></div>
+        <div class="amenity"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg><span>Fast WiFi</span></div>
+      </div>
+    </div>
+    <div class="room-pricing">
+      <div class="price-top">
+        <div class="price-main"><span class="price-amount">$1,112</span><span class="price-unit">/ night</span></div>
+        <div class="price-total-badge">All-In Price</div>
+      </div>
+      <div class="price-breakdown-label" onclick="toggleBreakdown(this)">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        See full price breakdown — no hidden fees
+      </div>
+      <div class="price-breakdown">
+        <div class="pb-row"><span class="label">Room rate</span><span class="val">$962.33 × 5 nights</span></div>
+        <div class="pb-row included"><span class="label">Resort fee</span><span class="val">Included</span></div>
+        <div class="pb-row included"><span class="label">Taxes (13.5%)</span><span class="val">Included</span></div>
+        <div class="pb-row included"><span class="label">WiFi & beach access</span><span class="val">Included</span></div>
+        <div class="pb-divider"></div>
+        <div class="pb-row total"><span class="label">Total for 5 nights</span><span class="val">$5,560</span></div>
+        <div class="pb-guarantee"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>This is the final price. Nothing will be added at checkout.</div>
+      </div>
+      <button class="room-cta secondary">Select This Room</button>
+    </div>
+  </div>
+
+  <!-- ROOM 2: OCEAN VIEW KING — Most Popular -->
+  <div class="room-card" style="border-color:var(--gold);box-shadow:0 0 0 1px var(--gold),0 8px 32px rgba(196,162,101,0.12)">
+    <div class="room-img-wrap">
+      <img class="room-img" src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&q=80" alt="Ocean View King" loading="lazy">
+      <div class="room-popular"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Most Popular</div>
+      <div class="room-urgency"><span class="pulse"></span>2 rooms left</div>
+      <div class="room-img-count"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>18 photos</div>
+      <div class="room-viewing"><svg class="eye" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span id="viewers2">14</span> people viewing now</div>
+    </div>
+    <div class="room-body">
+      <div class="room-type" style="color:var(--gold)">Most Popular · 73% of guests choose this</div>
+      <div class="room-name">Ocean View King</div>
+      <div class="room-desc">Wake up to Atlantic sunrise views through floor-to-ceiling windows. King bed, Aesop amenities, seating area, and balcony access.</div>
+      <div class="room-features">
+        <span class="room-feat"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/></svg>King Bed</span>
+        <span class="room-feat"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Sleeps 2</span>
+        <span class="room-feat"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>320 sq ft</span>
+        <span class="room-feat"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>Ocean View</span>
+      </div>
+      <div class="room-amenities">
+        <div class="amenity"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8z"/></svg><span>Nespresso</span></div>
+        <div class="amenity"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg><span>Aesop Bath</span></div>
+        <div class="amenity"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M17 2l-5 5-5-5"/></svg><span>55" TV</span></div>
+        <div class="amenity"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg><span>Balcony</span></div>
+      </div>
+    </div>
+    <div class="room-pricing">
+      <div class="price-top">
+        <div class="price-main"><span class="price-amount">$1,332</span><span class="price-unit">/ night</span></div>
+        <div class="price-total-badge">All-In Price</div>
+      </div>
+      <div class="price-breakdown-label" onclick="toggleBreakdown(this)">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        See full price breakdown — no hidden fees
+      </div>
+      <div class="price-breakdown">
+        <div class="pb-row"><span class="label">Room rate</span><span class="val">$1,099.33 × 5 nights</span></div>
+        <div class="pb-row included"><span class="label">Resort fee ($75/night)</span><span class="val">Included</span></div>
+        <div class="pb-row included"><span class="label">Taxes (13.5%)</span><span class="val">Included</span></div>
+        <div class="pb-row included"><span class="label">WiFi, beach & pool access</span><span class="val">Included</span></div>
+        <div class="pb-divider"></div>
+        <div class="pb-row total"><span class="label">Total for 5 nights</span><span class="val">$6,660</span></div>
+        <div class="pb-guarantee"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>This is the final price. Nothing will be added at checkout.</div>
+      </div>
+      <button class="room-cta primary">Select This Room — Most Popular</button>
+    </div>
+  </div>
+
+  <!-- ROOM 3: OCEANFRONT SUITE — Premium -->
+  <div class="room-card">
+    <div class="room-img-wrap">
+      <img class="room-img" src="https://images.unsplash.com/photo-1590490360182-c33d57733427?w=600&q=80" alt="Oceanfront Suite" loading="lazy">
+      <div class="room-urgency"><span class="pulse"></span>1 suite left</div>
+      <div class="room-img-count"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>24 photos</div>
+      <div class="room-viewing"><svg class="eye" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span id="viewers3">6</span> people viewing now</div>
+    </div>
+    <div class="room-body">
+      <div class="room-type">Premium Experience</div>
+      <div class="room-name">Oceanfront Suite</div>
+      <div class="room-desc">Our most coveted accommodation — a full suite with separate living area, panoramic ocean views, soaking tub, and private furnished balcony.</div>
+      <div class="room-features">
+        <span class="room-feat"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/></svg>King Bed</span>
+        <span class="room-feat"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Sleeps 3</span>
+        <span class="room-feat"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>520 sq ft</span>
+        <span class="room-feat"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/></svg>Oceanfront</span>
+      </div>
+      <div class="room-amenities">
+        <div class="amenity"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8z"/></svg><span>Nespresso</span></div>
+        <div class="amenity"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 2v6m0 0a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/></svg><span>Soaking Tub</span></div>
+        <div class="amenity"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="2" y="7" width="20" height="14" rx="2"/></svg><span>Living Area</span></div>
+        <div class="amenity"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/></svg><span>Balcony</span></div>
+      </div>
+    </div>
+    <div class="room-pricing">
+      <div class="price-top">
+        <div class="price-main"><span class="price-amount">$1,889</span><span class="price-unit">/ night</span></div>
+        <div class="price-total-badge">All-In Price</div>
+      </div>
+      <div class="price-breakdown-label" onclick="toggleBreakdown(this)">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        See full price breakdown — no hidden fees
+      </div>
+      <div class="price-breakdown">
+        <div class="pb-row"><span class="label">Room rate</span><span class="val">$1,588.33 × 5 nights</span></div>
+        <div class="pb-row included"><span class="label">Resort fee ($75/night)</span><span class="val">Included</span></div>
+        <div class="pb-row included"><span class="label">Taxes (13.5%)</span><span class="val">Included</span></div>
+        <div class="pb-row included"><span class="label">WiFi, beach, pool & cabana</span><span class="val">Included</span></div>
+        <div class="pb-divider"></div>
+        <div class="pb-row total"><span class="label">Total for 5 nights</span><span class="val">$9,445</span></div>
+        <div class="pb-guarantee"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>This is the final price. Nothing will be added at checkout.</div>
+      </div>
+      <button class="room-cta secondary">Select This Room</button>
+    </div>
+  </div>
+</div>
+
+<!-- View All Toggle -->
+<div class="view-all-section">
+  <button class="view-all-btn" onclick="toggleViewAll()">
+    View All 12 Room Types
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+</div>
+
+<!-- Hidden additional rooms (simplified for demo — shows 3 more) -->
+<div class="more-rooms" id="moreRooms">
+  <div class="room-card">
+    <div class="room-img-wrap" style="height:200px">
+      <img class="room-img" src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=500&q=80" alt="City View Two Queens" loading="lazy">
+    </div>
+    <div class="room-body">
+      <div class="room-type">Family Friendly</div>
+      <div class="room-name">City View Two Queens</div>
+      <div class="room-desc">Two queen beds, seating area, and Miami views. Ideal for families or friends travelling together.</div>
+      <div class="room-features">
+        <span class="room-feat">2 Queen Beds</span><span class="room-feat">Sleeps 4</span><span class="room-feat">340 sq ft</span>
+      </div>
+    </div>
+    <div class="room-pricing">
+      <div class="price-top"><div class="price-main"><span class="price-amount">$1,156</span><span class="price-unit">/ night</span></div><div class="price-total-badge">All-In</div></div>
+      <button class="room-cta secondary" style="margin-top:12px">Select</button>
+    </div>
+  </div>
+  <div class="room-card">
+    <div class="room-img-wrap" style="height:200px">
+      <img class="room-img" src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=500&q=80" alt="Ocean View Two Queens" loading="lazy">
+    </div>
+    <div class="room-body">
+      <div class="room-type">Family + Ocean</div>
+      <div class="room-name">Ocean View Two Queens</div>
+      <div class="room-desc">Two queen beds with panoramic ocean views. The best of both worlds for families.</div>
+      <div class="room-features">
+        <span class="room-feat">2 Queen Beds</span><span class="room-feat">Sleeps 4</span><span class="room-feat">360 sq ft</span>
+      </div>
+    </div>
+    <div class="room-pricing">
+      <div class="price-top"><div class="price-main"><span class="price-amount">$1,378</span><span class="price-unit">/ night</span></div><div class="price-total-badge">All-In</div></div>
+      <button class="room-cta secondary" style="margin-top:12px">Select</button>
+    </div>
+  </div>
+  <div class="room-card">
+    <div class="room-img-wrap" style="height:200px">
+      <img class="room-img" src="https://images.unsplash.com/photo-1591088398332-8a7791972843?w=500&q=80" alt="Pool Villa Suite" loading="lazy">
+    </div>
+    <div class="room-body">
+      <div class="room-type">Ultra Premium</div>
+      <div class="room-name">Two Bedroom Pool Villa</div>
+      <div class="room-desc">Private pool, two bedrooms, full kitchen, and direct beach access. The ultimate Shelborne experience.</div>
+      <div class="room-features">
+        <span class="room-feat">2 Bedrooms</span><span class="room-feat">Sleeps 6</span><span class="room-feat">1,200 sq ft</span>
+      </div>
+    </div>
+    <div class="room-pricing">
+      <div class="price-top"><div class="price-main"><span class="price-amount">$3,445</span><span class="price-unit">/ night</span></div><div class="price-total-badge">All-In</div></div>
+      <button class="room-cta secondary" style="margin-top:12px">Select</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     BEFORE / AFTER COMPARISON
+     ══════════════════════════════════════ -->
+<section class="comparison">
+  <div class="comp-header">
+    <div class="comp-eyebrow">Before & After</div>
+    <div class="comp-title">What Changed and Why</div>
+    <div class="comp-sub">Every change targets a specific psychological friction point that causes the 87.1% drop-off.</div>
+  </div>
+
+  <div class="comp-grid">
+    <div class="comp-card before">
+      <div class="comp-card-header">
+        <div class="comp-card-tag">Current</div>
+        <div class="comp-card-title">The Problem</div>
+      </div>
+      <div class="comp-body">
+        <div class="comp-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>15+ rooms shown equally — no guidance on which to pick</div>
+        <div class="comp-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>No pricing visible on room cards — must click to booking engine</div>
+        <div class="comp-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>"Total price after all taxs" hidden as small red link</div>
+        <div class="comp-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>$75 resort fee only appears at checkout stage</div>
+        <div class="comp-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>No social proof, urgency, or booking confidence signals</div>
+        <div class="comp-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>No "Most Popular" — every room feels equally uncertain</div>
+      </div>
+    </div>
+
+    <div class="comp-vs"><div class="comp-vs-circle">vs</div></div>
+
+    <div class="comp-card after">
+      <div class="comp-card-header">
+        <div class="comp-card-tag">Redesign</div>
+        <div class="comp-card-title">The Fix</div>
+      </div>
+      <div class="comp-body">
+        <div class="comp-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>3 curated defaults (Best Value, Most Popular, Premium) + "View All"</div>
+        <div class="comp-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>All-in pricing on every card — taxes and resort fee included</div>
+        <div class="comp-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Expandable price breakdown with "nothing added at checkout" guarantee</div>
+        <div class="comp-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Trust banner: "The price you see is the price you pay"</div>
+        <div class="comp-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Real-time urgency: rooms remaining + "people viewing now"</div>
+        <div class="comp-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>"Most Popular — 73% of guests choose this" with gold highlight</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Projected Impact -->
+  <div class="impact">
+    <div class="impact-card">
+      <div class="impact-value">-40%</div>
+      <div class="impact-label">Projected Drop-Off Reduction</div>
+    </div>
+    <div class="impact-card">
+      <div class="impact-value">+25%</div>
+      <div class="impact-label">Checkout Completion Rate</div>
+    </div>
+    <div class="impact-card">
+      <div class="impact-value">$0</div>
+      <div class="impact-label">Hidden Fees at Checkout</div>
+    </div>
+  </div>
+</section>
+
+<script>
+// Price breakdown toggle
+function toggleBreakdown(el){
+  el.classList.toggle('open');
+  el.nextElementSibling.classList.toggle('open');
+}
+
+// View all rooms toggle
+function toggleViewAll(){
+  const mr=document.getElementById('moreRooms');
+  const btns=document.querySelectorAll('.view-all-btn');
+  mr.classList.toggle('open');
+  btns.forEach(b=>b.classList.toggle('open'));
+  const t=document.getElementById('viewAllText');
+  if(mr.classList.contains('open')){
+    t.textContent='Show fewer rooms ↑';
+    btns.forEach(b=>b.innerHTML='Show Fewer Rooms <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>');
+  }else{
+    t.textContent='View all rooms ↓';
+    btns.forEach(b=>b.innerHTML='View All 12 Room Types <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>');
+  }
+}
+
+// Simulated "people viewing" counter
+setInterval(()=>{
+  ['viewers1','viewers2','viewers3'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el){
+      let v=parseInt(el.textContent);
+      v+=Math.random()>0.5?1:-1;
+      v=Math.max(3,Math.min(18,v));
+      el.textContent=v;
+    }
+  });
+},4000);
+
+// Scroll reveal
+const rvs=document.querySelectorAll('.rv');
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target)}})},{threshold:0.1});
+rvs.forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

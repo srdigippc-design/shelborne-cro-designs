@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dining at The Shelborne — Restaurant Cross-Sell Redesign</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --parchment:#F6F1E9;--parchment-dark:#EBE4D8;--cream:#FAF7F2;--warm-white:#FDFBF8;
+  --ink:#1A1610;--ink-mid:#2E2820;--ink-light:#4A4238;
+  --umber:#8C7A5E;--umber-light:#B8A88C;--umber-pale:#E8DFD0;
+  --copper:#B87333;--copper-light:#D4956E;--copper-glow:rgba(184,115,51,0.1);
+  --wine:#6B2D3E;--wine-light:#8E4A5E;--wine-pale:#F5E8EC;
+  --olive:#4A5E3A;--olive-light:#7A8E6A;--olive-pale:#E8EDDF;
+  --ocean:#3A5E6B;--ocean-light:#6A9AAA;
+  --text:#2C2418;--text-mid:#6B6154;--text-light:#9A9083;--text-faint:#B8AFA4;
+  --white:#FFFFFF;--border:#DDD6CA;--border-light:#EDE8DF;
+  --gold:#C4A265;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);overflow-x:hidden}
+
+/* ══════════════════════════════════
+   CONTEXT INTRO
+   ══════════════════════════════════ */
+.context{background:var(--ink);padding:80px 24px;text-align:center;position:relative;overflow:hidden}
+.context::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(184,115,51,0.05),transparent 60%)}
+.ctx-eyebrow{font-size:10px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:var(--umber-light);margin-bottom:14px;animation:fadeUp .7s ease both}
+.ctx-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4.5vw,46px);font-weight:300;color:var(--white);line-height:1.2;max-width:650px;margin:0 auto 12px;animation:fadeUp .7s ease .1s both}
+.ctx-sub{font-size:14px;font-weight:300;color:rgba(255,255,255,0.35);max-width:500px;margin:0 auto 36px;line-height:1.7;animation:fadeUp .7s ease .2s both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+.ctx-stats{display:flex;justify-content:center;gap:48px;animation:fadeUp .7s ease .3s both}
+.ctx-stat{text-align:center}
+.ctx-stat-val{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:600;color:var(--copper)}
+.ctx-stat-label{font-size:10px;font-weight:400;letter-spacing:2px;text-transform:uppercase;color:var(--umber-light);margin-top:4px}
+.ctx-stat-div{width:1px;height:50px;background:linear-gradient(180deg,transparent,var(--umber-light),transparent);opacity:0.3;align-self:center}
+
+/* ══════════════════════════════════
+   DINING HUB — ALL 5 RESTAURANTS
+   ══════════════════════════════════ */
+.hub{padding:80px 24px;background:var(--cream)}
+.hub-header{text-align:center;margin-bottom:56px}
+.eyebrow{font-size:9px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:var(--text-light);margin-bottom:12px}
+.title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,3.5vw,40px);font-weight:300;color:var(--ink);line-height:1.2;margin-bottom:8px}
+.subtitle{font-size:13px;font-weight:300;color:var(--text-mid);line-height:1.7;max-width:480px;margin:0 auto}
+.gold-line{width:36px;height:1px;background:var(--copper);margin:16px auto 0}
+
+/* Restaurant cards */
+.hub-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.hub-card{position:relative;border-radius:6px;overflow:hidden;cursor:pointer;height:440px}
+.hub-card-img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.25,.46,.45,.94)}
+.hub-card:hover .hub-card-img{transform:scale(1.08)}
+.hub-card-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(26,22,16,0.1) 0%,rgba(26,22,16,0.75) 70%,rgba(26,22,16,0.92) 100%);transition:background .4s}
+.hub-card:hover .hub-card-overlay{background:linear-gradient(180deg,rgba(26,22,16,0.05) 0%,rgba(26,22,16,0.65) 60%,rgba(26,22,16,0.88) 100%)}
+.hub-card-content{position:absolute;bottom:0;left:0;right:0;padding:24px;transition:transform .4s}
+.hub-card:hover .hub-card-content{transform:translateY(-4px)}
+.hub-card-type{font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--copper-light);margin-bottom:6px}
+.hub-card-name{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;color:var(--white);margin-bottom:4px}
+.hub-card-desc{font-size:11px;color:rgba(255,255,255,0.45);font-weight:300;line-height:1.5;margin-bottom:14px}
+.hub-card-hours{font-size:10px;color:rgba(255,255,255,0.3);font-weight:300;margin-bottom:14px}
+
+/* Cross-sell CTA on hub card — this is the first integration point */
+.hub-card-stay{display:flex;align-items:center;gap:6px;font-size:10px;color:var(--copper-light);font-weight:400;opacity:0;transform:translateY(8px);transition:all .4s ease .1s;text-decoration:none}
+.hub-card:hover .hub-card-stay{opacity:1;transform:translateY(0)}
+.hub-card-stay svg{flex-shrink:0}
+
+/* Active card highlight */
+.hub-card.active{outline:2px solid var(--copper);outline-offset:-2px}
+
+/* ══════════════════════════════════
+   EXAMPLE: PAULINE RESTAURANT PAGE
+   ══════════════════════════════════ */
+.page-label{text-align:center;padding:48px 24px 0;background:var(--parchment)}
+.page-label-badge{display:inline-flex;align-items:center;gap:8px;font-size:10px;font-weight:400;letter-spacing:3px;text-transform:uppercase;color:var(--text-light);background:var(--warm-white);border:1px solid var(--border-light);border-radius:24px;padding:10px 24px}
+.page-label-badge svg{color:var(--copper)}
+
+/* Restaurant Hero */
+.resto-hero{height:75vh;min-height:550px;position:relative;overflow:hidden;background:var(--ink)}
+.resto-hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;transform:scale(1.05);animation:slowZoom 25s ease infinite alternate}
+@keyframes slowZoom{from{transform:scale(1.05)}to{transform:scale(1.12)}}
+.resto-hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(26,22,16,0.25) 0%,rgba(26,22,16,0.5) 60%,rgba(26,22,16,0.85) 100%)}
+.resto-hero-content{position:absolute;bottom:80px;left:0;right:0;text-align:center;z-index:2;padding:0 24px}
+.resto-hero-type{font-size:10px;font-weight:400;letter-spacing:4px;text-transform:uppercase;color:var(--copper-light);margin-bottom:14px}
+.resto-hero-name{font-family:'Cormorant Garamond',serif;font-size:clamp(42px,7vw,72px);font-weight:300;color:var(--white);line-height:1.1;margin-bottom:10px}
+.resto-hero-tagline{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;font-style:italic;color:rgba(255,255,255,0.5);margin-bottom:32px}
+.resto-hero-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;padding:16px 36px;border-radius:3px;cursor:pointer;transition:all .35s;text-decoration:none;display:inline-block;border:none}
+.btn-light{background:var(--white);color:var(--ink)}
+.btn-light:hover{background:var(--parchment);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.btn-ghost{background:transparent;border:1px solid rgba(255,255,255,.4);color:var(--white)}
+.btn-ghost:hover{background:rgba(255,255,255,.08);border-color:var(--white)}
+/* CROSS-SELL: Room booking CTA right in the hero */
+.btn-stay{background:transparent;border:1px solid var(--copper);color:var(--copper-light)}
+.btn-stay:hover{background:var(--copper);color:var(--white)}
+
+/* Nav bar */
+.resto-nav{position:sticky;top:0;z-index:100;background:var(--parchment);border-bottom:1px solid var(--border-light);display:flex;align-items:center;justify-content:space-between;padding:14px 48px}
+.resto-nav-logo{font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:var(--ink)}
+.resto-nav-logo span{font-size:10px;color:var(--text-light);letter-spacing:2px}
+.resto-nav-links{display:flex;gap:24px;align-items:center}
+.resto-nav-links a{font-size:10px;font-weight:400;letter-spacing:2px;text-transform:uppercase;color:var(--text-mid);text-decoration:none;transition:color .3s}
+.resto-nav-links a:hover{color:var(--ink)}
+.resto-nav-links a.stay-link{color:var(--copper);font-weight:500;display:flex;align-items:center;gap:5px}
+.resto-nav-links a.stay-link:hover{color:var(--copper-light)}
+
+/* Section */
+.section{padding:80px 48px}
+
+/* About + Menu preview */
+.about{background:var(--parchment)}
+.about-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.about-text .subtitle{max-width:none;margin-bottom:24px}
+.hours-row{display:flex;gap:32px;margin-bottom:24px}
+.hours-item{font-size:12px;color:var(--text-mid);font-weight:300}
+.hours-item strong{display:block;font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--text-light);margin-bottom:4px}
+.menu-preview{display:flex;flex-direction:column;gap:12px;margin-top:24px;padding-top:20px;border-top:1px solid var(--border-light)}
+.menu-item{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;border-bottom:1px dotted var(--border)}
+.menu-item-name{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:500;color:var(--ink)}
+.menu-item-price{font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--copper)}
+.menu-item-desc{font-size:11px;color:var(--text-light);font-weight:300;margin-top:2px}
+.about-img{border-radius:6px;overflow:hidden;box-shadow:0 20px 60px rgba(26,22,16,0.1)}
+.about-img img{width:100%;height:auto;display:block}
+
+/* ═══════════════════════════════════════
+   CROSS-SELL INTEGRATION #1
+   Contextual "Dine & Stay" inline block
+   ═══════════════════════════════════════ */
+.dine-stay{background:var(--ink);position:relative;overflow:hidden}
+.dine-stay::before{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=1400&q=60') center/cover;opacity:.1}
+.dine-stay::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(26,22,16,.92),rgba(26,22,16,.85))}
+.ds-inner{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;position:relative;z-index:1}
+.ds-content .eyebrow{color:var(--copper-light)}
+.ds-content .title{color:var(--white);margin-bottom:12px}
+.ds-text{font-size:13px;font-weight:300;color:rgba(255,255,255,.5);line-height:1.8;margin-bottom:28px}
+
+.ds-package{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:28px;margin-bottom:28px}
+.ds-pkg-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:var(--white);margin-bottom:6px}
+.ds-pkg-price{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:600;color:var(--copper);margin-bottom:4px}
+.ds-pkg-price span{font-size:13px;font-weight:300;color:rgba(255,255,255,.35);font-family:'DM Sans',sans-serif}
+.ds-pkg-rack{font-size:11px;color:rgba(255,255,255,.25);text-decoration:line-through;margin-bottom:16px}
+.ds-pkg-includes{display:flex;flex-direction:column;gap:8px}
+.ds-pkg-inc{display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,.55);font-weight:300}
+.ds-pkg-inc svg{color:var(--olive-light);flex-shrink:0}
+
+.ds-cta{display:inline-block;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:var(--ink);background:var(--copper);padding:16px 40px;border-radius:3px;text-decoration:none;cursor:pointer;transition:all .35s;border:none}
+.ds-cta:hover{background:var(--copper-light);transform:translateY(-2px);box-shadow:0 8px 24px rgba(184,115,51,.3)}
+
+.ds-visual{position:relative}
+.ds-room-img{width:100%;border-radius:6px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.3)}
+.ds-room-img img{width:100%;height:360px;object-fit:cover;display:block}
+.ds-room-tag{position:absolute;bottom:-12px;left:24px;background:var(--copper);color:var(--white);font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:8px 18px;border-radius:3px;box-shadow:0 4px 16px rgba(184,115,51,.3)}
+
+/* ═══════════════════════════════════════
+   CROSS-SELL INTEGRATION #2
+   Social proof band with stay nudge
+   ═══════════════════════════════════════ */
+.social-band{background:var(--parchment);border-top:1px solid var(--border-light);border-bottom:1px solid var(--border-light)}
+.social-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 1fr;gap:0}
+.social-item{padding:40px 32px;text-align:center;position:relative}
+.social-item:not(:last-child)::after{content:'';position:absolute;right:0;top:20%;height:60%;width:1px;background:var(--border)}
+.social-stars{color:var(--copper);font-size:14px;letter-spacing:2px;margin-bottom:10px}
+.social-quote{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:400;font-style:italic;color:var(--ink);line-height:1.55;margin-bottom:10px}
+.social-author{font-size:11px;color:var(--text-faint);font-weight:400}
+/* Cross-sell nudge in the third testimonial slot */
+.social-item.stay-nudge{background:var(--copper-glow)}
+.stay-nudge-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;color:var(--ink);margin-bottom:6px}
+.stay-nudge-text{font-size:12px;color:var(--text-mid);font-weight:300;line-height:1.6;margin-bottom:16px}
+.stay-nudge-cta{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--copper);text-decoration:none;border:1px solid var(--copper);padding:10px 22px;border-radius:3px;transition:all .3s;cursor:pointer;background:transparent}
+.stay-nudge-cta:hover{background:var(--copper);color:var(--white)}
+
+/* ═══════════════════════════════════════
+   CROSS-SELL INTEGRATION #3
+   Gallery with contextual room prompt
+   ═══════════════════════════════════════ */
+.gallery{background:var(--cream)}
+.gallery-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:260px 260px;gap:12px}
+.gallery-item{border-radius:4px;overflow:hidden;position:relative;cursor:pointer}
+.gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .7s ease}
+.gallery-item:hover img{transform:scale(1.05)}
+.gallery-item:first-child{grid-row:span 2}
+/* The room cross-sell card sits in the gallery grid */
+.gallery-stay-card{background:var(--ink);border-radius:4px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px;text-align:center;cursor:pointer;transition:all .4s}
+.gallery-stay-card:hover{background:var(--ink-mid)}
+.gsc-icon{width:56px;height:56px;border-radius:50%;background:rgba(184,115,51,0.1);border:1px solid rgba(184,115,51,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:16px;color:var(--copper)}
+.gsc-title{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:500;color:var(--white);margin-bottom:4px}
+.gsc-text{font-size:11px;color:rgba(255,255,255,.4);font-weight:300;line-height:1.5;margin-bottom:16px}
+.gsc-price{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:var(--copper);margin-bottom:12px}
+.gsc-price span{font-size:11px;color:rgba(255,255,255,.3);font-family:'DM Sans',sans-serif;font-weight:300}
+.gsc-btn{font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--copper);border:1px solid rgba(184,115,51,.4);padding:8px 20px;border-radius:2px;background:transparent;cursor:pointer;transition:all .3s}
+.gsc-btn:hover{background:var(--copper);color:var(--white);border-color:var(--copper)}
+
+/* ═══════════════════════════════════════
+   CROSS-SELL INTEGRATION #4
+   Post-reservation interstitial modal
+   ═══════════════════════════════════════ */
+.modal-overlay{position:fixed;inset:0;background:rgba(26,22,16,0.6);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;visibility:hidden;transition:all .4s}
+.modal-overlay.active{opacity:1;visibility:visible}
+.modal{background:var(--warm-white);border-radius:8px;max-width:520px;width:100%;overflow:hidden;transform:translateY(24px) scale(.97);transition:transform .5s cubic-bezier(.16,1,.3,1);box-shadow:0 40px 100px rgba(0,0,0,.3)}
+.modal-overlay.active .modal{transform:translateY(0) scale(1)}
+.modal-header{position:relative;height:200px;overflow:hidden}
+.modal-header img{width:100%;height:100%;object-fit:cover}
+.modal-header-overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(26,22,16,0.7) 100%);display:flex;align-items:flex-end;padding:20px 24px}
+.modal-header-text{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;color:var(--white)}
+.modal-close{position:absolute;top:14px;right:14px;width:32px;height:32px;border-radius:50%;background:rgba(26,22,16,0.5);backdrop-filter:blur(8px);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--white);transition:background .3s}
+.modal-close:hover{background:rgba(26,22,16,0.8)}
+.modal-body{padding:28px 28px 24px}
+.modal-tag{font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--copper);margin-bottom:10px}
+.modal-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:400;color:var(--ink);margin-bottom:8px}
+.modal-text{font-size:13px;font-weight:300;color:var(--text-mid);line-height:1.7;margin-bottom:20px}
+.modal-offer{background:var(--parchment);border:1px solid var(--border-light);border-radius:6px;padding:20px;display:flex;align-items:center;gap:16px;margin-bottom:20px}
+.modal-offer-price{text-align:center;flex-shrink:0}
+.modal-offer-price .from{font-size:9px;color:var(--text-faint);font-weight:400;letter-spacing:1px;text-transform:uppercase}
+.modal-offer-price .amount{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;color:var(--copper)}
+.modal-offer-price .per{font-size:10px;color:var(--text-light);font-weight:300}
+.modal-offer-details{flex-grow:1}
+.modal-offer-details div{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-mid);font-weight:300;margin-bottom:4px}
+.modal-offer-details svg{color:var(--olive-light);flex-shrink:0}
+.modal-actions{display:flex;gap:10px}
+.modal-btn{flex:1;text-align:center;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;padding:14px;border-radius:3px;cursor:pointer;transition:all .3s;text-decoration:none;border:none}
+.modal-btn.primary{background:var(--copper);color:var(--white)}
+.modal-btn.primary:hover{background:var(--copper-light)}
+.modal-btn.skip{background:transparent;color:var(--text-light);border:1px solid var(--border)}
+.modal-btn.skip:hover{border-color:var(--text-mid);color:var(--text)}
+
+/* ═══════════════════════════════════════
+   CROSS-SELL INTEGRATION #5
+   Sticky bottom bar (appears on scroll)
+   ═══════════════════════════════════════ */
+.sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:500;background:var(--ink);border-top:1px solid rgba(184,115,51,0.2);padding:12px 48px;display:flex;align-items:center;justify-content:space-between;transform:translateY(100%);transition:transform .5s cubic-bezier(.25,.46,.45,.94);box-shadow:0 -8px 32px rgba(0,0,0,.15)}
+.sticky-bar.visible{transform:translateY(0)}
+.sticky-left{display:flex;align-items:center;gap:14px}
+.sticky-img{width:48px;height:48px;border-radius:4px;object-fit:cover}
+.sticky-text{font-size:12px;color:rgba(255,255,255,.6);font-weight:300}
+.sticky-text strong{color:var(--white);font-weight:500;display:block;font-size:13px;margin-bottom:1px}
+.sticky-right{display:flex;align-items:center;gap:16px}
+.sticky-price{text-align:right}
+.sticky-price .from{font-size:9px;color:var(--umber-light);letter-spacing:1px;text-transform:uppercase}
+.sticky-price .amount{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;color:var(--copper)}
+.sticky-btn{font-family:'DM Sans',sans-serif;font-size:10px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:var(--white);background:var(--copper);padding:14px 32px;border-radius:3px;border:none;cursor:pointer;transition:all .3s;white-space:nowrap}
+.sticky-btn:hover{background:var(--copper-light);transform:translateY(-1px)}
+.sticky-dismiss{background:transparent;border:none;color:rgba(255,255,255,.25);cursor:pointer;padding:8px;transition:color .3s}
+.sticky-dismiss:hover{color:rgba(255,255,255,.5)}
+
+/* ══════════════════════════════════
+   ALL 5 RESTAURANTS OVERVIEW
+   ══════════════════════════════════ */
+.all-restos{background:var(--parchment);border-top:1px solid var(--border-light)}
+.all-grid{max-width:1200px;margin:48px auto 0;display:grid;grid-template-columns:1fr;gap:2px}
+.all-row{display:grid;grid-template-columns:200px 1fr 200px 200px 160px;align-items:center;gap:0;background:var(--white);padding:20px 28px;transition:background .3s;cursor:pointer}
+.all-row:hover{background:var(--cream)}
+.all-row:first-child{border-radius:6px 6px 0 0}
+.all-row:last-child{border-radius:0 0 6px 6px}
+.all-row-header{display:grid;grid-template-columns:200px 1fr 200px 200px 160px;padding:10px 28px;font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--text-faint)}
+.all-name{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:500;color:var(--ink)}
+.all-desc{font-size:12px;color:var(--text-mid);font-weight:300}
+.all-hours{font-size:12px;color:var(--text-light);font-weight:300}
+.all-traffic{font-size:12px;font-weight:400;color:var(--ink)}
+.all-traffic span{font-size:10px;color:var(--text-faint);font-weight:300}
+.all-cross-sell{font-size:10px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--copper);display:flex;align-items:center;gap:5px}
+
+/* Footer */
+.footer{background:var(--ink);padding:48px;text-align:center}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:500;letter-spacing:5px;text-transform:uppercase;color:var(--parchment);margin-bottom:8px}
+.footer-text{font-size:11px;color:rgba(184,168,140,0.3);font-weight:300}
+
+/* Responsive */
+@media(max-width:1024px){
+  .hub-grid{grid-template-columns:repeat(3,1fr)}
+  .gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto}
+  .gallery-item:first-child{grid-row:span 1}
+  .ds-inner,.about-grid{grid-template-columns:1fr;gap:36px}
+  .all-row,.all-row-header{grid-template-columns:1fr 1fr;gap:8px}
+  .all-desc,.all-hours{display:none}
+}
+@media(max-width:768px){
+  .section{padding:60px 24px}
+  .hub-grid{grid-template-columns:1fr 1fr}
+  .gallery-grid{grid-template-columns:1fr}
+  .social-inner{grid-template-columns:1fr}
+  .social-item::after{display:none!important}
+  .resto-nav{padding:12px 20px}
+  .sticky-bar{padding:10px 20px}
+  .sticky-text{display:none}
+  .ctx-stats{gap:24px;flex-wrap:wrap}
+}
+
+.rv{opacity:0;transform:translateY(24px);transition:all .7s cubic-bezier(.16,1,.3,1)}
+.rv.vis{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<!-- ═══ CONTEXT INTRO ═══ -->
+<section class="context">
+  <div class="ctx-eyebrow">Restaurant Cross-Sell Strategy</div>
+  <div class="ctx-title">5,000 Diners a Month. Zero Room Bookings.</div>
+  <div class="ctx-sub">Visitors to Shelborne's 5 restaurant pages show high engagement but zero path to hotel conversion. Here's the redesign with 5 cross-sell integration points.</div>
+  <div class="ctx-stats">
+    <div class="ctx-stat"><div class="ctx-stat-val">5,012</div><div class="ctx-stat-label">Monthly Dining Visitors</div></div>
+    <div class="ctx-stat-div"></div>
+    <div class="ctx-stat"><div class="ctx-stat-val">5</div><div class="ctx-stat-label">Restaurant Pages</div></div>
+    <div class="ctx-stat-div"></div>
+    <div class="ctx-stat"><div class="ctx-stat-val">0</div><div class="ctx-stat-label">Room CTAs Currently</div></div>
+    <div class="ctx-stat-div"></div>
+    <div class="ctx-stat"><div class="ctx-stat-val">0%</div><div class="ctx-stat-label">Room Conversion</div></div>
+  </div>
+</section>
+
+<!-- ═══ DINING HUB — ALL 5 RESTAURANTS ═══ -->
+<section class="section hub">
+  <div class="hub-header rv">
+    <div class="eyebrow">On the Ocean at 18th</div>
+    <div class="title">Dining at The Shelborne</div>
+    <div class="subtitle">Five distinct culinary experiences — from sunrise café to sunset cocktails. Each one with a reason to stay the night.</div>
+    <div class="gold-line"></div>
+  </div>
+
+  <div class="hub-grid rv">
+    <div class="hub-card active">
+      <img class="hub-card-img" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=500&q=80" alt="Pauline" loading="lazy">
+      <div class="hub-card-overlay"></div>
+      <div class="hub-card-content">
+        <div class="hub-card-type">Signature Restaurant</div>
+        <div class="hub-card-name">Pauline</div>
+        <div class="hub-card-desc">Refined coastal cuisine with an oceanfront terrace.</div>
+        <div class="hub-card-hours">Dinner · 6PM – 11PM</div>
+        <a class="hub-card-stay" href="#"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Dine & Stay from $489/night →</a>
+      </div>
+    </div>
+    <div class="hub-card">
+      <img class="hub-card-img" src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=500&q=80" alt="Little Torch" loading="lazy">
+      <div class="hub-card-overlay"></div>
+      <div class="hub-card-content">
+        <div class="hub-card-type">Casual Dining</div>
+        <div class="hub-card-name">Little Torch</div>
+        <div class="hub-card-desc">Wood-fired flavours in a breezy Keys-inspired setting.</div>
+        <div class="hub-card-hours">Lunch & Dinner · 11AM – 10PM</div>
+        <a class="hub-card-stay" href="#"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Dine & Stay from $489/night →</a>
+      </div>
+    </div>
+    <div class="hub-card">
+      <img class="hub-card-img" src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=500&q=80" alt="The Bar" loading="lazy">
+      <div class="hub-card-overlay"></div>
+      <div class="hub-card-content">
+        <div class="hub-card-type">Cocktail Bar</div>
+        <div class="hub-card-name">The Bar</div>
+        <div class="hub-card-desc">Handcrafted cocktails and rare spirits in an Art Deco lounge.</div>
+        <div class="hub-card-hours">Nightly · 5PM – 1AM</div>
+        <a class="hub-card-stay" href="#"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Sip & Stay from $489/night →</a>
+      </div>
+    </div>
+    <div class="hub-card">
+      <img class="hub-card-img" src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=500&q=80" alt="Pool Deck" loading="lazy">
+      <div class="hub-card-overlay"></div>
+      <div class="hub-card-content">
+        <div class="hub-card-type">Poolside</div>
+        <div class="hub-card-name">Pool Deck</div>
+        <div class="hub-card-desc">Daytime bites and frozen cocktails by the water.</div>
+        <div class="hub-card-hours">Daily · 10AM – 6PM</div>
+        <a class="hub-card-stay" href="#"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Swim, Dine & Stay →</a>
+      </div>
+    </div>
+    <div class="hub-card">
+      <img class="hub-card-img" src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=500&q=80" alt="The Café" loading="lazy">
+      <div class="hub-card-overlay"></div>
+      <div class="hub-card-content">
+        <div class="hub-card-type">All-Day Café</div>
+        <div class="hub-card-name">The Café</div>
+        <div class="hub-card-desc">Fresh pastries, artisan coffee, and light bites from sunrise.</div>
+        <div class="hub-card-hours">Daily · 6:30AM – 4PM</div>
+        <a class="hub-card-stay" href="#"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Wake up at the Shelborne →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ DIVIDER: Example Page Below ═══ -->
+<div class="page-label">
+  <div class="page-label-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>Example: Pauline restaurant page with 5 cross-sell touchpoints</div>
+</div>
+
+<!-- ═══ PAULINE — RESTAURANT HERO ═══ -->
+<section class="resto-hero">
+  <div class="resto-hero-bg" style="background-image:url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1400&q=80')"></div>
+  <div class="resto-hero-overlay"></div>
+  <div class="resto-hero-content">
+    <div class="resto-hero-type">Signature Restaurant</div>
+    <h1 class="resto-hero-name">Pauline</h1>
+    <div class="resto-hero-tagline">Refined coastal cuisine, feet from the Atlantic</div>
+    <div class="resto-hero-actions">
+      <a class="btn btn-light" href="#">Reserve a Table</a>
+      <a class="btn btn-ghost" href="#">View Menu</a>
+      <!-- CROSS-SELL: Room CTA right in the hero -->
+      <a class="btn btn-stay" href="#">Dine & Stay Package →</a>
+    </div>
+  </div>
+</section>
+
+<!-- Sticky nav with stay link -->
+<nav class="resto-nav">
+  <div class="resto-nav-logo">Pauline <span>at The Shelborne</span></div>
+  <div class="resto-nav-links">
+    <a href="#">Menu</a>
+    <a href="#">Hours</a>
+    <a href="#">Private Events</a>
+    <a href="#">Reserve</a>
+    <!-- CROSS-SELL: Stay link in nav -->
+    <a href="#" class="stay-link"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Book a Room</a>
+  </div>
+</nav>
+
+<!-- ═══ ABOUT + MENU PREVIEW ═══ -->
+<section class="section about rv">
+  <div class="about-grid">
+    <div class="about-text">
+      <div class="eyebrow">The Experience</div>
+      <div class="title">Where the Ocean Meets the Table</div>
+      <div class="subtitle">Pauline celebrates the best of coastal Miami through seasonal, ingredient-driven cuisine. Executive Chef brings together local seafood, farm-fresh produce, and global influences into dishes that are as beautiful as the oceanfront setting.</div>
+      <div class="hours-row">
+        <div class="hours-item"><strong>Dinner</strong>Nightly 6PM – 11PM</div>
+        <div class="hours-item"><strong>Brunch</strong>Sat & Sun 10AM – 3PM</div>
+        <div class="hours-item"><strong>Bar</strong>From 5PM nightly</div>
+      </div>
+      <div class="menu-preview">
+        <div style="font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--text-light);margin-bottom:4px">Menu Highlights</div>
+        <div class="menu-item"><div><div class="menu-item-name">Yellowtail Crudo</div><div class="menu-item-desc">Citrus, chili oil, microgreens</div></div><div class="menu-item-price">$24</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Grilled Branzino</div><div class="menu-item-desc">Fennel, capers, charred lemon</div></div><div class="menu-item-price">$48</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Wagyu Ribeye</div><div class="menu-item-desc">Truffle butter, roasted bone marrow</div></div><div class="menu-item-price">$72</div></div>
+      </div>
+    </div>
+    <div class="about-img"><img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80" alt="Pauline dish" loading="lazy"></div>
+  </div>
+</section>
+
+<!-- ═══ CROSS-SELL #1: DINE & STAY PACKAGE ═══ -->
+<section class="section dine-stay rv">
+  <div class="ds-inner">
+    <div class="ds-content">
+      <div class="eyebrow" style="color:var(--copper-light)">Dine & Stay Package</div>
+      <div class="title" style="color:var(--white)">Turn Dinner Into a Getaway</div>
+      <div class="ds-text">Why end the night with a drive home when you could end it with an ocean view from your pillow? Book our Dine & Stay package and your dinner at Pauline becomes the opening act.</div>
+
+      <div class="ds-package">
+        <div class="ds-pkg-name">Pauline Dine & Stay</div>
+        <div class="ds-pkg-price">$589 <span>/ night all-in</span></div>
+        <div class="ds-pkg-rack">Booked separately: $689+</div>
+        <div class="ds-pkg-includes">
+          <div class="ds-pkg-inc"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Ocean View room (taxes & resort fee included)</div>
+          <div class="ds-pkg-inc"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>$100 dining credit at Pauline</div>
+          <div class="ds-pkg-inc"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Priority table reservation</div>
+          <div class="ds-pkg-inc"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Late checkout (2pm)</div>
+          <div class="ds-pkg-inc"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Complimentary morning coffee at The Café</div>
+        </div>
+      </div>
+      <button class="ds-cta" onclick="openModal()">Book the Dine & Stay Package</button>
+    </div>
+    <div class="ds-visual">
+      <div class="ds-room-img"><img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&q=80" alt="Ocean View Room" loading="lazy"></div>
+      <div class="ds-room-tag">Ocean View Room Included</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CROSS-SELL #2: SOCIAL PROOF + STAY NUDGE ═══ -->
+<section class="section social-band" style="padding:0">
+  <div class="social-inner rv">
+    <div class="social-item">
+      <div class="social-stars">★ ★ ★ ★ ★</div>
+      <div class="social-quote">"The branzino at Pauline was the best fish I've had in Miami. The terrace at sunset is simply unmatched."</div>
+      <div class="social-author">— Thomas R., OpenTable</div>
+    </div>
+    <div class="social-item">
+      <div class="social-stars">★ ★ ★ ★ ★</div>
+      <div class="social-quote">"We came for dinner and wished we'd booked a room. Next time we're doing the Dine & Stay — the whole vibe is too good to leave."</div>
+      <div class="social-author">— Amara K., Google</div>
+    </div>
+    <!-- Third slot: stay nudge -->
+    <div class="social-item stay-nudge">
+      <div style="font-size:28px;margin-bottom:12px">🌙</div>
+      <div class="stay-nudge-title">Don't Let the Night End</div>
+      <div class="stay-nudge-text">62% of our Dine & Stay guests say the best part was waking up to the ocean the morning after.</div>
+      <button class="stay-nudge-cta" onclick="openModal()">Book a Room Tonight →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CROSS-SELL #3: GALLERY WITH ROOM CARD ═══ -->
+<section class="section gallery rv">
+  <div class="hub-header" style="margin-bottom:36px">
+    <div class="eyebrow">The Space</div>
+    <div class="title">Inside Pauline</div>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=700&q=80" alt="Interior" loading="lazy"></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=400&q=80" alt="Bar" loading="lazy"></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=400&q=80" alt="Terrace" loading="lazy"></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?w=400&q=80" alt="Dish" loading="lazy"></div>
+    <!-- CROSS-SELL: Room card embedded in gallery -->
+    <div class="gallery-stay-card">
+      <div class="gsc-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+      <div class="gsc-title">Stay the Night</div>
+      <div class="gsc-text">Steps from your table to your ocean view room.</div>
+      <div class="gsc-price">$489 <span>/ night all-in</span></div>
+      <button class="gsc-btn" onclick="openModal()">View Rooms</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CROSS-SELL #4: POST-RESERVATION MODAL ═══ -->
+<div class="modal-overlay" id="stayModal">
+  <div class="modal">
+    <div class="modal-header">
+      <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&q=80" alt="Room">
+      <div class="modal-header-overlay">
+        <div class="modal-header-text">Your room is steps from the restaurant</div>
+      </div>
+      <button class="modal-close" onclick="closeModal()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-tag">Extend Your Evening</div>
+      <div class="modal-title">Why Not Stay the Night?</div>
+      <div class="modal-text">You're dining at one of Miami's best restaurants in one of Miami's most beautiful hotels. Skip the late-night drive and wake up to the Atlantic instead.</div>
+      <div class="modal-offer">
+        <div class="modal-offer-price">
+          <div class="from">From</div>
+          <div class="amount">$489</div>
+          <div class="per">/ night all-in</div>
+        </div>
+        <div class="modal-offer-details">
+          <div><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Ocean View room, taxes included</div>
+          <div><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Late checkout (2pm)</div>
+          <div><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Morning coffee at The Café</div>
+          <div><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Free cancellation 72hrs</div>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="modal-btn primary" onclick="closeModal()">Browse Rooms</button>
+        <button class="modal-btn skip" onclick="closeModal()">Just Dining Tonight</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CROSS-SELL #5: STICKY BOTTOM BAR ═══ -->
+<div class="sticky-bar" id="stickyBar">
+  <div class="sticky-left">
+    <img class="sticky-img" src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=100&q=80" alt="Room">
+    <div class="sticky-text"><strong>Extend your evening?</strong>Book a room and wake up at the Shelborne.</div>
+  </div>
+  <div class="sticky-right">
+    <div class="sticky-price"><div class="from">From</div><div class="amount">$489</div></div>
+    <button class="sticky-btn" onclick="openModal()">View Rooms</button>
+    <button class="sticky-dismiss" onclick="dismissSticky()" title="Dismiss"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+  </div>
+</div>
+
+<!-- ═══ ALL 5 RESTAURANTS: CROSS-SELL MATRIX ═══ -->
+<section class="section all-restos">
+  <div class="hub-header rv">
+    <div class="eyebrow">Implementation Map</div>
+    <div class="title">Cross-Sell Across All 5 Venues</div>
+    <div class="subtitle">Every restaurant page gets the same 5 integration points — contextualised to each venue's personality.</div>
+    <div class="gold-line"></div>
+  </div>
+
+  <div style="max-width:1200px;margin:0 auto" class="rv">
+    <div class="all-row-header">
+      <div>Restaurant</div><div>Cross-Sell Hook</div><div>Monthly Visitors</div><div>Package Name</div><div>Projected Bookings</div>
+    </div>
+    <div class="all-row">
+      <div class="all-name">Pauline</div>
+      <div class="all-desc">"Turn dinner into a getaway" — Dine & Stay with $100 credit</div>
+      <div class="all-traffic">1,842 <span>/ month</span></div>
+      <div class="all-cross-sell">Dine & Stay</div>
+      <div class="all-traffic" style="color:var(--olive)">12–18 <span>bookings</span></div>
+    </div>
+    <div class="all-row">
+      <div class="all-name">Little Torch</div>
+      <div class="all-desc">"From Keys lunch to ocean suite" — casual-to-stay conversion</div>
+      <div class="all-traffic">1,256 <span>/ month</span></div>
+      <div class="all-cross-sell">Lunch & Stay</div>
+      <div class="all-traffic" style="color:var(--olive)">8–12 <span>bookings</span></div>
+    </div>
+    <div class="all-row">
+      <div class="all-name">The Bar</div>
+      <div class="all-desc">"Skip the late-night drive" — cocktails → morning coffee pipeline</div>
+      <div class="all-traffic">986 <span>/ month</span></div>
+      <div class="all-cross-sell">Sip & Stay</div>
+      <div class="all-traffic" style="color:var(--olive)">6–10 <span>bookings</span></div>
+    </div>
+    <div class="all-row">
+      <div class="all-name">Pool Deck</div>
+      <div class="all-desc">"Poolside all day, oceanfront all night" — day-to-overnight</div>
+      <div class="all-traffic">624 <span>/ month</span></div>
+      <div class="all-cross-sell">Swim & Stay</div>
+      <div class="all-traffic" style="color:var(--olive)">4–7 <span>bookings</span></div>
+    </div>
+    <div class="all-row">
+      <div class="all-name">The Café</div>
+      <div class="all-desc">"Wake up here tomorrow" — morning coffee as stay teaser</div>
+      <div class="all-traffic">304 <span>/ month</span></div>
+      <div class="all-cross-sell">Morning & Stay</div>
+      <div class="all-traffic" style="color:var(--olive)">2–4 <span>bookings</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-logo">The Shelborne</div>
+  <div class="footer-text">1801 Collins Avenue, Miami Beach, FL 33139 · (305) 341-1400</div>
+</footer>
+
+<script>
+// Modal
+function openModal(){document.getElementById('stayModal').classList.add('active')}
+function closeModal(){document.getElementById('stayModal').classList.remove('active')}
+document.getElementById('stayModal').addEventListener('click',function(e){if(e.target===this)closeModal()});
+
+// Sticky bar — appears after scrolling past the Dine & Stay section
+let stickyDismissed=false;
+window.addEventListener('scroll',()=>{
+  if(stickyDismissed)return;
+  const bar=document.getElementById('stickyBar');
+  const threshold=document.querySelector('.dine-stay');
+  if(threshold){
+    const rect=threshold.getBoundingClientRect();
+    bar.classList.toggle('visible',rect.bottom<0);
+  }
+});
+function dismissSticky(){
+  stickyDismissed=true;
+  document.getElementById('stickyBar').classList.remove('visible');
+}
+
+// Scroll reveal
+const rvs=document.querySelectorAll('.rv');
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target)}})},{threshold:.1});
+rvs.forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

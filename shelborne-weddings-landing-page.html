@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weddings at Shelborne South Beach</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Jost:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ivory:#FAF8F4;--ivory-dark:#F0EDE6;--cream:#F5F0E8;
+  --champagne:#D4C5A9;--gold:#B8976A;--gold-deep:#9A7B52;
+  --sage:#8FA68E;--sage-light:#C5D4C3;--sage-pale:#EBF0EB;
+  --blush:#D4A9A0;--blush-light:#F0DDD9;
+  --navy:#1C2B3A;--navy-light:#2C3E50;--charcoal:#3A3A3A;
+  --text:#2C2C2C;--text-light:#6B6B6B;--text-faint:#9A9A9A;
+  --white:#FFFFFF;--border:#E0DCD4;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Jost',sans-serif;background:var(--ivory);color:var(--text);overflow-x:hidden}
+
+/* ── NAV ── */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:20px 48px;display:flex;align-items:center;justify-content:space-between;transition:all 0.5s ease}
+.nav.scrolled{background:rgba(250,248,244,0.95);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 1px 0 var(--border);padding:14px 48px}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;letter-spacing:5px;text-transform:uppercase;color:var(--white);transition:color 0.5s}
+.nav.scrolled .nav-logo{color:var(--navy)}
+.nav-links{display:flex;gap:32px;align-items:center}
+.nav-links a{font-size:11px;font-weight:400;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.8);text-decoration:none;transition:all 0.3s}
+.nav.scrolled .nav-links a{color:var(--text-light)}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--white);background:transparent;border:1px solid rgba(255,255,255,0.4);padding:10px 24px;cursor:pointer;transition:all 0.3s;text-decoration:none}
+.nav.scrolled .nav-cta{border-color:var(--gold);color:var(--gold)}
+.nav-cta:hover{background:var(--gold);color:var(--white);border-color:var(--gold)}
+
+/* ── HERO ── */
+.hero{height:100vh;min-height:700px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1600&q=80') center/cover;transform:scale(1.05);animation:heroZoom 20s ease infinite alternate}
+@keyframes heroZoom{from{transform:scale(1.05)}to{transform:scale(1.12)}}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(28,43,58,0.35) 0%,rgba(28,43,58,0.55) 60%,rgba(28,43,58,0.75) 100%)}
+.hero-content{position:relative;z-index:2;text-align:center;max-width:750px;padding:0 24px}
+.hero-eyebrow{font-size:11px;font-weight:400;letter-spacing:5px;text-transform:uppercase;color:var(--champagne);margin-bottom:24px;animation:fadeUp .8s ease both}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(42px,7vw,80px);font-weight:300;color:var(--white);line-height:1.1;margin-bottom:16px;animation:fadeUp .8s ease .15s both}
+.hero-title em{font-style:italic;font-weight:300}
+.hero-sub{font-size:15px;font-weight:300;color:rgba(255,255,255,0.7);line-height:1.8;max-width:500px;margin:0 auto 40px;animation:fadeUp .8s ease .3s both}
+.hero-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;animation:fadeUp .8s ease .45s both}
+.btn-primary{font-family:'Jost',sans-serif;font-size:12px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:var(--white);background:var(--gold);border:none;padding:16px 40px;cursor:pointer;transition:all 0.4s;text-decoration:none;display:inline-block}
+.btn-primary:hover{background:var(--gold-deep);transform:translateY(-2px);box-shadow:0 12px 32px rgba(184,151,106,0.3)}
+.btn-outline{font-family:'Jost',sans-serif;font-size:12px;font-weight:400;letter-spacing:2.5px;text-transform:uppercase;color:var(--white);background:transparent;border:1px solid rgba(255,255,255,0.4);padding:16px 40px;cursor:pointer;transition:all 0.4s;text-decoration:none;display:inline-block}
+.btn-outline:hover{border-color:var(--white);background:rgba(255,255,255,0.08)}
+.hero-scroll{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;animation:fadeUp .8s ease .6s both}
+.hero-scroll span{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.4)}
+.hero-scroll svg{color:var(--champagne);animation:float 2s ease infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── SECTION COMMON ── */
+.section{padding:120px 48px}
+.section-eyebrow{font-size:10px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,48px);font-weight:300;color:var(--navy);line-height:1.2;margin-bottom:12px}
+.section-sub{font-size:14px;font-weight:300;color:var(--text-light);line-height:1.8;max-width:560px}
+.section-header{text-align:center;margin-bottom:64px}
+.section-header .section-sub{margin:0 auto}
+.divider-line{width:48px;height:1px;background:var(--gold);margin:20px auto 0}
+
+/* ── INTRO STATS ── */
+.intro{background:var(--white)}
+.intro-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.intro-left .section-sub{margin-bottom:32px}
+.intro-features{display:flex;flex-direction:column;gap:20px}
+.intro-feature{display:flex;gap:16px;align-items:flex-start}
+.intro-feature-icon{width:44px;height:44px;border-radius:50%;background:var(--sage-pale);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--sage)}
+.intro-feature-text h4{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:var(--navy);margin-bottom:2px}
+.intro-feature-text p{font-size:12px;color:var(--text-light);font-weight:300;line-height:1.6}
+.intro-right{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.intro-img{border-radius:4px;overflow:hidden;position:relative}
+.intro-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.6s ease}
+.intro-img:hover img{transform:scale(1.04)}
+.intro-img.tall{grid-row:span 2}
+.intro-img.tall img{height:100%;min-height:400px}
+.intro-img:not(.tall) img{height:200px}
+
+/* ── VENUE GALLERY ── */
+.venues{background:var(--ivory)}
+.venue-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.venue-card{position:relative;border-radius:4px;overflow:hidden;cursor:pointer;group:true}
+.venue-card-img{width:100%;height:340px;object-fit:cover;display:block;transition:transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94)}
+.venue-card:hover .venue-card-img{transform:scale(1.06)}
+.venue-card-overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(28,43,58,0.85) 100%);transition:opacity 0.4s}
+.venue-card-content{position:absolute;bottom:0;left:0;right:0;padding:28px;transform:translateY(8px);transition:transform 0.4s}
+.venue-card:hover .venue-card-content{transform:translateY(0)}
+.venue-card-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:var(--white);margin-bottom:4px}
+.venue-card-cap{font-size:11px;color:rgba(255,255,255,0.6);font-weight:300;letter-spacing:1px}
+.venue-card-tag{position:absolute;top:20px;left:20px;font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--white);background:rgba(184,151,106,0.85);backdrop-filter:blur(8px);padding:6px 14px;border-radius:2px}
+
+/* ── ROOM BLOCK CALCULATOR ── */
+.calculator{background:var(--navy);color:var(--white);position:relative;overflow:hidden}
+.calculator::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(184,151,106,0.06) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(143,166,142,0.04) 0%,transparent 50%)}
+.calc-container{max-width:1100px;margin:0 auto;position:relative;z-index:1}
+.calculator .section-title{color:var(--white)}
+.calculator .section-sub{color:rgba(255,255,255,0.5)}
+.calculator .divider-line{background:var(--gold)}
+.calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-top:48px;align-items:flex-start}
+.calc-form{display:flex;flex-direction:column;gap:24px}
+.calc-group{display:flex;flex-direction:column;gap:8px}
+.calc-label{font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--champagne)}
+.calc-input{font-family:'Jost',sans-serif;font-size:15px;font-weight:300;color:var(--white);background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);padding:14px 18px;border-radius:3px;outline:none;transition:border-color 0.3s}
+.calc-input:focus{border-color:var(--gold)}
+.calc-input::placeholder{color:rgba(255,255,255,0.25)}
+select.calc-input{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23B8976A' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center}
+select.calc-input option{background:var(--navy);color:var(--white)}
+.calc-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.calc-slider-wrapper{position:relative}
+.calc-slider{width:100%;-webkit-appearance:none;appearance:none;height:4px;background:rgba(255,255,255,0.1);border-radius:2px;outline:none;margin-top:8px}
+.calc-slider::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--gold);cursor:pointer;box-shadow:0 2px 8px rgba(184,151,106,0.4)}
+.calc-slider-value{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:500;color:var(--white);text-align:center;margin-top:4px}
+.calc-btn{font-family:'Jost',sans-serif;font-size:12px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:var(--navy);background:var(--gold);border:none;padding:18px;border-radius:3px;cursor:pointer;transition:all 0.4s;margin-top:8px}
+.calc-btn:hover{background:var(--champagne);transform:translateY(-2px);box-shadow:0 8px 24px rgba(184,151,106,0.3)}
+
+/* Results */
+.calc-results{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:6px;padding:40px;position:relative}
+.calc-results-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:400;color:var(--white);margin-bottom:8px}
+.calc-results-sub{font-size:12px;color:rgba(255,255,255,0.4);font-weight:300;margin-bottom:32px}
+.result-row{display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid rgba(255,255,255,0.06)}
+.result-row:last-child{border-bottom:none}
+.result-label{font-size:13px;color:rgba(255,255,255,0.6);font-weight:300}
+.result-value{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:var(--white)}
+.result-row.total{border-top:2px solid var(--gold);margin-top:8px;padding-top:24px}
+.result-row.total .result-label{color:var(--champagne);font-weight:500;font-size:14px}
+.result-row.total .result-value{font-size:32px;color:var(--gold)}
+.result-savings{margin-top:24px;background:rgba(143,166,142,0.1);border:1px solid rgba(143,166,142,0.2);border-radius:4px;padding:16px 20px;display:flex;align-items:center;gap:12px}
+.result-savings-icon{width:36px;height:36px;border-radius:50%;background:rgba(143,166,142,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--sage)}
+.result-savings-text{font-size:13px;color:var(--sage-light);font-weight:300;line-height:1.5}
+.result-savings-text strong{color:var(--sage);font-weight:500}
+.calc-results-placeholder{text-align:center;padding:60px 20px}
+.calc-results-placeholder svg{color:rgba(255,255,255,0.1);margin-bottom:16px}
+.calc-results-placeholder p{font-size:13px;color:rgba(255,255,255,0.25);font-weight:300}
+
+/* ── TESTIMONIALS ── */
+.testimonials{background:var(--cream);overflow:hidden}
+.testimonial-track{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.testimonial-card{background:var(--white);border-radius:6px;padding:36px;border:1px solid var(--border);transition:all 0.4s;position:relative}
+.testimonial-card:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(0,0,0,0.06)}
+.testimonial-stars{color:var(--gold);font-size:14px;letter-spacing:2px;margin-bottom:16px}
+.testimonial-quote{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:400;font-style:italic;color:var(--navy);line-height:1.6;margin-bottom:24px}
+.testimonial-author{display:flex;align-items:center;gap:14px}
+.testimonial-avatar{width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid var(--champagne)}
+.testimonial-name{font-size:13px;font-weight:500;color:var(--navy)}
+.testimonial-detail{font-size:11px;color:var(--text-faint);font-weight:300;margin-top:2px}
+.testimonial-event-tag{position:absolute;top:20px;right:20px;font-size:9px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;padding:4px 12px;border-radius:2px}
+.tag-wedding{background:var(--blush-light);color:var(--blush)}
+.tag-reception{background:var(--sage-pale);color:var(--sage)}
+.tag-rehearsal{background:rgba(184,151,106,0.12);color:var(--gold)}
+
+/* ── PACKAGES ── */
+.packages{background:var(--white)}
+.package-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.package-card{border:1px solid var(--border);border-radius:6px;overflow:hidden;transition:all 0.4s;position:relative}
+.package-card:hover{transform:translateY(-6px);box-shadow:0 20px 60px rgba(0,0,0,0.08)}
+.package-card.featured{border-color:var(--gold);box-shadow:0 8px 32px rgba(184,151,106,0.15)}
+.package-featured-tag{position:absolute;top:0;left:0;right:0;background:var(--gold);text-align:center;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--white);padding:8px}
+.package-header{padding:40px 32px 24px;text-align:center}
+.package-card.featured .package-header{padding-top:56px}
+.package-name{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:500;color:var(--navy);margin-bottom:4px}
+.package-guests{font-size:12px;color:var(--text-faint);font-weight:300;margin-bottom:20px}
+.package-price{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:600;color:var(--gold)}
+.package-price span{font-size:14px;font-weight:300;color:var(--text-faint)}
+.package-divider{height:1px;background:var(--border);margin:0 32px}
+.package-features{padding:24px 32px;display:flex;flex-direction:column;gap:12px}
+.package-feature{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-light);font-weight:300}
+.package-feature svg{color:var(--sage);flex-shrink:0}
+.package-footer{padding:8px 32px 32px}
+.package-btn{width:100%;font-family:'Jost',sans-serif;font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;padding:14px;border-radius:3px;cursor:pointer;transition:all 0.3s;text-align:center;text-decoration:none;display:block}
+.package-btn.primary{background:var(--gold);color:var(--white);border:none}
+.package-btn.primary:hover{background:var(--gold-deep)}
+.package-btn.secondary{background:transparent;color:var(--gold);border:1px solid var(--gold)}
+.package-btn.secondary:hover{background:var(--gold);color:var(--white)}
+
+/* ── CTA / LEAD CAPTURE ── */
+.lead-capture{background:var(--navy);position:relative;overflow:hidden}
+.lead-capture::before{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=1400&q=60') center/cover;opacity:0.12}
+.lead-capture::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(28,43,58,0.95),rgba(28,43,58,0.85))}
+.lead-inner{max-width:800px;margin:0 auto;position:relative;z-index:1;text-align:center}
+.lead-capture .section-title{color:var(--white)}
+.lead-capture .section-sub{color:rgba(255,255,255,0.5);margin:0 auto 40px}
+.lead-form{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:600px;margin:0 auto}
+.lead-input{font-family:'Jost',sans-serif;font-size:14px;font-weight:300;color:var(--white);background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);padding:16px 20px;border-radius:3px;outline:none;transition:border-color 0.3s}
+.lead-input:focus{border-color:var(--gold)}
+.lead-input::placeholder{color:rgba(255,255,255,0.3)}
+.lead-input.full{grid-column:span 2}
+.lead-submit{grid-column:span 2;font-family:'Jost',sans-serif;font-size:12px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:var(--white);background:var(--gold);border:none;padding:18px;border-radius:3px;cursor:pointer;transition:all 0.4s;margin-top:4px}
+.lead-submit:hover{background:var(--champagne);transform:translateY(-2px);box-shadow:0 8px 24px rgba(184,151,106,0.3)}
+.lead-trust{display:flex;justify-content:center;gap:24px;margin-top:24px}
+.lead-trust-item{font-size:11px;color:rgba(255,255,255,0.35);font-weight:300;display:flex;align-items:center;gap:6px}
+.lead-trust-item svg{color:var(--gold);opacity:0.6}
+
+/* ── FOOTER ── */
+.footer{background:var(--navy);border-top:1px solid rgba(255,255,255,0.05);padding:48px;text-align:center}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;letter-spacing:6px;text-transform:uppercase;color:var(--white);margin-bottom:8px}
+.footer-address{font-size:12px;color:rgba(255,255,255,0.3);font-weight:300;line-height:1.7;margin-bottom:16px}
+.footer-links{font-size:11px;color:rgba(255,255,255,0.25)}
+.footer-links a{color:var(--gold);text-decoration:none}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .section{padding:80px 24px}
+  .nav{padding:16px 24px}
+  .intro-grid,.calc-grid{grid-template-columns:1fr;gap:40px}
+  .venue-grid,.testimonial-track,.package-grid{grid-template-columns:1fr}
+  .intro-right{grid-template-columns:1fr 1fr}
+  .lead-form{grid-template-columns:1fr}
+  .lead-input.full,.lead-submit{grid-column:span 1}
+  .stats-bar-inner{flex-direction:column;gap:24px}
+  .hero-actions{flex-direction:column;align-items:center}
+  .nav-links{display:none}
+}
+
+/* ── SMOOTH REVEAL ── */
+.reveal{opacity:0;transform:translateY(32px);transition:all 0.8s cubic-bezier(0.16,1,0.3,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* Stats bar between sections */
+.stats-bar{background:var(--gold);padding:0}
+.stats-bar-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:center;align-items:center}
+.stats-bar-item{flex:1;text-align:center;padding:32px 24px;position:relative}
+.stats-bar-item:not(:last-child)::after{content:'';position:absolute;right:0;top:20%;height:60%;width:1px;background:rgba(255,255,255,0.2)}
+.stats-bar-value{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:600;color:var(--white)}
+.stats-bar-label{font-size:10px;font-weight:400;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.7);margin-top:4px}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav class="nav" id="nav">
+  <div class="nav-logo">Shelborne</div>
+  <div class="nav-links">
+    <a href="#venues">Venues</a>
+    <a href="#calculator">Room Blocks</a>
+    <a href="#packages">Packages</a>
+    <a href="#testimonials">Stories</a>
+    <a href="#contact" class="nav-cta">Request Proposal</a>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Weddings at Shelborne South Beach</div>
+    <h1 class="hero-title">Where the Ocean<br>Meets <em>I Do</em></h1>
+    <p class="hero-sub">An iconic beachfront setting for ceremonies, receptions, and celebrations that your guests will never forget.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Request a Proposal</a>
+      <a href="#venues" class="btn-outline">Explore Our Venues</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Discover</span>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"/></svg>
+  </div>
+</section>
+
+<!-- ═══ STATS BAR ═══ -->
+<div class="stats-bar">
+  <div class="stats-bar-inner">
+    <div class="stats-bar-item"><div class="stats-bar-value">200+</div><div class="stats-bar-label">Weddings Hosted</div></div>
+    <div class="stats-bar-item"><div class="stats-bar-value">350</div><div class="stats-bar-label">Max Guest Capacity</div></div>
+    <div class="stats-bar-item"><div class="stats-bar-value">5</div><div class="stats-bar-label">Unique Event Spaces</div></div>
+    <div class="stats-bar-item"><div class="stats-bar-value">4.9</div><div class="stats-bar-label">Average Rating</div></div>
+  </div>
+</div>
+
+<!-- ═══ INTRO ═══ -->
+<section class="section intro" id="about">
+  <div class="intro-grid">
+    <div class="intro-left reveal">
+      <div class="section-eyebrow">Your Dream, Our Canvas</div>
+      <div class="section-title">A Celebration Designed Around You</div>
+      <div class="section-sub">From intimate beachfront vows to grand ballroom receptions, our dedicated wedding team transforms your vision into an unforgettable experience — with the Atlantic Ocean as your backdrop.</div>
+      <div class="intro-features">
+        <div class="intro-feature">
+          <div class="intro-feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+          <div class="intro-feature-text"><h4>Dedicated Wedding Planner</h4><p>A personal coordinator from first inquiry through last dance</p></div>
+        </div>
+        <div class="intro-feature">
+          <div class="intro-feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3h18v18H3z"/><path d="M3 9h18"/><path d="M9 3v18"/></svg></div>
+          <div class="intro-feature-text"><h4>Group Room Blocks</h4><p>Discounted rates for your guests with our room block programme</p></div>
+        </div>
+        <div class="intro-feature">
+          <div class="intro-feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
+          <div class="intro-feature-text"><h4>Custom Catering & Bar</h4><p>Chef-curated menus and craft cocktail programmes for every palate</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="intro-right reveal">
+      <div class="intro-img tall"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=500&q=80" alt="Beach ceremony" loading="lazy"></div>
+      <div class="intro-img"><img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=400&q=80" alt="Reception setup" loading="lazy"></div>
+      <div class="intro-img"><img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=400&q=80" alt="Table setting" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ VENUE GALLERY ═══ -->
+<section class="section venues" id="venues">
+  <div class="section-header reveal">
+    <div class="section-eyebrow">Our Event Spaces</div>
+    <div class="section-title">Five Venues, Endless Possibilities</div>
+    <div class="section-sub">Each space offers a distinct character — from ocean breezes to crystal chandeliers.</div>
+    <div class="divider-line"></div>
+  </div>
+  <div class="venue-grid reveal">
+    <div class="venue-card">
+      <img class="venue-card-img" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80" alt="Oceanfront Terrace" loading="lazy">
+      <div class="venue-card-overlay"></div>
+      <div class="venue-card-tag">Most Popular</div>
+      <div class="venue-card-content">
+        <div class="venue-card-name">Oceanfront Terrace</div>
+        <div class="venue-card-cap">Ceremonies up to 200 · Outdoor · Ocean views</div>
+      </div>
+    </div>
+    <div class="venue-card">
+      <img class="venue-card-img" src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=600&q=80" alt="Grand Ballroom" loading="lazy">
+      <div class="venue-card-overlay"></div>
+      <div class="venue-card-content">
+        <div class="venue-card-name">Grand Ballroom</div>
+        <div class="venue-card-cap">Receptions up to 350 · Indoor · Chandeliers</div>
+      </div>
+    </div>
+    <div class="venue-card">
+      <img class="venue-card-img" src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=600&q=80" alt="Pool Deck" loading="lazy">
+      <div class="venue-card-overlay"></div>
+      <div class="venue-card-content">
+        <div class="venue-card-name">Pool Deck</div>
+        <div class="venue-card-cap">Cocktail receptions up to 250 · Outdoor · Sunset views</div>
+      </div>
+    </div>
+    <div class="venue-card">
+      <img class="venue-card-img" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80" alt="Private Dining Room" loading="lazy">
+      <div class="venue-card-overlay"></div>
+      <div class="venue-card-content">
+        <div class="venue-card-name">Private Dining Room</div>
+        <div class="venue-card-cap">Rehearsal dinners up to 60 · Indoor · Intimate</div>
+      </div>
+    </div>
+    <div class="venue-card">
+      <img class="venue-card-img" src="https://images.unsplash.com/photo-1505236858219-8359eb29e329?w=600&q=80" alt="Beach Club" loading="lazy">
+      <div class="venue-card-overlay"></div>
+      <div class="venue-card-content">
+        <div class="venue-card-name">Beach Club</div>
+        <div class="venue-card-cap">Welcome parties up to 150 · Outdoor · Toes in the sand</div>
+      </div>
+    </div>
+    <div class="venue-card">
+      <img class="venue-card-img" src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=600&q=80" alt="Garden Courtyard" loading="lazy">
+      <div class="venue-card-overlay"></div>
+      <div class="venue-card-content">
+        <div class="venue-card-name">Garden Courtyard</div>
+        <div class="venue-card-cap">Ceremonies up to 100 · Outdoor · Lush tropical</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ROOM BLOCK CALCULATOR ═══ -->
+<section class="section calculator" id="calculator">
+  <div class="calc-container">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">Room Block Estimator</div>
+      <div class="section-title" style="color:var(--white)">Plan Your Guest Accommodation</div>
+      <div class="section-sub" style="color:rgba(255,255,255,0.5)">Get an instant estimate for your wedding room block — including group discounts, complimentary upgrades, and total savings.</div>
+      <div class="divider-line"></div>
+    </div>
+
+    <div class="calc-grid reveal">
+      <div class="calc-form">
+        <div class="calc-row">
+          <div class="calc-group">
+            <label class="calc-label">Total Guest Count</label>
+            <input type="number" class="calc-input" id="guestCount" value="120" min="20" max="350" placeholder="120">
+          </div>
+          <div class="calc-group">
+            <label class="calc-label">Estimated Rooms Needed</label>
+            <div class="calc-slider-wrapper">
+              <input type="range" class="calc-slider" id="roomSlider" min="10" max="120" value="40">
+              <div class="calc-slider-value" id="roomValue">40 rooms</div>
+            </div>
+          </div>
+        </div>
+        <div class="calc-row">
+          <div class="calc-group">
+            <label class="calc-label">Room Type Mix</label>
+            <select class="calc-input" id="roomType">
+              <option value="standard">Mostly Standard Rooms</option>
+              <option value="mixed" selected>Mix of Standard & Suites</option>
+              <option value="premium">Mostly Suites & Premium</option>
+            </select>
+          </div>
+          <div class="calc-group">
+            <label class="calc-label">Number of Nights</label>
+            <select class="calc-input" id="numNights">
+              <option value="1">1 Night</option>
+              <option value="2" selected>2 Nights</option>
+              <option value="3">3 Nights (Weekend)</option>
+              <option value="4">4 Nights</option>
+            </select>
+          </div>
+        </div>
+        <div class="calc-group">
+          <label class="calc-label">Wedding Season</label>
+          <select class="calc-input" id="season">
+            <option value="peak">Peak Season (Dec – Apr)</option>
+            <option value="shoulder" selected>Shoulder (May, Oct, Nov)</option>
+            <option value="value">Value Season (Jun – Sep)</option>
+          </select>
+        </div>
+        <button class="calc-btn" onclick="calculateBlock()">Calculate My Room Block</button>
+      </div>
+
+      <div class="calc-results" id="calcResults">
+        <div class="calc-results-placeholder" id="calcPlaceholder">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="3" y1="9" x2="21" y2="9"/></svg>
+          <p>Adjust the options and click calculate to see your personalised room block estimate.</p>
+        </div>
+        <div id="calcOutput" style="display:none;">
+          <div class="calc-results-title">Your Room Block Estimate</div>
+          <div class="calc-results-sub" id="estimateSummary"></div>
+          <div class="result-row"><span class="result-label">Standard Rooms</span><span class="result-value" id="resStandard"></span></div>
+          <div class="result-row"><span class="result-label">Suite Upgrades</span><span class="result-value" id="resSuites"></span></div>
+          <div class="result-row"><span class="result-label">Avg. Nightly Rate (Group)</span><span class="result-value" id="resRate"></span></div>
+          <div class="result-row"><span class="result-label">Number of Nights</span><span class="result-value" id="resNights"></span></div>
+          <div class="result-row total"><span class="result-label">Estimated Block Total</span><span class="result-value" id="resTotal"></span></div>
+          <div class="result-savings">
+            <div class="result-savings-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div class="result-savings-text" id="resSavings"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TESTIMONIALS ═══ -->
+<section class="section testimonials" id="testimonials">
+  <div class="section-header reveal">
+    <div class="section-eyebrow">Love Stories</div>
+    <div class="section-title">From Our Happy Couples</div>
+    <div class="section-sub">Every wedding at the Shelborne has its own story. Here are a few of our favourites.</div>
+    <div class="divider-line"></div>
+  </div>
+  <div class="testimonial-track reveal">
+    <div class="testimonial-card">
+      <div class="testimonial-event-tag tag-wedding">Beach Ceremony</div>
+      <div class="testimonial-stars">★ ★ ★ ★ ★</div>
+      <div class="testimonial-quote">"Our sunset ceremony on the oceanfront terrace was beyond anything we dreamed. Every single guest has told us it was the most beautiful wedding they've ever attended."</div>
+      <div class="testimonial-author">
+        <img class="testimonial-avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80" alt="Avatar" loading="lazy">
+        <div><div class="testimonial-name">Jessica & Michael</div><div class="testimonial-detail">180 guests · October 2025</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-event-tag tag-reception">Grand Ballroom</div>
+      <div class="testimonial-stars">★ ★ ★ ★ ★</div>
+      <div class="testimonial-quote">"The team handled every detail flawlessly — from the room block coordination to the midnight after-party by the pool. Our guests are still raving about the whole weekend."</div>
+      <div class="testimonial-author">
+        <img class="testimonial-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" alt="Avatar" loading="lazy">
+        <div><div class="testimonial-name">David & Lauren</div><div class="testimonial-detail">240 guests · February 2026</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-event-tag tag-rehearsal">Full Weekend</div>
+      <div class="testimonial-stars">★ ★ ★ ★ ★</div>
+      <div class="testimonial-quote">"We booked the entire wedding weekend — rehearsal dinner, ceremony, reception, and brunch. Having everything under one roof with the beach right there made it magical."</div>
+      <div class="testimonial-author">
+        <img class="testimonial-avatar" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80" alt="Avatar" loading="lazy">
+        <div><div class="testimonial-name">Priya & James</div><div class="testimonial-detail">160 guests · March 2026</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PACKAGES ═══ -->
+<section class="section packages" id="packages">
+  <div class="section-header reveal">
+    <div class="section-eyebrow">Wedding Packages</div>
+    <div class="section-title">Tailored to Your Celebration</div>
+    <div class="section-sub">Three curated packages — each fully customisable to match your vision and guest count.</div>
+    <div class="divider-line"></div>
+  </div>
+  <div class="package-grid reveal">
+    <div class="package-card">
+      <div class="package-header">
+        <div class="package-name">Intimate</div>
+        <div class="package-guests">Up to 60 guests</div>
+        <div class="package-price">$18,500 <span>starting</span></div>
+      </div>
+      <div class="package-divider"></div>
+      <div class="package-features">
+        <div class="package-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Private venue (4 hours)</div>
+        <div class="package-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Plated dinner for all guests</div>
+        <div class="package-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Premium open bar (4 hours)</div>
+        <div class="package-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Wedding cake & champagne toast</div>
+        <div class="package-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Day-of coordinator</div>
+      </div>
+      <div class="package-footer"><a class="package-btn secondary" href="#contact">Get a Quote</a></div>
+    </div>
+
+    <div class="package-card featured">
+      <div class="package-featured-tag">Most Popular</div>
+      <div class="package-header">
+        <div class="package-name">Classic</div>
+        <div class="package-guests">Up to 200 guests</div>
+        <div class="package-price">$42,000 <span>starting</span></div>
+      </div>
+      <div class="package-divider"></div>
+      <div class="package-features">
+        <div class="package-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Ceremony + reception venues (6 hours)</div>
+        <div class="package-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Custom chef-curated menu</div>
+        <div class="package-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Top-shelf open bar (6 hours)</div>
+        <div class="package-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Floral centrepieces & décor package</div>
+        <div class="package-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Room block (15% group discount)</div>
+        <div class="package-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Complimentary bridal suite upgrade</div>
+      </div>
+      <div class="package-footer"><a class="package-btn primary" href="#contact">Get a Quote</a></div>
+    </div>
+
+    <div class="package-card">
+      <div class="package-header">
+        <div class="package-name">Grand</div>
+        <div class="package-guests">Up to 350 guests</div>
+        <div class="package-price">$85,000 <span>starting</span></div>
+      </div>
+      <div class="package-divider"></div>
+      <div class="package-features">
+        <div class="package-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Full venue buyout (full day)</div>
+        <div class="package-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Multi-course tasting menu</div>
+        <div class="package-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Unlimited premium bar</div>
+        <div class="package-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Full décor, florals & lighting</div>
+        <div class="package-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Room block (20% group discount)</div>
+        <div class="package-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Welcome party + morning-after brunch</div>
+        <div class="package-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Dedicated wedding planner</div>
+      </div>
+      <div class="package-footer"><a class="package-btn secondary" href="#contact">Get a Quote</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ LEAD CAPTURE ═══ -->
+<section class="section lead-capture" id="contact">
+  <div class="lead-inner reveal">
+    <div class="section-eyebrow" style="color:var(--champagne)">Start Planning</div>
+    <div class="section-title" style="color:var(--white)">Let's Create Something Beautiful</div>
+    <div class="section-sub" style="color:rgba(255,255,255,0.5)">Tell us about your celebration and our wedding team will prepare a personalised proposal within 48 hours.</div>
+    <div class="lead-form">
+      <input type="text" class="lead-input" placeholder="Your Name">
+      <input type="text" class="lead-input" placeholder="Partner's Name">
+      <input type="email" class="lead-input" placeholder="Email Address">
+      <input type="tel" class="lead-input" placeholder="Phone Number">
+      <input type="text" class="lead-input" placeholder="Estimated Guest Count">
+      <input type="text" class="lead-input" placeholder="Preferred Date(s)">
+      <select class="lead-input full" style="appearance:none;color:rgba(255,255,255,0.3)">
+        <option value="" selected>Which package interests you?</option>
+        <option style="color:#fff">Intimate (up to 60 guests)</option>
+        <option style="color:#fff">Classic (up to 200 guests)</option>
+        <option style="color:#fff">Grand (up to 350 guests)</option>
+        <option style="color:#fff">Not sure yet — help me decide</option>
+      </select>
+      <textarea class="lead-input full" placeholder="Tell us about your vision..." rows="3" style="resize:vertical;font-family:'Jost',sans-serif"></textarea>
+      <button class="lead-submit">Request My Proposal</button>
+    </div>
+    <div class="lead-trust">
+      <div class="lead-trust-item"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Response within 48 hours</div>
+      <div class="lead-trust-item"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>No commitment required</div>
+      <div class="lead-trust-item"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Custom pricing for your event</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="footer-logo">Shelborne South Beach</div>
+  <div class="footer-address">1801 Collins Avenue, Miami Beach, FL 33139<br>+1 (305) 531-1271 · weddings@shelborne.com</div>
+  <div class="footer-links"><a href="#">Privacy Policy</a> · <a href="#">Terms</a> · <a href="#">Accessibility</a></div>
+</footer>
+
+<script>
+// Sticky nav
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>80)});
+
+// Room slider display
+const slider=document.getElementById('roomSlider');
+const roomVal=document.getElementById('roomValue');
+slider.addEventListener('input',()=>{roomVal.textContent=slider.value+' rooms'});
+
+// Room block calculator
+function calculateBlock(){
+  const rooms=parseInt(slider.value);
+  const type=document.getElementById('roomType').value;
+  const nights=parseInt(document.getElementById('numNights').value);
+  const season=document.getElementById('season').value;
+  const guests=parseInt(document.getElementById('guestCount').value)||120;
+
+  // Base rates by season
+  const rates={peak:{standard:489,suite:789},shoulder:{standard:389,suite:649},value:{standard:299,suite:519}};
+  const r=rates[season];
+
+  // Room mix by type
+  let stdRooms,suiteRooms;
+  if(type==='standard'){stdRooms=Math.round(rooms*0.85);suiteRooms=rooms-stdRooms}
+  else if(type==='mixed'){stdRooms=Math.round(rooms*0.65);suiteRooms=rooms-stdRooms}
+  else{stdRooms=Math.round(rooms*0.35);suiteRooms=rooms-stdRooms}
+
+  // Group discount
+  let disc=0.1;
+  if(rooms>=30) disc=0.15;
+  if(rooms>=60) disc=0.2;
+
+  const stdRate=Math.round(r.standard*(1-disc));
+  const suiteRate=Math.round(r.suite*(1-disc));
+  const avgRate=Math.round((stdRooms*stdRate+suiteRooms*suiteRate)/rooms);
+  const total=(stdRooms*stdRate+suiteRooms*suiteRate)*nights;
+  const rackTotal=(stdRooms*r.standard+suiteRooms*r.suite)*nights;
+  const savings=rackTotal-total;
+
+  document.getElementById('calcPlaceholder').style.display='none';
+  document.getElementById('calcOutput').style.display='block';
+  document.getElementById('estimateSummary').textContent=`${rooms} rooms · ${nights} night${nights>1?'s':''} · ${Math.round(disc*100)}% group discount applied`;
+  document.getElementById('resStandard').textContent=`${stdRooms} rooms × $${stdRate}/night`;
+  document.getElementById('resSuites').textContent=`${suiteRooms} rooms × $${suiteRate}/night`;
+  document.getElementById('resRate').textContent=`$${avgRate}`;
+  document.getElementById('resNights').textContent=nights;
+  document.getElementById('resTotal').textContent=`$${total.toLocaleString()}`;
+  document.getElementById('resSavings').innerHTML=`<strong>Your guests save $${savings.toLocaleString()}</strong> compared to booking individually at rack rates. ${rooms>=30?'Complimentary bridal suite upgrade included with 30+ room blocks.':'Book 30+ rooms to unlock a complimentary bridal suite upgrade.'}`;
+}
+
+// Scroll reveal
+const reveals=document.querySelectorAll('.reveal');
+const revealObs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revealObs.unobserve(e.target)}})},{threshold:0.15});
+reveals.forEach(el=>revealObs.observe(el));
+
+// Auto-calculate on load
+setTimeout(calculateBlock,500);
+</script>
+</body>
+</html>

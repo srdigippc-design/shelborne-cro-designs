@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Member Exclusive Stays — The Shelborne by Proper</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Libre+Franklin:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --sand:#F2EADD;--sand-light:#F7F2EA;--sand-dark:#E8DFD0;
+  --cream:#FAF6F0;--warm-white:#FDFBF8;
+  --taupe:#C4B69C;--taupe-dark:#A89878;
+  --espresso:#2C2418;--espresso-light:#3D3226;
+  --charcoal:#1E1E1E;--text:#3A3428;--text-mid:#6B6154;--text-light:#9A9083;--text-faint:#B8AFA4;
+  --sage:#7A8E6F;--sage-light:#A8B8A0;--sage-pale:#EDF1EB;
+  --ocean:#5B7E8A;--ocean-light:#8AABB5;
+  --blush:#C4988A;--blush-light:#E8D2CA;
+  --gold-accent:#B89B6A;
+  --white:#FFFFFF;--border:#DDD6CA;--border-light:#ECE7DE;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Libre Franklin',sans-serif;background:var(--cream);color:var(--text)}
+
+/* ── NAV ── */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:18px 48px;background:var(--cream);border-bottom:1px solid var(--border-light);transition:all 0.4s}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:500;letter-spacing:5px;text-transform:uppercase;color:var(--espresso)}
+.nav-logo span{display:block;font-size:9px;letter-spacing:3px;color:var(--text-light);font-weight:400;margin-top:1px}
+.nav-right{display:flex;align-items:center;gap:28px}
+.nav-link{font-size:10px;font-weight:400;letter-spacing:2.5px;text-transform:uppercase;color:var(--text-mid);text-decoration:none;transition:color 0.3s}
+.nav-link:hover{color:var(--espresso)}
+.nav-reserve{font-size:10px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:var(--espresso);border:1px solid var(--espresso);padding:10px 24px;text-decoration:none;transition:all 0.3s}
+.nav-reserve:hover{background:var(--espresso);color:var(--cream)}
+
+/* ── MEMBER BADGE BANNER ── */
+.member-banner{margin-top:60px;background:var(--espresso);padding:12px 48px;display:flex;align-items:center;justify-content:center;gap:10px}
+.member-banner svg{color:var(--taupe);flex-shrink:0}
+.member-banner span{font-size:10px;font-weight:400;letter-spacing:3px;text-transform:uppercase;color:var(--taupe)}
+
+/* ── HERO ── */
+.hero{position:relative;height:85vh;min-height:600px;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=1600&q=80') center/cover}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(44,36,24,0.15) 0%,rgba(44,36,24,0.3) 50%,rgba(44,36,24,0.65) 100%)}
+.hero-content{position:absolute;bottom:80px;left:0;right:0;text-align:center;z-index:2;padding:0 24px}
+.hero-eyebrow{font-size:10px;font-weight:400;letter-spacing:5px;text-transform:uppercase;color:var(--taupe);margin-bottom:20px;animation:fadeIn .8s ease both}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,6vw,68px);font-weight:300;color:var(--white);line-height:1.12;margin-bottom:14px;animation:fadeIn .8s ease .12s both}
+.hero-title em{font-style:italic}
+.hero-sub{font-size:14px;font-weight:300;color:rgba(255,255,255,0.65);max-width:480px;margin:0 auto 36px;line-height:1.8;animation:fadeIn .8s ease .24s both}
+.hero-cta{display:inline-block;font-family:'Libre Franklin',sans-serif;font-size:11px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--cream);border:1px solid rgba(255,255,255,0.5);padding:16px 44px;text-decoration:none;transition:all 0.4s;animation:fadeIn .8s ease .36s both}
+.hero-cta:hover{background:var(--white);color:var(--espresso);border-color:var(--white)}
+@keyframes fadeIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── SECTION SYSTEM ── */
+.section{padding:100px 48px}
+.section-center{text-align:center;max-width:600px;margin:0 auto}
+.eyebrow{font-size:9px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:var(--text-light);margin-bottom:14px}
+.title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,3.5vw,42px);font-weight:400;color:var(--espresso);line-height:1.2;margin-bottom:10px}
+.subtitle{font-size:13px;font-weight:300;color:var(--text-mid);line-height:1.8;margin-bottom:0}
+.gold-line{width:40px;height:1px;background:var(--taupe);margin:20px auto 0}
+
+/* ── MEMBER PERKS BAR ── */
+.perks{background:var(--sand);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.perks-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.perk{text-align:center;padding:48px 28px;position:relative}
+.perk:not(:last-child)::after{content:'';position:absolute;right:0;top:25%;height:50%;width:1px;background:var(--border)}
+.perk-icon{width:48px;height:48px;border-radius:50%;background:var(--warm-white);border:1px solid var(--border-light);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;color:var(--taupe-dark)}
+.perk-title{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:500;color:var(--espresso);margin-bottom:4px}
+.perk-desc{font-size:11px;font-weight:300;color:var(--text-light);line-height:1.6}
+
+/* ── PACKAGE CARDS ── */
+.packages{background:var(--cream)}
+.package-grid{max-width:1200px;margin:48px auto 0;display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.pkg{background:var(--white);border:1px solid var(--border-light);border-radius:4px;overflow:hidden;transition:all 0.5s cubic-bezier(0.25,0.46,0.45,0.94);display:grid;grid-template-columns:1fr 1fr}
+.pkg:hover{box-shadow:0 20px 60px rgba(44,36,24,0.08);transform:translateY(-4px)}
+.pkg-img{min-height:420px;background-size:cover;background-position:center;position:relative}
+.pkg-img::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(44,36,24,0.05),rgba(44,36,24,0.15))}
+.pkg-tag{position:absolute;top:20px;left:20px;z-index:2;font-size:8px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;padding:6px 14px;border-radius:2px}
+.tag-member{background:var(--espresso);color:var(--taupe)}
+.tag-popular{background:var(--gold-accent);color:var(--white)}
+.tag-seasonal{background:var(--ocean);color:var(--white)}
+.tag-new{background:var(--blush);color:var(--white)}
+.pkg-body{padding:40px 36px;display:flex;flex-direction:column}
+.pkg-eyebrow{font-size:9px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--text-light);margin-bottom:10px}
+.pkg-name{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:400;color:var(--espresso);margin-bottom:10px;line-height:1.25}
+.pkg-desc{font-size:13px;font-weight:300;color:var(--text-mid);line-height:1.75;margin-bottom:24px;flex-grow:1}
+.pkg-inclusions{display:flex;flex-direction:column;gap:10px;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid var(--border-light)}
+.pkg-inc{display:flex;align-items:flex-start;gap:10px;font-size:12px;color:var(--text);font-weight:300;line-height:1.5}
+.pkg-inc svg{flex-shrink:0;margin-top:2px;color:var(--sage)}
+.pkg-pricing{display:flex;align-items:baseline;gap:8px;margin-bottom:6px}
+.pkg-price{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:500;color:var(--espresso)}
+.pkg-price-note{font-size:11px;color:var(--text-light);font-weight:300}
+.pkg-rack{font-size:11px;color:var(--text-faint);text-decoration:line-through;margin-bottom:20px}
+.pkg-cta{display:block;text-align:center;font-family:'Libre Franklin',sans-serif;font-size:10px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;padding:14px;border-radius:2px;text-decoration:none;transition:all 0.3s;cursor:pointer}
+.pkg-cta.dark{background:var(--espresso);color:var(--cream);border:1px solid var(--espresso)}
+.pkg-cta.dark:hover{background:var(--espresso-light)}
+.pkg-cta.outline{background:transparent;color:var(--espresso);border:1px solid var(--espresso)}
+.pkg-cta.outline:hover{background:var(--espresso);color:var(--cream)}
+
+/* Full-width feature package */
+.pkg-feature{grid-column:span 2;grid-template-columns:1.1fr 0.9fr}
+.pkg-feature .pkg-img{min-height:480px}
+
+/* ── OCCASIONS SECTION ── */
+.occasions{background:var(--sand-light);border-top:1px solid var(--border-light)}
+.occasions-grid{max-width:1100px;margin:48px auto 0;display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.occ-card{background:var(--white);border:1px solid var(--border-light);border-radius:4px;padding:32px 24px;text-align:center;transition:all 0.4s;cursor:pointer}
+.occ-card:hover{transform:translateY(-6px);box-shadow:0 16px 48px rgba(44,36,24,0.08);border-color:var(--taupe)}
+.occ-icon{font-size:32px;margin-bottom:16px;display:block;line-height:1}
+.occ-name{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:500;color:var(--espresso);margin-bottom:6px}
+.occ-desc{font-size:11px;color:var(--text-light);font-weight:300;line-height:1.6;margin-bottom:16px}
+.occ-from{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;color:var(--gold-accent)}
+.occ-from span{font-size:11px;font-weight:300;color:var(--text-light);font-family:'Libre Franklin',sans-serif}
+
+/* ── TESTIMONIAL ── */
+.testimonial{background:var(--espresso);position:relative;overflow:hidden}
+.testimonial::before{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1400&q=60') center/cover;opacity:0.08}
+.test-inner{max-width:700px;margin:0 auto;text-align:center;position:relative;z-index:1}
+.test-quote-mark{font-family:'Cormorant Garamond',serif;font-size:80px;color:var(--taupe);line-height:1;margin-bottom:0;opacity:0.5}
+.test-quote{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;font-style:italic;color:var(--sand);line-height:1.65;margin-bottom:28px}
+.test-author{font-size:12px;font-weight:400;color:var(--taupe);letter-spacing:2px;text-transform:uppercase}
+.test-detail{font-size:11px;color:rgba(196,182,156,0.5);font-weight:300;margin-top:4px}
+.test-nav{display:flex;justify-content:center;gap:8px;margin-top:32px}
+.test-dot{width:8px;height:8px;border-radius:50%;background:rgba(196,182,156,0.2);cursor:pointer;transition:all 0.3s;border:none}
+.test-dot.active{background:var(--taupe);width:24px;border-radius:4px}
+
+/* ── HOW IT WORKS ── */
+.how{background:var(--cream)}
+.how-steps{max-width:900px;margin:48px auto 0;display:grid;grid-template-columns:repeat(3,1fr);gap:0;position:relative}
+.how-steps::before{content:'';position:absolute;top:36px;left:12%;right:12%;height:1px;background:var(--border)}
+.how-step{text-align:center;position:relative;z-index:1}
+.how-num{width:72px;height:72px;border-radius:50%;background:var(--warm-white);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:500;color:var(--espresso)}
+.how-step-title{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:500;color:var(--espresso);margin-bottom:6px}
+.how-step-desc{font-size:12px;color:var(--text-light);font-weight:300;line-height:1.6;max-width:220px;margin:0 auto}
+
+/* ── CTA SECTION ── */
+.final-cta{background:var(--sand);border-top:1px solid var(--border)}
+.cta-inner{max-width:700px;margin:0 auto;text-align:center}
+.cta-form{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:36px}
+.cta-input{font-family:'Libre Franklin',sans-serif;font-size:13px;font-weight:300;color:var(--text);background:var(--white);border:1px solid var(--border);padding:15px 18px;border-radius:2px;outline:none;transition:border-color 0.3s}
+.cta-input:focus{border-color:var(--taupe-dark)}
+.cta-input::placeholder{color:var(--text-faint)}
+.cta-input.full{grid-column:span 2}
+.cta-submit{grid-column:span 2;font-family:'Libre Franklin',sans-serif;font-size:11px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--cream);background:var(--espresso);border:none;padding:18px;border-radius:2px;cursor:pointer;transition:all 0.4s;margin-top:4px}
+.cta-submit:hover{background:var(--espresso-light);transform:translateY(-1px);box-shadow:0 8px 24px rgba(44,36,24,0.15)}
+.cta-trust{display:flex;justify-content:center;gap:28px;margin-top:20px}
+.cta-trust-item{font-size:10px;color:var(--text-faint);display:flex;align-items:center;gap:5px}
+.cta-trust-item svg{color:var(--taupe)}
+
+/* ── FOOTER ── */
+.footer{background:var(--espresso);padding:48px;text-align:center}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:500;letter-spacing:6px;text-transform:uppercase;color:var(--sand);margin-bottom:4px}
+.footer-sub{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--taupe);font-weight:300;margin-bottom:16px}
+.footer-address{font-size:11px;color:rgba(196,182,156,0.4);font-weight:300;line-height:1.8;margin-bottom:16px}
+.footer-links a{font-size:10px;color:var(--taupe);text-decoration:none;margin:0 8px}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1024px){
+  .package-grid{grid-template-columns:1fr}
+  .pkg{grid-template-columns:1fr}
+  .pkg-feature{grid-column:span 1;grid-template-columns:1fr}
+  .pkg-img{min-height:280px!important}
+  .perks-inner{grid-template-columns:1fr 1fr}
+  .perk:nth-child(2)::after{display:none}
+  .occasions-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:680px){
+  .section{padding:72px 24px}
+  .nav{padding:16px 24px}
+  .nav-right .nav-link{display:none}
+  .perks-inner,.how-steps{grid-template-columns:1fr}
+  .perk::after{display:none!important}
+  .how-steps::before{display:none}
+  .occasions-grid{grid-template-columns:1fr}
+  .cta-form{grid-template-columns:1fr}
+  .cta-input.full,.cta-submit{grid-column:span 1}
+  .pkg-body{padding:28px 24px}
+}
+
+/* ── REVEAL ── */
+.reveal{opacity:0;transform:translateY(28px);transition:all 0.7s cubic-bezier(0.16,1,0.3,1)}
+.reveal.vis{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav class="nav">
+  <div class="nav-logo">The Shelborne<span>by Proper</span></div>
+  <div class="nav-right">
+    <a href="#packages" class="nav-link">Packages</a>
+    <a href="#occasions" class="nav-link">Occasions</a>
+    <a href="#how" class="nav-link">How It Works</a>
+    <a href="#book" class="nav-reserve">Book as Member</a>
+  </div>
+</nav>
+
+<!-- ═══ MEMBER BADGE ═══ -->
+<div class="member-banner">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+  <span>Beach Club Members — Exclusive Rates & Privileges Below</span>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Beach Club Member Exclusive</div>
+    <h1 class="hero-title">Your Beach Club.<br><em>Their Unforgettable Stay.</em></h1>
+    <p class="hero-sub">Exclusive hotel packages for members and their loved ones — with rates, upgrades, and perks you won't find anywhere else.</p>
+    <a href="#packages" class="hero-cta">Explore Member Packages</a>
+  </div>
+</section>
+
+<!-- ═══ MEMBER PERKS ═══ -->
+<section class="section perks" style="padding:0">
+  <div class="perks-inner">
+    <div class="perk reveal">
+      <div class="perk-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg></div>
+      <div class="perk-title">Up to 25% Off</div>
+      <div class="perk-desc">Member-exclusive rates below published prices on all room types</div>
+    </div>
+    <div class="perk reveal">
+      <div class="perk-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M16 8l-8 8"/><circle cx="9" cy="9" r="1"/><circle cx="15" cy="15" r="1"/></svg></div>
+      <div class="perk-title">Guaranteed Upgrade</div>
+      <div class="perk-desc">Automatic room upgrade at check-in, subject to availability</div>
+    </div>
+    <div class="perk reveal">
+      <div class="perk-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
+      <div class="perk-title">Early Access</div>
+      <div class="perk-desc">48-hour priority on seasonal packages and holiday weekends</div>
+    </div>
+    <div class="perk reveal">
+      <div class="perk-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+      <div class="perk-title">Guest Perks</div>
+      <div class="perk-desc">Friends & family receive beach club day passes with every stay</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PACKAGES ═══ -->
+<section class="section packages" id="packages">
+  <div class="section-center reveal">
+    <div class="eyebrow">Member-Only Packages</div>
+    <div class="title">Curated Stays for Every Occasion</div>
+    <div class="subtitle">Each package is available exclusively to Beach Club members and includes perks your guests won't find on any booking site.</div>
+    <div class="gold-line"></div>
+  </div>
+
+  <div class="package-grid">
+
+    <!-- FRIENDS & FAMILY — FEATURED -->
+    <div class="pkg pkg-feature reveal">
+      <div class="pkg-img" style="background-image:url('https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=80')">
+        <div class="pkg-tag tag-popular">Most Popular</div>
+      </div>
+      <div class="pkg-body">
+        <div class="pkg-eyebrow">Friends & Family Package</div>
+        <div class="pkg-name">Give Them the Shelborne Experience</div>
+        <div class="pkg-desc">Your favourite people deserve your favourite place. Book a stay for family, friends, or out-of-town guests at your exclusive member rate — and we'll treat them like royalty from the moment they arrive.</div>
+        <div class="pkg-inclusions">
+          <div class="pkg-inc"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>25% off published room rates</div>
+          <div class="pkg-inc"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Complimentary beach club day pass per guest</div>
+          <div class="pkg-inc"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Welcome amenity & personalised note in room</div>
+          <div class="pkg-inc"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Late checkout (2pm, guaranteed)</div>
+          <div class="pkg-inc"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Priority pool & cabana reservations</div>
+        </div>
+        <div class="pkg-pricing">
+          <div class="pkg-price">$367</div>
+          <div class="pkg-price-note">/ night · Ocean View Room</div>
+        </div>
+        <div class="pkg-rack">Published rate: $489/night</div>
+        <a class="pkg-cta dark" href="#book">Book for Friends & Family</a>
+      </div>
+    </div>
+
+    <!-- ANNIVERSARY -->
+    <div class="pkg reveal">
+      <div class="pkg-img" style="background-image:url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80')">
+        <div class="pkg-tag tag-member">Member Rate</div>
+      </div>
+      <div class="pkg-body">
+        <div class="pkg-eyebrow">Anniversary Package</div>
+        <div class="pkg-name">Celebrate Another Year Together</div>
+        <div class="pkg-desc">An oceanfront suite, champagne at sunset, and a candlelit dinner for two — because some milestones deserve more than a card.</div>
+        <div class="pkg-inclusions">
+          <div class="pkg-inc"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Suite upgrade (guaranteed)</div>
+          <div class="pkg-inc"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Bottle of Veuve Clicquot in room</div>
+          <div class="pkg-inc"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>$150 dining credit</div>
+          <div class="pkg-inc"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Couples cabana session</div>
+        </div>
+        <div class="pkg-pricing">
+          <div class="pkg-price">$599</div>
+          <div class="pkg-price-note">/ night · Oceanfront Suite</div>
+        </div>
+        <div class="pkg-rack">Published rate: $789/night</div>
+        <a class="pkg-cta outline" href="#book">Reserve This Package</a>
+      </div>
+    </div>
+
+    <!-- BIRTHDAY -->
+    <div class="pkg reveal">
+      <div class="pkg-img" style="background-image:url('https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=600&q=80')">
+        <div class="pkg-tag tag-new">New</div>
+      </div>
+      <div class="pkg-body">
+        <div class="pkg-eyebrow">Birthday Getaway</div>
+        <div class="pkg-name">Make Their Day Unforgettable</div>
+        <div class="pkg-desc">Surprise someone special — or treat yourself. A curated birthday experience with pool deck access, a custom cake, and VIP nightlife entry.</div>
+        <div class="pkg-inclusions">
+          <div class="pkg-inc"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>20% off room rate</div>
+          <div class="pkg-inc"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Custom birthday cake in room</div>
+          <div class="pkg-inc"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>$75 dining credit</div>
+          <div class="pkg-inc"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Pool deck reserved cabana</div>
+        </div>
+        <div class="pkg-pricing">
+          <div class="pkg-price">$391</div>
+          <div class="pkg-price-note">/ night · Ocean View Room</div>
+        </div>
+        <div class="pkg-rack">Published rate: $489/night</div>
+        <a class="pkg-cta outline" href="#book">Reserve This Package</a>
+      </div>
+    </div>
+
+    <!-- PROPOSAL PACKAGE -->
+    <div class="pkg reveal">
+      <div class="pkg-img" style="background-image:url('https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80')">
+        <div class="pkg-tag tag-member">Member Rate</div>
+      </div>
+      <div class="pkg-body">
+        <div class="pkg-eyebrow">Proposal Package</div>
+        <div class="pkg-name">The Question Deserves a Setting</div>
+        <div class="pkg-desc">Pop the question with the Atlantic behind you. Our team will help arrange every detail — from the ring box in the sand to the champagne toast after.</div>
+        <div class="pkg-inclusions">
+          <div class="pkg-inc"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Premium suite (2 nights)</div>
+          <div class="pkg-inc"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Private beach setup with florals</div>
+          <div class="pkg-inc"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Photographer (1 hour)</div>
+          <div class="pkg-inc"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>$200 dining credit + Dom Pérignon</div>
+        </div>
+        <div class="pkg-pricing">
+          <div class="pkg-price">$1,899</div>
+          <div class="pkg-price-note">/ complete package (2 nights)</div>
+        </div>
+        <div class="pkg-rack">Non-member price: $2,650</div>
+        <a class="pkg-cta outline" href="#book">Reserve This Package</a>
+      </div>
+    </div>
+
+    <!-- SEASONAL ESCAPE -->
+    <div class="pkg reveal">
+      <div class="pkg-img" style="background-image:url('https://images.unsplash.com/photo-1505236858219-8359eb29e329?w=600&q=80')">
+        <div class="pkg-tag tag-seasonal">Seasonal</div>
+      </div>
+      <div class="pkg-body">
+        <div class="pkg-eyebrow">Summer Escape — June to September</div>
+        <div class="pkg-name">Your Lowest Rate of the Year</div>
+        <div class="pkg-desc">The beach is quieter, the rates are lower, and the sunsets are just as good. Members get first access to summer's deepest discounts.</div>
+        <div class="pkg-inclusions">
+          <div class="pkg-inc"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>25% off already-reduced summer rates</div>
+          <div class="pkg-inc"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Complimentary daily breakfast</div>
+          <div class="pkg-inc"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Beach club access for up to 4 guests</div>
+          <div class="pkg-inc"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Flexible cancellation (72 hours)</div>
+        </div>
+        <div class="pkg-pricing">
+          <div class="pkg-price">$224</div>
+          <div class="pkg-price-note">/ night · Deluxe Room</div>
+        </div>
+        <div class="pkg-rack">Published summer rate: $299/night</div>
+        <a class="pkg-cta outline" href="#book">Reserve This Package</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ OCCASION CARDS ═══ -->
+<section class="section occasions" id="occasions">
+  <div class="section-center reveal">
+    <div class="eyebrow">Special Occasion Add-Ons</div>
+    <div class="title">Make Any Stay a Celebration</div>
+    <div class="subtitle">Add these enhancements to any member booking for a personal touch your guests will remember.</div>
+    <div class="gold-line"></div>
+  </div>
+  <div class="occasions-grid reveal">
+    <div class="occ-card">
+      <span class="occ-icon">🥂</span>
+      <div class="occ-name">Champagne & Roses</div>
+      <div class="occ-desc">Bottle of Veuve Clicquot and long-stem roses arranged in room before arrival.</div>
+      <div class="occ-from">$125 <span>add-on</span></div>
+    </div>
+    <div class="occ-card">
+      <span class="occ-icon">🎂</span>
+      <div class="occ-name">Custom Cake</div>
+      <div class="occ-desc">Artisan celebration cake by our pastry chef — birthday, anniversary, or just because.</div>
+      <div class="occ-from">$95 <span>add-on</span></div>
+    </div>
+    <div class="occ-card">
+      <span class="occ-icon">📸</span>
+      <div class="occ-name">Sunset Photoshoot</div>
+      <div class="occ-desc">Professional photographer on the beach or poolside — 30 minutes, 25 edited photos.</div>
+      <div class="occ-from">$275 <span>add-on</span></div>
+    </div>
+    <div class="occ-card">
+      <span class="occ-icon">💆</span>
+      <div class="occ-name">In-Room Spa</div>
+      <div class="occ-desc">Couples massage or facial in the comfort of your suite — the ultimate relaxation.</div>
+      <div class="occ-from">$350 <span>add-on</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TESTIMONIAL ═══ -->
+<section class="section testimonial">
+  <div class="test-inner reveal">
+    <div class="test-quote-mark">"</div>
+    <div class="test-quote">I've been a Beach Club member for two years. When my parents visited from New York, I booked them the Friends & Family package — they got the ocean view room, a welcome note with our family photo, and beach club passes. My mom still talks about it. It felt like I gave them the trip of a lifetime.</div>
+    <div class="test-author">Nicole R. — Beach Club Member Since 2024</div>
+    <div class="test-detail">Booked Friends & Family Package · Parents' 40th Anniversary</div>
+    <div class="test-nav">
+      <button class="test-dot active"></button>
+      <button class="test-dot"></button>
+      <button class="test-dot"></button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ HOW IT WORKS ═══ -->
+<section class="section how" id="how">
+  <div class="section-center reveal">
+    <div class="eyebrow">How It Works</div>
+    <div class="title">Three Steps to Their Perfect Stay</div>
+    <div class="gold-line"></div>
+  </div>
+  <div class="how-steps reveal">
+    <div class="how-step">
+      <div class="how-num">1</div>
+      <div class="how-step-title">Choose a Package</div>
+      <div class="how-step-desc">Select the experience that fits — from casual getaways to milestone celebrations.</div>
+    </div>
+    <div class="how-step">
+      <div class="how-num">2</div>
+      <div class="how-step-title">Share Your Member ID</div>
+      <div class="how-step-desc">Your membership unlocks the rate. Book for yourself or on behalf of guests.</div>
+    </div>
+    <div class="how-step">
+      <div class="how-num">3</div>
+      <div class="how-step-title">We Handle the Rest</div>
+      <div class="how-step-desc">Welcome amenities, personalised touches, and VIP treatment — arranged before arrival.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA FORM ═══ -->
+<section class="section final-cta" id="book">
+  <div class="cta-inner reveal">
+    <div class="eyebrow">Book as a Beach Club Member</div>
+    <div class="title">Ready to Share the Shelborne?</div>
+    <div class="subtitle" style="margin:0 auto">Tell us about the stay and we'll confirm your member rate, arrange the personalised details, and have everything ready for arrival.</div>
+    <div class="cta-form">
+      <input type="text" class="cta-input" placeholder="Your Name">
+      <input type="text" class="cta-input" placeholder="Member ID">
+      <input type="email" class="cta-input" placeholder="Email Address">
+      <input type="tel" class="cta-input" placeholder="Phone Number">
+      <input type="text" class="cta-input" placeholder="Guest Name(s)">
+      <select class="cta-input">
+        <option value="">Select Package</option>
+        <option>Friends & Family</option>
+        <option>Anniversary</option>
+        <option>Birthday Getaway</option>
+        <option>Proposal Package</option>
+        <option>Summer Escape</option>
+        <option>Custom / Not Sure</option>
+      </select>
+      <input type="text" class="cta-input" placeholder="Preferred Dates">
+      <select class="cta-input">
+        <option value="">Any Add-Ons?</option>
+        <option>Champagne & Roses ($125)</option>
+        <option>Custom Cake ($95)</option>
+        <option>Sunset Photoshoot ($275)</option>
+        <option>In-Room Spa ($350)</option>
+        <option>Multiple — tell us below</option>
+        <option>None</option>
+      </select>
+      <textarea class="cta-input full" placeholder="Anything special we should know? (occasion, dietary needs, surprise details...)" rows="3" style="resize:vertical;font-family:'Libre Franklin',sans-serif"></textarea>
+      <button class="cta-submit">Submit Member Booking Request</button>
+    </div>
+    <div class="cta-trust">
+      <div class="cta-trust-item"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Confirmed within 24 hours</div>
+      <div class="cta-trust-item"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Member rate guaranteed</div>
+      <div class="cta-trust-item"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Free cancellation 48hrs</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="footer-logo">The Shelborne</div>
+  <div class="footer-sub">by Proper</div>
+  <div class="footer-address">1801 Collins Avenue, Miami Beach, FL 33139<br>(305) 341-1400 · info@shelborne.com</div>
+  <div class="footer-links"><a href="#">Privacy Policy</a> · <a href="#">Terms of Use</a> · <a href="#">Accessibility</a></div>
+</footer>
+
+<script>
+// Scroll reveal
+const els=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target)}})},{threshold:0.12});
+els.forEach(el=>obs.observe(el));
+
+// Testimonial dots (visual only for demo)
+document.querySelectorAll('.test-dot').forEach((d,i)=>{
+  d.addEventListener('click',()=>{
+    document.querySelectorAll('.test-dot').forEach(x=>x.classList.remove('active'));
+    d.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

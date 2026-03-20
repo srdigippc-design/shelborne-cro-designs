@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Shelborne Parting Gift</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --sand:#F2EADD;--sand-light:#F8F4ED;--sand-dark:#E4D9C8;
+  --cream:#FAF7F2;--warm-white:#FDFBF8;
+  --espresso:#2C2418;--espresso-mid:#3D3226;
+  --taupe:#C4B69C;--taupe-dark:#A08968;
+  --gold:#B89B6A;--gold-glow:rgba(184,155,106,0.15);
+  --ocean:#4A7A8A;--ocean-light:#7AABB8;--ocean-pale:#E6F0F3;
+  --coral:#C87E6E;--coral-light:#E8B5A8;
+  --sage:#7A8E6F;
+  --text:#2C2418;--text-mid:#6B6154;--text-light:#9A9083;--text-faint:#B8AFA4;
+  --white:#FFFFFF;--border:#DDD6CA;--border-light:#EDE8DF;
+  --star-gold:#D4A843;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);overflow-x:hidden}
+
+/* ══════════════════════════════════════
+   PART 1: EMAIL PREVIEW CONTEXT
+   ══════════════════════════════════════ */
+.email-context{background:var(--espresso);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 24px;position:relative;overflow:hidden}
+.email-context::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 20%,rgba(184,155,106,0.06) 0%,transparent 60%),radial-gradient(ellipse at 70% 80%,rgba(74,122,138,0.04) 0%,transparent 50%)}
+
+.context-eyebrow{font-size:10px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:var(--taupe);margin-bottom:16px;position:relative;animation:fadeUp .7s ease both}
+.context-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,44px);font-weight:300;color:var(--white);text-align:center;margin-bottom:10px;line-height:1.25;animation:fadeUp .7s ease .1s both}
+.context-sub{font-size:13px;font-weight:300;color:rgba(255,255,255,0.4);text-align:center;max-width:500px;line-height:1.7;margin-bottom:40px;animation:fadeUp .7s ease .2s both}
+.context-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(184,155,106,0.1);border:1px solid rgba(184,155,106,0.2);border-radius:24px;padding:8px 20px;font-size:11px;color:var(--taupe);font-weight:400;margin-bottom:32px;animation:fadeUp .7s ease .15s both}
+.context-badge svg{color:var(--gold)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* Email browser frame */
+.email-frame{width:100%;max-width:640px;background:var(--white);border-radius:12px;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,0.4),0 0 0 1px rgba(255,255,255,0.05);animation:fadeUp .7s ease .3s both}
+.email-bar{background:#F0F0F0;padding:12px 16px;display:flex;align-items:center;gap:8px}
+.email-dot{width:10px;height:10px;border-radius:50%}
+.email-dot.r{background:#FF5F57}.email-dot.y{background:#FFBD2E}.email-dot.g{background:#28C940}
+.email-bar-text{font-size:11px;color:#999;margin-left:8px}
+.email-meta-bar{padding:16px 24px;border-bottom:1px solid var(--border-light);font-size:12px;color:var(--text-light)}
+.email-meta-bar strong{color:var(--text);font-weight:500}
+
+/* Email body */
+.email-body{max-width:100%}
+.email-hero-img{width:100%;height:300px;background:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80') center/cover;position:relative;display:flex;align-items:flex-end;justify-content:center}
+.email-hero-img::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(44,36,24,0.1) 0%,rgba(44,36,24,0.55) 100%)}
+.email-hero-content{position:relative;z-index:1;text-align:center;padding:0 24px 32px}
+.email-hero-logo{font-family:'Cormorant Garamond',serif;font-size:13px;font-weight:500;letter-spacing:5px;text-transform:uppercase;color:rgba(255,255,255,0.7);margin-bottom:12px}
+.email-hero-title{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:300;color:var(--white);line-height:1.25}
+
+.email-content{padding:40px 36px}
+.email-greeting{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;color:var(--espresso);margin-bottom:16px}
+.email-p{font-size:14px;font-weight:300;color:var(--text-mid);line-height:1.85;margin-bottom:18px}
+.email-signature{font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:var(--text-mid);margin-top:24px}
+.email-sig-name{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;color:var(--espresso);font-style:normal;margin-top:4px}
+.email-sig-role{font-size:11px;color:var(--text-light);font-weight:300;font-style:normal}
+
+/* Stay summary card */
+.stay-card{background:var(--sand-light);border:1px solid var(--border-light);border-radius:6px;padding:24px;margin:24px 0;display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;text-align:center}
+.stay-item-label{font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--text-light);margin-bottom:4px}
+.stay-item-value{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:500;color:var(--espresso)}
+
+/* Parting gift teaser */
+.gift-teaser{background:linear-gradient(135deg,var(--espresso),var(--espresso-mid));border-radius:8px;padding:32px;text-align:center;margin:28px 0}
+.gift-teaser-eyebrow{font-size:9px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--taupe);margin-bottom:8px}
+.gift-teaser-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:400;color:var(--white);margin-bottom:6px}
+.gift-teaser-sub{font-size:12px;color:rgba(255,255,255,0.4);font-weight:300;margin-bottom:20px}
+.gift-teaser-items{display:flex;justify-content:center;gap:24px;margin-bottom:24px;flex-wrap:wrap}
+.gift-item{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--taupe);font-weight:300}
+.gift-item svg{color:var(--gold)}
+.gift-cta{display:inline-block;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:var(--espresso);background:var(--gold);padding:14px 36px;border-radius:3px;text-decoration:none;transition:all 0.3s;cursor:pointer;border:none}
+.gift-cta:hover{background:var(--taupe);transform:translateY(-1px)}
+
+/* Review stars */
+.review-ask{background:var(--ocean-pale);border:1px solid rgba(74,122,138,0.15);border-radius:6px;padding:28px;text-align:center;margin:24px 0}
+.review-ask-title{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--espresso);margin-bottom:8px}
+.review-ask-sub{font-size:12px;color:var(--text-light);font-weight:300;margin-bottom:16px}
+.review-stars{display:flex;justify-content:center;gap:6px;margin-bottom:16px}
+.review-star{width:40px;height:40px;border-radius:50%;background:var(--white);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.3s;font-size:18px;color:var(--border)}
+.review-star:hover,.review-star.active{background:var(--star-gold);border-color:var(--star-gold);color:var(--white);transform:scale(1.1)}
+.review-star.active ~ .review-star{background:var(--white);border-color:var(--border);color:var(--border);transform:scale(1)}
+.review-links{display:flex;justify-content:center;gap:16px}
+.review-link{font-size:11px;font-weight:400;color:var(--ocean);text-decoration:underline;cursor:pointer}
+
+.email-footer{background:var(--sand-light);padding:24px 36px;text-align:center;border-top:1px solid var(--border-light)}
+.email-footer-logo{font-family:'Cormorant Garamond',serif;font-size:12px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:var(--espresso);margin-bottom:4px}
+.email-footer-addr{font-size:10px;color:var(--text-faint);line-height:1.7}
+
+/* Scroll indicator */
+.scroll-to-gift{text-align:center;margin-top:40px;animation:fadeUp .7s ease .5s both}
+.scroll-to-gift span{font-size:10px;font-weight:400;letter-spacing:3px;text-transform:uppercase;color:var(--taupe)}
+.scroll-to-gift svg{display:block;margin:8px auto 0;color:var(--gold);animation:bounce 2s infinite}
+@keyframes bounce{0%,20%,50%,80%,100%{transform:translateY(0)}40%{transform:translateY(6px)}60%{transform:translateY(3px)}}
+
+/* ══════════════════════════════════════
+   PART 2: PARTING GIFT LANDING PAGE
+   ══════════════════════════════════════ */
+.gift-page{background:var(--cream)}
+
+/* Gift hero */
+.gift-hero{background:var(--espresso);padding:100px 24px 80px;text-align:center;position:relative;overflow:hidden}
+.gift-hero::before{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1533106497176-45ae19e68ba2?w=1400&q=60') center/cover;opacity:0.1}
+.gift-hero::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(44,36,24,0.6),var(--espresso))}
+.gift-hero-inner{position:relative;z-index:1}
+.gift-hero-icon{width:72px;height:72px;border-radius:50%;background:rgba(184,155,106,0.1);border:1px solid rgba(184,155,106,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;color:var(--gold)}
+.gift-hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,5vw,52px);font-weight:300;color:var(--white);line-height:1.2;margin-bottom:12px}
+.gift-hero-sub{font-size:14px;font-weight:300;color:rgba(255,255,255,0.45);max-width:460px;margin:0 auto;line-height:1.7}
+
+/* Section common */
+.g-section{padding:80px 24px}
+.g-header{text-align:center;margin-bottom:48px}
+.g-eyebrow{font-size:9px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:var(--text-light);margin-bottom:12px}
+.g-title{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,3.5vw,38px);font-weight:400;color:var(--espresso);line-height:1.25;margin-bottom:8px}
+.g-sub{font-size:13px;font-weight:300;color:var(--text-light);line-height:1.7;max-width:480px;margin:0 auto}
+.g-line{width:36px;height:1px;background:var(--taupe);margin:16px auto 0}
+
+/* ── PLAYLIST SECTION ── */
+.playlist{background:var(--espresso);color:var(--white);position:relative;overflow:hidden}
+.playlist::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 30%,rgba(74,122,138,0.06),transparent 60%)}
+.playlist-container{max-width:900px;margin:0 auto;display:grid;grid-template-columns:340px 1fr;gap:48px;align-items:center;position:relative;z-index:1}
+
+.playlist-cover{position:relative;border-radius:8px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,0.4)}
+.playlist-cover-img{width:100%;height:340px;object-fit:cover;display:block}
+.playlist-cover-overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(44,36,24,0.8) 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:24px}
+.playlist-cover-label{font-size:9px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--taupe);margin-bottom:4px}
+.playlist-cover-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;color:var(--white)}
+.playlist-cover-sub{font-size:11px;color:rgba(255,255,255,0.4);font-weight:300;margin-top:2px}
+
+.playlist-info .g-eyebrow{color:var(--taupe)}
+.playlist-info .g-title{color:var(--white)}
+.playlist-info .g-sub{color:rgba(255,255,255,0.45)}
+.playlist-desc{font-size:13px;font-weight:300;color:rgba(255,255,255,0.5);line-height:1.8;margin-bottom:28px}
+.playlist-tracks{display:flex;flex-direction:column;gap:0;margin-bottom:28px}
+.track{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.06)}
+.track:last-child{border-bottom:none}
+.track-num{font-size:12px;color:rgba(255,255,255,0.2);font-weight:400;width:20px;text-align:center;flex-shrink:0}
+.track-info{flex-grow:1}
+.track-name{font-size:13px;font-weight:400;color:var(--white)}
+.track-artist{font-size:11px;color:rgba(255,255,255,0.35);font-weight:300}
+.track-dur{font-size:11px;color:rgba(255,255,255,0.2);flex-shrink:0}
+.playlist-btn{display:inline-flex;align-items:center;gap:10px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--white);background:#1DB954;border:none;padding:14px 32px;border-radius:32px;cursor:pointer;transition:all 0.3s;text-decoration:none}
+.playlist-btn:hover{background:#1ed760;transform:translateY(-2px);box-shadow:0 8px 24px rgba(29,185,84,0.3)}
+.playlist-btn svg{flex-shrink:0}
+
+/* ── COCKTAIL RECIPE ── */
+.cocktail{background:var(--sand-light);border-top:1px solid var(--border-light)}
+.cocktail-container{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.cocktail-img{border-radius:6px;overflow:hidden;position:relative;box-shadow:0 16px 48px rgba(44,36,24,0.1)}
+.cocktail-img img{width:100%;height:480px;object-fit:cover;display:block}
+.cocktail-img-tag{position:absolute;bottom:20px;left:20px;background:rgba(44,36,24,0.85);backdrop-filter:blur(12px);padding:8px 16px;border-radius:3px;font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--taupe)}
+.cocktail-body{padding:20px 0}
+.cocktail-name{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:400;color:var(--espresso);margin-bottom:4px;margin-top:8px}
+.cocktail-tagline{font-size:13px;font-weight:300;color:var(--text-light);font-style:italic;margin-bottom:24px}
+.cocktail-story{font-size:13px;font-weight:300;color:var(--text-mid);line-height:1.85;margin-bottom:28px}
+
+.ingredients-title{font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--taupe-dark);margin-bottom:14px}
+.ingredients-list{display:flex;flex-direction:column;gap:10px;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid var(--border-light)}
+.ingredient{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text);font-weight:300}
+.ingredient-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0}
+
+.method-title{font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--taupe-dark);margin-bottom:14px}
+.method-steps{display:flex;flex-direction:column;gap:14px}
+.method-step{display:flex;gap:14px;align-items:flex-start}
+.step-num{width:28px;height:28px;border-radius:50%;background:var(--sand);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:600;color:var(--espresso);flex-shrink:0}
+.step-text{font-size:13px;font-weight:300;color:var(--text-mid);line-height:1.65;padding-top:4px}
+
+/* ── REVIEW SECTION ── */
+.review-section{background:var(--warm-white);border-top:1px solid var(--border-light)}
+.review-container{max-width:600px;margin:0 auto;text-align:center}
+.review-question{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:400;color:var(--espresso);margin-bottom:8px}
+.review-question-sub{font-size:13px;font-weight:300;color:var(--text-light);margin-bottom:32px;line-height:1.6}
+.review-stars-big{display:flex;justify-content:center;gap:10px;margin-bottom:24px}
+.star-big{width:56px;height:56px;border-radius:50%;background:var(--white);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.35s;font-size:24px;color:var(--border)}
+.star-big:hover,.star-big.lit{background:var(--star-gold);border-color:var(--star-gold);color:var(--white);transform:scale(1.12)}
+.review-textarea{width:100%;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:300;color:var(--text);background:var(--white);border:1px solid var(--border);border-radius:4px;padding:16px 20px;outline:none;resize:vertical;margin-bottom:8px;transition:border-color 0.3s;display:none}
+.review-textarea.visible{display:block;animation:fadeUp .4s ease both}
+.review-textarea:focus{border-color:var(--taupe-dark)}
+.review-textarea::placeholder{color:var(--text-faint)}
+.review-submit{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:var(--white);background:var(--espresso);border:none;padding:16px 40px;border-radius:3px;cursor:pointer;transition:all 0.3s;margin-bottom:24px;display:none}
+.review-submit.visible{display:inline-block;animation:fadeUp .4s ease .1s both}
+.review-submit:hover{background:var(--espresso-mid);transform:translateY(-1px)}
+.review-or{font-size:12px;color:var(--text-faint);margin-bottom:16px;display:none}
+.review-or.visible{display:block}
+.review-platforms{display:flex;justify-content:center;gap:12px;display:none;flex-wrap:wrap}
+.review-platforms.visible{display:flex;animation:fadeUp .4s ease .2s both}
+.platform-btn{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:400;color:var(--text-mid);background:var(--white);border:1px solid var(--border);padding:10px 20px;border-radius:3px;cursor:pointer;transition:all 0.3s;text-decoration:none}
+.platform-btn:hover{border-color:var(--taupe);color:var(--espresso);transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.06)}
+
+/* ── REBOOK CTA ── */
+.rebook{background:var(--espresso);position:relative;overflow:hidden}
+.rebook::before{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1400&q=60') center/cover;opacity:0.12}
+.rebook::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(44,36,24,0.92),rgba(44,36,24,0.85))}
+.rebook-inner{max-width:700px;margin:0 auto;text-align:center;position:relative;z-index:1}
+.rebook .g-title{color:var(--white)}
+.rebook .g-sub{color:rgba(255,255,255,0.45)}
+.rebook-incentive{background:rgba(184,155,106,0.08);border:1px solid rgba(184,155,106,0.15);border-radius:6px;padding:28px;margin:32px auto;max-width:420px}
+.rebook-code-label{font-size:9px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--taupe);margin-bottom:8px}
+.rebook-code{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:500;color:var(--gold);letter-spacing:4px;margin-bottom:6px}
+.rebook-code-desc{font-size:12px;color:rgba(255,255,255,0.4);font-weight:300}
+.rebook-cta{display:inline-block;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:var(--espresso);background:var(--gold);padding:16px 44px;border-radius:3px;text-decoration:none;cursor:pointer;transition:all 0.3s;border:none;margin-top:24px}
+.rebook-cta:hover{background:var(--taupe);transform:translateY(-2px);box-shadow:0 8px 24px rgba(184,155,106,0.25)}
+.rebook-expires{font-size:11px;color:rgba(255,255,255,0.25);margin-top:12px}
+
+/* Footer */
+.gift-footer{background:var(--espresso);border-top:1px solid rgba(255,255,255,0.05);padding:40px 24px;text-align:center}
+.gift-footer-logo{font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:500;letter-spacing:5px;text-transform:uppercase;color:var(--sand);margin-bottom:4px}
+.gift-footer-sub{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(196,182,156,0.4);margin-bottom:12px}
+.gift-footer-text{font-size:11px;color:rgba(196,182,156,0.25);line-height:1.7}
+
+/* Responsive */
+@media(max-width:900px){
+  .playlist-container,.cocktail-container{grid-template-columns:1fr;gap:32px}
+  .cocktail-img img{height:320px}
+  .g-section{padding:64px 24px}
+  .email-content{padding:28px 24px}
+  .stay-card{grid-template-columns:1fr}
+}
+
+/* Reveals */
+.rv{opacity:0;transform:translateY(24px);transition:all 0.7s cubic-bezier(0.16,1,0.3,1)}
+.rv.vis{opacity:1;transform:translateY(0)}
+
+/* Section label */
+.section-label{text-align:center;padding:48px 24px 0;background:var(--cream)}
+.section-label-badge{display:inline-flex;align-items:center;gap:8px;font-size:10px;font-weight:400;letter-spacing:3px;text-transform:uppercase;color:var(--text-light);background:var(--sand-light);border:1px solid var(--border-light);border-radius:24px;padding:10px 24px}
+.section-label-badge svg{color:var(--gold)}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     PART 1: THE EMAIL (preview in browser frame)
+     ═══════════════════════════════════════════ -->
+<section class="email-context">
+  <div class="context-eyebrow">Post-Stay Experience Design</div>
+  <div class="context-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Sent 2 hours after checkout</div>
+  <div class="context-title">The Peak-End Rule, Applied</div>
+  <div class="context-sub">Guests judge their stay by two moments: the peak experience, and how it ended. This email ensures the last impression is as beautiful as the first.</div>
+
+  <!-- Email Frame -->
+  <div class="email-frame">
+    <div class="email-bar">
+      <div class="email-dot r"></div><div class="email-dot y"></div><div class="email-dot g"></div>
+      <div class="email-bar-text">Inbox</div>
+    </div>
+    <div class="email-meta-bar">
+      <strong>From:</strong> The Shelborne by Proper &lt;hello@shelborne.com&gt;<br>
+      <strong>Subject:</strong> Thank you, Sarah — and a parting gift from us 🎁<br>
+      <strong>Preview:</strong> A curated Miami playlist, our signature cocktail recipe, and something special for your next visit.
+    </div>
+
+    <div class="email-body">
+      <div class="email-hero-img">
+        <div class="email-hero-content">
+          <div class="email-hero-logo">The Shelborne</div>
+          <div class="email-hero-title">Until We Meet Again, Sarah</div>
+        </div>
+      </div>
+
+      <div class="email-content">
+        <div class="email-greeting">Dear Sarah,</div>
+        <div class="email-p">As you settle back into the rhythm of everyday life, we hope a little piece of the Shelborne stays with you — the sound of the waves, the warmth of the Miami sun, the feeling of having nowhere to be but right where you are.</div>
+        <div class="email-p">Thank you for sharing 4 beautiful nights with us. It was our privilege to be part of your getaway.</div>
+
+        <!-- Stay Summary -->
+        <div class="stay-card">
+          <div><div class="stay-item-label">Room</div><div class="stay-item-value">Ocean View Suite</div></div>
+          <div><div class="stay-item-label">Stay</div><div class="stay-item-value">Mar 14 – 18</div></div>
+          <div><div class="stay-item-label">Nights</div><div class="stay-item-value">4 Nights</div></div>
+        </div>
+
+        <div class="email-p">We put together a small parting gift — a few pieces of the Shelborne experience you can take home and revisit whenever you'd like:</div>
+
+        <!-- Parting Gift Teaser -->
+        <div class="gift-teaser">
+          <div class="gift-teaser-eyebrow">Your Shelborne Parting Gift</div>
+          <div class="gift-teaser-title">A Little of Miami, For Home</div>
+          <div class="gift-teaser-sub">Three keepsakes from your stay — curated just for you.</div>
+          <div class="gift-teaser-items">
+            <div class="gift-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>Curated Miami Playlist</div>
+            <div class="gift-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>Signature Cocktail Recipe</div>
+            <div class="gift-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>A Special Return Offer</div>
+          </div>
+          <button class="gift-cta" onclick="document.getElementById('giftPage').scrollIntoView({behavior:'smooth'})">Open My Parting Gift</button>
+        </div>
+
+        <!-- Review Ask -->
+        <div class="review-ask">
+          <div class="review-ask-title">How Was Your Stay?</div>
+          <div class="review-ask-sub">Your feedback means the world to our team — and helps future guests discover the Shelborne.</div>
+          <div class="review-stars" id="emailStars">
+            <div class="review-star" data-v="1" onclick="rateEmail(1)">★</div>
+            <div class="review-star" data-v="2" onclick="rateEmail(2)">★</div>
+            <div class="review-star" data-v="3" onclick="rateEmail(3)">★</div>
+            <div class="review-star" data-v="4" onclick="rateEmail(4)">★</div>
+            <div class="review-star" data-v="5" onclick="rateEmail(5)">★</div>
+          </div>
+          <div class="review-links">
+            <span class="review-link">Review on Google</span>
+            <span class="review-link">Review on TripAdvisor</span>
+          </div>
+        </div>
+
+        <div class="email-signature">With warmth from all of us at the Shelborne,</div>
+        <div class="email-sig-name">Maria Gonzalez</div>
+        <div class="email-sig-role">Guest Experience Director · The Shelborne by Proper</div>
+      </div>
+
+      <div class="email-footer">
+        <div class="email-footer-logo">The Shelborne</div>
+        <div class="email-footer-addr">1801 Collins Avenue, Miami Beach, FL 33139 · (305) 341-1400</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-to-gift">
+    <span>Scroll to see the Parting Gift page</span>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"/></svg>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     PART 2: THE PARTING GIFT LANDING PAGE
+     ═══════════════════════════════════════════ -->
+<div class="gift-page" id="giftPage">
+
+  <div class="section-label">
+    <div class="section-label-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>Landing page the "Open My Parting Gift" button links to</div>
+  </div>
+
+  <!-- Gift Hero -->
+  <section class="gift-hero">
+    <div class="gift-hero-inner rv">
+      <div class="gift-hero-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg></div>
+      <h1 class="gift-hero-title">Your Shelborne<br>Parting Gift</h1>
+      <p class="gift-hero-sub">Three keepsakes from your stay — a curated playlist, our signature cocktail recipe, and a little something for your next visit.</p>
+    </div>
+  </section>
+
+  <!-- ═══ PLAYLIST ═══ -->
+  <section class="g-section playlist">
+    <div class="playlist-container rv">
+      <div class="playlist-cover">
+        <img class="playlist-cover-img" src="https://images.unsplash.com/photo-1533106497176-45ae19e68ba2?w=600&q=80" alt="Miami sunset">
+        <div class="playlist-cover-overlay">
+          <div class="playlist-cover-label">Curated by Shelborne</div>
+          <div class="playlist-cover-title">South Beach Golden Hour</div>
+          <div class="playlist-cover-sub">12 tracks · 48 minutes</div>
+        </div>
+      </div>
+
+      <div class="playlist-info">
+        <div class="g-eyebrow">Gift One — The Soundtrack</div>
+        <div class="g-title" style="color:var(--white);margin-bottom:6px">South Beach Golden Hour</div>
+        <div class="playlist-desc">The songs that set the tone at the Shelborne — from poolside afternoons to ocean-view sunsets. Hit play whenever you want to be transported back.</div>
+
+        <div class="playlist-tracks">
+          <div class="track"><span class="track-num">1</span><div class="track-info"><div class="track-name">Ocean Drive</div><div class="track-artist">Duke Dumont</div></div><span class="track-dur">3:42</span></div>
+          <div class="track"><span class="track-num">2</span><div class="track-info"><div class="track-name">Sunset Lover</div><div class="track-artist">Petit Biscuit</div></div><span class="track-dur">3:48</span></div>
+          <div class="track"><span class="track-num">3</span><div class="track-info"><div class="track-name">Crave You</div><div class="track-artist">Flight Facilities</div></div><span class="track-dur">4:12</span></div>
+          <div class="track"><span class="track-num">4</span><div class="track-info"><div class="track-name">Myth</div><div class="track-artist">Beach House</div></div><span class="track-dur">4:18</span></div>
+          <div class="track"><span class="track-num">5</span><div class="track-info"><div class="track-name">On Hold</div><div class="track-artist">The xx</div></div><span class="track-dur">3:56</span></div>
+          <div class="track"><span class="track-num">6</span><div class="track-info"><div class="track-name">Something About Us</div><div class="track-artist">Daft Punk</div></div><span class="track-dur">3:52</span></div>
+        </div>
+
+        <a class="playlist-btn" href="#">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+          Open in Spotify
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ COCKTAIL RECIPE ═══ -->
+  <section class="g-section cocktail">
+    <div class="cocktail-container rv">
+      <div class="cocktail-img">
+        <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=600&q=80" alt="Signature cocktail">
+        <div class="cocktail-img-tag">Shelborne Signature</div>
+      </div>
+
+      <div class="cocktail-body">
+        <div class="g-eyebrow">Gift Two — The Recipe</div>
+        <div class="cocktail-name">The Collins Sunset</div>
+        <div class="cocktail-tagline">Our bartender's signature — now yours to make at home.</div>
+        <div class="cocktail-story">Named after the avenue that connects Miami Beach's most iconic spots, The Collins Sunset captures everything we love about golden hour on the terrace — citrus, warmth, and that perfect hint of tropical sweetness. Our head bartender, Marco, created this for guests who wanted to take a piece of the Shelborne bar home.</div>
+
+        <div class="ingredients-title">Ingredients</div>
+        <div class="ingredients-list">
+          <div class="ingredient"><span class="ingredient-dot"></span>2 oz aged rum (we use Ron Zacapa 23)</div>
+          <div class="ingredient"><span class="ingredient-dot"></span>1 oz fresh passion fruit purée</div>
+          <div class="ingredient"><span class="ingredient-dot"></span>¾ oz fresh lime juice</div>
+          <div class="ingredient"><span class="ingredient-dot"></span>½ oz honey syrup (2:1 honey to warm water)</div>
+          <div class="ingredient"><span class="ingredient-dot"></span>2 dashes Angostura bitters</div>
+          <div class="ingredient"><span class="ingredient-dot"></span>Champagne float (about 1 oz)</div>
+          <div class="ingredient"><span class="ingredient-dot"></span>Garnish: dehydrated lime wheel + edible flower</div>
+        </div>
+
+        <div class="method-title">Method</div>
+        <div class="method-steps">
+          <div class="method-step"><div class="step-num">1</div><div class="step-text">Combine rum, passion fruit, lime juice, honey syrup, and bitters in a shaker with ice. Shake vigorously for 12 seconds.</div></div>
+          <div class="method-step"><div class="step-num">2</div><div class="step-text">Double strain into a chilled coupe glass.</div></div>
+          <div class="method-step"><div class="step-num">3</div><div class="step-text">Gently float champagne over the back of a bar spoon so it layers on top.</div></div>
+          <div class="method-step"><div class="step-num">4</div><div class="step-text">Garnish with a dehydrated lime wheel and an edible flower. Close your eyes. You're back on Collins Avenue.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ REVIEW SECTION ═══ -->
+  <section class="g-section review-section">
+    <div class="review-container rv">
+      <div class="g-eyebrow">One Last Thing</div>
+      <div class="review-question">How Did We Do, Sarah?</div>
+      <div class="review-question-sub">Your words help future guests discover the Shelborne — and they mean everything to our team. A quick rating or review would make our day.</div>
+
+      <div class="review-stars-big" id="bigStars">
+        <div class="star-big" onclick="rateBig(1)">★</div>
+        <div class="star-big" onclick="rateBig(2)">★</div>
+        <div class="star-big" onclick="rateBig(3)">★</div>
+        <div class="star-big" onclick="rateBig(4)">★</div>
+        <div class="star-big" onclick="rateBig(5)">★</div>
+      </div>
+
+      <textarea class="review-textarea" id="reviewText" rows="4" placeholder="Tell us what made your stay special (or what we could do better)..."></textarea>
+      <br><br>
+      <button class="review-submit" id="reviewSubmit" onclick="submitReview()">Submit My Review</button>
+
+      <div class="review-or" id="reviewOr">Or share on a platform you love</div>
+      <div class="review-platforms" id="reviewPlatforms">
+        <a class="platform-btn" href="#">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--ocean)"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Review on Google
+        </a>
+        <a class="platform-btn" href="#">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--sage)"><circle cx="12" cy="12" r="10"/><path d="M8 12l2 2 4-4" stroke="white" stroke-width="2" fill="none"/></svg>
+          Review on TripAdvisor
+        </a>
+        <a class="platform-btn" href="#">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--coral)"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5" stroke="white" stroke-width="2" fill="none"/><circle cx="18" cy="6" r="1.5" fill="white"/></svg>
+          Tag Us on Instagram
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ RE-BOOKING CTA ═══ -->
+  <section class="g-section rebook">
+    <div class="rebook-inner rv">
+      <div class="g-eyebrow" style="color:var(--taupe)">Gift Three — Your Return</div>
+      <div class="g-title" style="color:var(--white)">The Best Trips Are the Ones You Book Before You Forget How It Felt</div>
+      <div class="g-sub" style="color:rgba(255,255,255,0.45);margin:0 auto">As a thank you for staying with us, here's an exclusive offer for your next visit — valid for 6 months.</div>
+
+      <div class="rebook-incentive">
+        <div class="rebook-code-label">Your Return Code</div>
+        <div class="rebook-code">COMEBACK20</div>
+        <div class="rebook-code-desc">20% off your next stay at The Shelborne — any room, any date.</div>
+      </div>
+
+      <button class="rebook-cta">Book My Next Stay</button>
+      <div class="rebook-expires">Valid through September 20, 2026 · Not combinable with other offers</div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="gift-footer">
+    <div class="gift-footer-logo">The Shelborne</div>
+    <div class="gift-footer-sub">by Proper</div>
+    <div class="gift-footer-text">1801 Collins Avenue, Miami Beach, FL 33139 · (305) 341-1400<br>This gift was created just for you, Sarah. Thank you for choosing the Shelborne.</div>
+  </footer>
+</div>
+
+<script>
+// Email stars
+function rateEmail(n){
+  document.querySelectorAll('#emailStars .review-star').forEach((s,i)=>{
+    s.classList.toggle('active',i<n);
+  });
+}
+
+// Big review stars + reveal textarea
+function rateBig(n){
+  document.querySelectorAll('#bigStars .star-big').forEach((s,i)=>{
+    s.classList.toggle('lit',i<n);
+  });
+  document.getElementById('reviewText').classList.add('visible');
+  document.getElementById('reviewSubmit').classList.add('visible');
+  document.getElementById('reviewOr').classList.add('visible');
+  document.getElementById('reviewPlatforms').classList.add('visible');
+}
+
+function submitReview(){
+  const btn=document.getElementById('reviewSubmit');
+  btn.textContent='Thank You, Sarah! ♥';
+  btn.style.background='var(--sage)';
+  btn.style.pointerEvents='none';
+}
+
+// Scroll reveal
+const rvEls=document.querySelectorAll('.rv');
+const rvObs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');rvObs.unobserve(e.target)}})},{threshold:0.12});
+rvEls.forEach(el=>rvObs.observe(el));
+</script>
+</body>
+</html>
