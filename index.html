@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shelborne CRO Designs — UI/UX Experiences</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--ink:#1A1610;--cream:#FAF7F2;--sand:#E8DFD0;--copper:#B87333;--copper-light:#D4956E;--taupe:#B8A88C;--white:#FFFFFF;--text:#2C2418;--text-mid:#6B6154;--text-light:#9A9083;--border:#DDD6CA}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);min-height:100vh}
+
+.hero{background:var(--ink);padding:80px 24px 64px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 30%,rgba(184,115,51,0.06),transparent 60%),radial-gradient(ellipse at 70% 70%,rgba(184,115,51,0.04),transparent 50%)}
+.hero-logo{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:500;letter-spacing:6px;text-transform:uppercase;color:var(--taupe);margin-bottom:24px;position:relative}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,5vw,52px);font-weight:300;color:var(--white);line-height:1.2;margin-bottom:12px;position:relative}
+.hero-sub{font-size:14px;font-weight:300;color:rgba(255,255,255,0.4);max-width:500px;margin:0 auto;line-height:1.7;position:relative}
+.hero-count{display:inline-flex;align-items:center;gap:8px;background:rgba(184,115,51,0.1);border:1px solid rgba(184,115,51,0.2);border-radius:24px;padding:8px 20px;font-size:11px;color:var(--copper);margin-top:24px;position:relative}
+
+.grid{max-width:1100px;margin:0 auto;padding:48px 24px 80px;display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
+
+.card{background:var(--white);border:1px solid var(--border);border-radius:8px;overflow:hidden;transition:all 0.4s cubic-bezier(0.25,0.46,0.45,0.94);text-decoration:none;color:inherit;display:flex;flex-direction:column}
+.card:hover{transform:translateY(-6px);box-shadow:0 20px 60px rgba(26,22,16,0.1);border-color:var(--copper)}
+
+.card-num{position:absolute;top:12px;left:12px;width:32px;height:32px;border-radius:50%;background:var(--ink);color:var(--copper);font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:600;display:flex;align-items:center;justify-content:center;z-index:2}
+
+.card-img{height:180px;background-size:cover;background-position:center;position:relative}
+.card-img::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(26,22,16,0.5) 100%)}
+.card-tag{position:absolute;bottom:12px;right:12px;z-index:2;font-size:8px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--white);background:rgba(184,115,51,0.85);backdrop-filter:blur(8px);padding:5px 12px;border-radius:3px}
+
+.card-body{padding:20px 20px 24px;flex-grow:1;display:flex;flex-direction:column}
+.card-eyebrow{font-size:9px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:var(--text-light);margin-bottom:6px}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:var(--ink);margin-bottom:8px;line-height:1.25}
+.card-desc{font-size:12px;font-weight:300;color:var(--text-mid);line-height:1.7;margin-bottom:16px;flex-grow:1}
+.card-cta{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:500;color:var(--copper);letter-spacing:1px;text-transform:uppercase}
+.card-cta svg{transition:transform 0.3s}
+.card:hover .card-cta svg{transform:translateX(4px)}
+
+.footer{background:var(--ink);padding:40px 24px;text-align:center}
+.footer-text{font-size:11px;color:rgba(184,168,140,0.3)}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-logo">The Shelborne by Proper</div>
+  <h1 class="hero-title">CRO Design Experiences</h1>
+  <p class="hero-sub">Interactive UI/UX prototypes for every recommendation in the Shelborne Conversion Rate Optimisation analysis.</p>
+  <div class="hero-count">✦ 8 Interactive Experiences</div>
+</div>
+
+<div class="grid">
+
+  <a class="card" href="shelborne-email-capture.html">
+    <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&q=80')">
+      <div class="card-num">1</div>
+      <div class="card-tag">Email Capture</div>
+    </div>
+    <div class="card-body">
+      <div class="card-eyebrow">Email Programme</div>
+      <div class="card-title">Incentive-Driven Email Capture Popup</div>
+      <div class="card-desc">Three popup variants (Cabana, $75 Dining, Beach Club) with toggle tabs, personalised CTAs, and post-signup confirmation codes. Targets 14→60+ signups/month.</div>
+      <div class="card-cta">View Experience <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div>
+    </div>
+  </a>
+
+  <a class="card" href="shelborne-abandoned-booking-sequence.html">
+    <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600&q=80')">
+      <div class="card-num">2</div>
+      <div class="card-tag">Abandoned Booking</div>
+    </div>
+    <div class="card-body">
+      <div class="card-eyebrow">Klaviyo Automation</div>
+      <div class="card-title">3-Touch Abandoned Booking Email Sequence</div>
+      <div class="card-desc">Full email designs for 1hr gentle reminder, 24hr social proof + incentive, and 72hr urgency with live countdown. Targets 1,051 monthly abandoners.</div>
+      <div class="card-cta">View Experience <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div>
+    </div>
+  </a>
+
+  <a class="card" href="shelborne-weddings-landing-page.html">
+    <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80')">
+      <div class="card-num">3</div>
+      <div class="card-tag">Weddings</div>
+    </div>
+    <div class="card-body">
+      <div class="card-eyebrow">Event Pipeline</div>
+      <div class="card-title">Weddings Landing Page with Room Block Calculator</div>
+      <div class="card-desc">Full page with 5 venue galleries, interactive room block estimator, 3-tier packages, testimonials, and lead capture. Targets 6,694 monthly event visitors.</div>
+      <div class="card-cta">View Experience <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div>
+    </div>
+  </a>
+
+  <a class="card" href="shelborne-member-cross-sell.html">
+    <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80')">
+      <div class="card-num">4</div>
+      <div class="card-tag">Member Cross-Sell</div>
+    </div>
+    <div class="card-body">
+      <div class="card-eyebrow">Beach Club Members</div>
+      <div class="card-title">Friends & Family + Special Occasion Packages</div>
+      <div class="card-desc">Member-exclusive page with 5 curated packages (F&F, Anniversary, Birthday, Proposal, Seasonal), add-ons, and booking form. Targets 522 monthly visitors.</div>
+      <div class="card-cta">View Experience <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div>
+    </div>
+  </a>
+
+  <a class="card" href="shelborne-post-stay-parting-gift.html">
+    <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1533106497176-45ae19e68ba2?w=600&q=80')">
+      <div class="card-num">5</div>
+      <div class="card-tag">Post-Stay</div>
+    </div>
+    <div class="card-body">
+      <div class="card-eyebrow">Peak-End Rule</div>
+      <div class="card-title">Post-Checkout Email + Parting Gift Landing Page</div>
+      <div class="card-desc">Personalised email preview + interactive gift page with curated Spotify playlist, signature cocktail recipe, review solicitation, and re-booking code.</div>
+      <div class="card-cta">View Experience <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div>
+    </div>
+  </a>
+
+  <a class="card" href="shelborne-room-page-redesign.html">
+    <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1590490360182-c33d57733427?w=600&q=80')">
+      <div class="card-num">6</div>
+      <div class="card-tag">Room UX + Pricing</div>
+    </div>
+    <div class="card-body">
+      <div class="card-eyebrow">Conversion Critical</div>
+      <div class="card-title">Room Page UX Overhaul + Price Transparency</div>
+      <div class="card-desc">3 featured defaults, all-in pricing with expandable breakdowns, Most Popular badges, urgency signals, and before/after comparison. Targets 87.1% drop-off.</div>
+      <div class="card-cta">View Experience <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div>
+    </div>
+  </a>
+
+  <a class="card" href="shelborne-restaurant-cross-sell.html">
+    <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80')">
+      <div class="card-num">7</div>
+      <div class="card-tag">Restaurant Cross-Sell</div>
+    </div>
+    <div class="card-body">
+      <div class="card-eyebrow">5 Dining Venues</div>
+      <div class="card-title">Restaurant → Room Booking Pipeline</div>
+      <div class="card-desc">5 cross-sell integration points across Pauline, Little Torch, The Bar, Pool Deck, and The Café. Full Pauline example with Dine & Stay package. Targets 5,000+ monthly visitors.</div>
+      <div class="card-cta">View Experience <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div>
+    </div>
+  </a>
+
+  <a class="card" href="shelborne-mobile-booking-redesign.html">
+    <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80')">
+      <div class="card-num">8</div>
+      <div class="card-tag">Mobile UX</div>
+    </div>
+    <div class="card-body">
+      <div class="card-eyebrow">Mobile Funnel</div>
+      <div class="card-title">Mobile Booking Flow Redesign</div>
+      <div class="card-desc">Based on frame-by-frame video analysis. Compressed header, swipeable filters, compact cards, thumb-zone CTAs. Targets 89.7% mobile drop-off and 1.49% mobile CVR.</div>
+      <div class="card-cta">View Experience <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div>
+    </div>
+  </a>
+
+</div>
+
+<footer class="footer">
+  <div class="footer-text">Shelborne CRO Design Experiences — Confidential · March 2026</div>
+</footer>
+</body>
+</html>
