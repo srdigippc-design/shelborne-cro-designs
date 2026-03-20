@@ -249,7 +249,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);
       <div class="email-bar-text">Inbox</div>
     </div>
     <div class="email-meta-bar">
-      <strong>From:</strong> The Shelborne by Proper &lt;<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6109040d0d0e211209040d030e130f044f020e0c">[email&#160;protected]</a>&gt;<br>
+      <strong>From:</strong> The Shelborne by Proper &lt;<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c6aea3aaaaa986b5aea3aaa4a9b4a8a3e8a5a9ab">[email&#160;protected]</a>&gt;<br>
       <strong>Subject:</strong> Thank you, Sarah — and a parting gift from us 🎁<br>
       <strong>Preview:</strong> A curated Miami playlist, our signature cocktail recipe, and something special for your next visit.
     </div>
@@ -502,4 +502,10 @@ function submitReview(){
 }
 
 // Scroll reveal
-const rvEls=document.querySelectorAll
+const rvEls=document.querySelectorAll('.rv');
+const rvObs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');rvObs.unobserve(e.target)}})},{threshold:0.12});
+rvEls.forEach(el=>rvObs.observe(el));
+setTimeout(()=>{rvEls.forEach(el=>el.classList.add('vis'))},1500);
+</script>
+</body>
+</html>

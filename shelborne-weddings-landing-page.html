@@ -578,7 +578,7 @@ select.calc-input option{background:var(--navy);color:var(--white)}
 <!-- ═══ FOOTER ═══ -->
 <footer class="footer">
   <div class="footer-logo">Shelborne South Beach</div>
-  <div class="footer-address">1801 Collins Avenue, Miami Beach, FL 33139<br>+1 (305) 531-1271 · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ff889a9b9b9691988cbf8c979a939d908d919ad19c9092">[email&#160;protected]</a></div>
+  <div class="footer-address">1801 Collins Avenue, Miami Beach, FL 33139<br>+1 (305) 531-1271 · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f186949595989f9682b18299949d939e839f94df929e9c">[email&#160;protected]</a></div>
   <div class="footer-links"><a href="#">Privacy Policy</a> · <a href="#">Terms</a> · <a href="#">Accessibility</a></div>
 </footer>
 
@@ -635,4 +635,12 @@ function calculateBlock(){
 
 // Scroll reveal
 const reveals=document.querySelectorAll('.reveal');
-const revealObs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e
+const revealObs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revealObs.unobserve(e.target)}})},{threshold:0.15});
+reveals.forEach(el=>revealObs.observe(el));
+setTimeout(()=>{reveals.forEach(el=>el.classList.add('visible'))},1500);
+
+// Auto-calculate on load
+setTimeout(calculateBlock,500);
+</script>
+</body>
+</html>

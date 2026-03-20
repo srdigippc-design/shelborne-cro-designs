@@ -640,6 +640,7 @@ function dismissSticky(){
 const rvs=document.querySelectorAll('.rv');
 const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target)}})},{threshold:.1});
 rvs.forEach(el=>obs.observe(el));
+setTimeout(()=>{rvs.forEach(el=>el.classList.add("vis"))},1500);
 </script>
 </body>
 </html>
